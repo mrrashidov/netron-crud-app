@@ -35,27 +35,61 @@
             </div>
             <div class="input-area">
               <label for="description"> Description: </label>
-              <textarea
-                v-model="form.description"
-                class="
-                  shadow
-                  appearance-none
-                  border
-                  rounded
-                  w-full
-                  py-2
-                  px-3
-                  resize-none
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:shadow-outline
-                  mb-5
-                "
-                name="description"
-                id="description"
-                required
-                placeholder="Description"
-              ></textarea>
+              <template v-if="form.description.length >= 100">
+                <textarea
+                  v-model="form.description"
+                  disabled
+                  class="
+                    shadow
+                    appearance-none
+                    border
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    resize-none
+                    text-gray-700
+                    leading-tight
+                    focus:outline-none focus:shadow-outline
+                    mb-5
+                  "
+                  name="description"
+                  id="description"
+                  required
+                  placeholder="Description"
+                ></textarea>
+                <span
+                  class="block mb-5 text-right text-red-500"
+                  style="color: red"
+                  >{{ form.description.length }} / 100</span
+                >
+              </template>
+              <template v-else>
+                <textarea
+                  v-model="form.description"
+                  class="
+                    shadow
+                    appearance-none
+                    border
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    resize-none
+                    text-gray-700
+                    leading-tight
+                    focus:outline-none focus:shadow-outline
+                    mb-5
+                  "
+                  name="description"
+                  id="description"
+                  required
+                  placeholder="Description"
+                ></textarea>
+                <span class="block text-right"
+                  >{{ form.description.length }} / 100</span
+                >
+              </template>
             </div>
             <div class="input-area">
               <label for="price"> Price: </label>
@@ -172,6 +206,19 @@ export default {
     },
     onUpdate(event) {
       event.preventDefault();
+      if (
+        this.todo.id.length == 0 ||
+        this.todo.name.length == 0 ||
+        this.todo.description.length == 0 ||
+        this.todo.select.length == 0 ||
+        this.todo.status.length == 0
+      ) {
+        alert("Please fill in the fields !");
+        return;
+      } else if (this.form.description.length >= 100) {
+        alert("Can't be more than 100 !");
+        return;
+      }
       this.$store.dispatch("UPDATE_TODO", this.form);
     },
   },

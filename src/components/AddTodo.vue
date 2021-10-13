@@ -52,7 +52,7 @@
               placeholder="What do you need to do today?"
             ></textarea>
             <span class="block mb-5 text-right text-red-500" style="color: red"
-              >{{ form.description.length }} / 100 asda</span
+              >{{ form.description.length }} / 100</span
             >
           </template>
           <template v-else>
@@ -180,6 +180,19 @@ export default {
   methods: {
     onSubmit(e) {
       e.preventDefault();
+      if (
+        this.form.name.length == 0 ||
+        this.form.description.length === 0 ||
+        this.form.price.length == 0 ||
+        this.form.select.length == 0 ||
+        this.form.status.length == 0
+      ) {
+        alert("Please fill in the fields !");
+        return;
+      } else if (this.form.description.length >= 100) {
+        alert("Can't be more than 100 !");
+        return;
+      }
       this.$store.dispatch("ADD_TODO", this.form);
     },
   },
