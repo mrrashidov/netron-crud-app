@@ -56,6 +56,12 @@
   <router-view />
 </template>
 
+<script>
+export default {
+  name: "App",
+};
+</script>
+
 <style scoped>
 #app {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,

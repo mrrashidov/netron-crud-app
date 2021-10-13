@@ -1,12 +1,16 @@
 <template>
   <div v-show="this.isToggle">
-    <div
-      class="w-full h-screen absolute top-0 left-0 bg-gray-900 bg-opacity-80"
-    >
-      <div class="bg-white transform translate-y-24 p-1">
-        <button class="block bg-red-500 text-white rounded" @click="onClose">
-          <ToggleCloseSvg />
-        </button>
+    <div class="w-full h-full absolute top-0 left-0 bg-gray-900 bg-opacity-80">
+      <div class="w-1/2 mx-auto rounded bg-white transform translate-y-24 p-1">
+        <div class="flex justify-end">
+          <button
+            class="block bg-gray-500 hover:bg-red-500 text-white text-right rounded"
+            @click="onClose"
+          >
+            <ToggleCloseSvg />
+          </button>
+        </div>
+
         <div class="flex justify-center items-center mt-1">
           <form @submit="onUpdate">
             <div class="input-area">
@@ -135,8 +139,14 @@
                   mb-5
                 "
               >
-                <option selected disabled value="default">Default</option>
-                <option>Price</option>
+                <option value="" disabled selected>Select</option>
+                <option
+                  v-for="option in options"
+                  v-bind:value="option.value"
+                  :key="option.value"
+                >
+                  {{ option.name }}
+                </option>
               </select>
             </div>
             <div class="flex items-center items-center justify-start mb-5">
@@ -150,7 +160,25 @@
                 checked
               />
             </div>
-            <div class="button-area">
+            <div class="button-area flex">
+              <button
+                @click="onClose"
+                class="
+                  bg-red-500
+                  hover:bg-red-700
+                  text-white
+                  mt-5
+                  mb-5
+                  font-bold
+                  py-2
+                  px-4
+                  cursor-pointer
+                  rounded
+                  focus:outline-none focus:shadow-outline
+                "
+              >
+                Cancel
+              </button>
               <input
                 class="
                   bg-blue-500
@@ -158,6 +186,7 @@
                   text-white
                   mt-5
                   mb-5
+                  ml-5
                   font-bold
                   py-2
                   px-4
@@ -190,6 +219,12 @@ export default {
   },
   data() {
     return {
+      // Select form
+      options: [
+        { value: 1, name: "General" },
+        { value: 2, name: "Party" },
+      ],
+      // Form fields in area
       form: {
         id: this.todo.id,
         name: this.todo.name,
@@ -201,9 +236,11 @@ export default {
     };
   },
   methods: {
+    // Modal close
     onClose() {
       this.$store.dispatch("GET_TOGGLE", false);
     },
+    // Form Validation and uptade
     onUpdate(event) {
       event.preventDefault();
       if (
@@ -223,6 +260,7 @@ export default {
     },
   },
   setup() {
+    // GET toggle value in store
     const store = useStore();
     store.dispatch("GET_TOGGLE", false);
     const isToggle = computed(() => store.state.todo.toggle);
