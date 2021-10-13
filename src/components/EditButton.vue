@@ -1,6 +1,7 @@
 <template>
   <div>
     <button
+      @click="onClick"
       class="
         bg-blue-500
         hover:bg-blue-700
@@ -10,21 +11,23 @@
         px-4
         rounded
       "
-      :style="{ background: color, border: brColor, color: textColor }"
     >
-      <i :class="icon"></i>
+      <EditSvg />
     </button>
   </div>
 </template>
 
 <script>
+import EditSvg from "@/components/EditSvg.vue";
 export default {
   name: "EditButton",
-  props: {
-    icon: String,
-    color: String,
-    brColor: String,
-    textColor: String,
+  components: {
+    EditSvg,
+  },
+  methods: {
+    onClick(event) {
+      this.$store.dispatch("GET_TOGGLE", true);
+    },
   },
 };
 </script>

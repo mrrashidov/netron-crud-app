@@ -11,11 +11,13 @@ interface TodoItem {
 interface IState {
   todos: [TodoItem] | [];
   todo: TodoItem | {};
+  toggle: boolean;
   loading: boolean;
 }
 const initState: IState = {
   todos: [],
   todo: {},
+  toggle: false,
   loading: true,
 };
 const todo: Module<any, any> = {
@@ -39,6 +41,12 @@ const todo: Module<any, any> = {
     },
     GET_TODO: ({ commit }, id) => commit("SET_GET_TODO", id),
     UPDATE_TODO: ({ commit }, payload) => commit("SET_UPDATE_TODO", payload),
+    DELETE_TODO: ({ commit }, payload) => {
+      localStorage.removeItem("todo-list");
+      commit("SET_DELETE_TODO", payload);
+    },
+    GET_TOGGLE: ({ commit }, payload) => commit('SET_GET_TOGGLE', payload),
+    UPDATE_TOGGLE: ({ commit }, payload) => commit('SET_UPDATE_TOGGLE',payload)
   },
 
   /* eslint no-param-reassign: ["error", { "props": false }] */
@@ -51,6 +59,15 @@ const todo: Module<any, any> = {
     SET_GET_TODO: (state, id) => {
       state.todo = state.todos.find((item) => item.findIndex(id));
     },
+    SET_DELETE_TODO: (state, id) => {
+      var index = state.todos.findIndex((todoId) => todoId == id);
+      state.todos.splice(index, 1);
+      localStorage.setItem('todo-list', JSON.stringify(state.todos))
+    },
+    SET_GET_TOGGLE: (state, data) => (state.toggle = data),
+    SET_UPDATE_TOGGLE: (state,  data) => {
+      console.log(data)
+    }
   },
 };
 export default todo;

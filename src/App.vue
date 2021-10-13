@@ -1,10 +1,10 @@
 <template>
-  <div id="nav">
+  <!-- <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/todos">Todos</router-link> |
     <router-link to="/about">About</router-link>
-  </div>
-  <ul class="flex items-center justify-center">
+  </div> -->
+  <ul class="menu flex items-center justify-center mt-12">
     <li class="mr-3">
       <a
         class="
@@ -33,7 +33,7 @@
           px-3
         "
         href="#"
-        ><router-link to="/about">About</router-link></a
+        ><router-link to="/todos">Todos</router-link></a
       >
     </li>
     <li class="mr-3">
@@ -49,7 +49,7 @@
           px-3
         "
         href="#"
-        ><router-link to="/todos">Todos</router-link></a
+        ><router-link to="/about">About</router-link></a
       >
     </li>
   </ul>
