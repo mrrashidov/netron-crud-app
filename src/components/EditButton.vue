@@ -24,6 +24,9 @@ export default {
   components: {
     EditSvg,
   },
+  props: {
+    id: Number,
+  },
   methods: {
     onClick(event) {
       this.$store.dispatch("GET_TOGGLE", true);

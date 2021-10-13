@@ -18,8 +18,8 @@
       </tbody>
     </table>
   </div>
-  <div>
-    <Modal />
+  <div v-for="(todo, index) in todos" :key="index">
+    <Modal :todo="todo" />
   </div>
 </template>
 

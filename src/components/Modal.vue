@@ -8,11 +8,12 @@
           <ToggleCloseSvg />
         </button>
         <div class="flex justify-center items-center mt-1">
-          <form>
+          <form @submit="onUpdate">
             <div class="input-area">
               <label for="name"> Name: </label>
               <input
                 type="text"
+                v-model="form.name"
                 class="
                   shadow
                   appearance-none
@@ -35,6 +36,7 @@
             <div class="input-area">
               <label for="description"> Description: </label>
               <textarea
+                v-model="form.description"
                 class="
                   shadow
                   appearance-none
@@ -59,6 +61,7 @@
               <label for="price"> Price: </label>
               <input
                 type="number"
+                v-model="form.price"
                 class="
                   shadow
                   appearance-none
@@ -82,6 +85,7 @@
               <label for="select"> Select: </label>
               <select
                 name="select"
+                v-model="form.select"
                 id="select"
                 class="
                   shadow
@@ -105,6 +109,7 @@
               <label for="status">Status:</label>
               <input
                 type="checkbox"
+                v-model="form.status"
                 class="ml-2 cursor-pointer"
                 name="status"
                 id="status"
@@ -146,9 +151,28 @@ export default {
   components: {
     ToggleCloseSvg,
   },
+  props: {
+    todo: Object,
+  },
+  data() {
+    return {
+      form: {
+        id: this.todo.id,
+        name: this.todo.name,
+        description: this.todo.description,
+        price: this.todo.price,
+        select: this.todo.select,
+        status: this.todo.status,
+      },
+    };
+  },
   methods: {
     onClose() {
       this.$store.dispatch("GET_TOGGLE", false);
+    },
+    onUpdate(event) {
+      event.preventDefault();
+      this.$store.dispatch("UPDATE_TODO", this.form);
     },
   },
   setup() {

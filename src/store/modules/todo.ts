@@ -40,13 +40,17 @@ const todo: Module<any, any> = {
       commit("SET_TODO", payload);
     },
     GET_TODO: ({ commit }, id) => commit("SET_GET_TODO", id),
-    UPDATE_TODO: ({ commit }, payload) => commit("SET_UPDATE_TODO", payload),
+    UPDATE_TODO: ({ commit }, payload) => {
+      localStorage.removeItem("todo-list");
+      commit("SET_UPDATE_TODO", payload);
+    },
     DELETE_TODO: ({ commit }, payload) => {
       localStorage.removeItem("todo-list");
       commit("SET_DELETE_TODO", payload);
     },
-    GET_TOGGLE: ({ commit }, payload) => commit('SET_GET_TOGGLE', payload),
-    UPDATE_TOGGLE: ({ commit }, payload) => commit('SET_UPDATE_TOGGLE',payload)
+    GET_TOGGLE: ({ commit }, payload) => commit("SET_GET_TOGGLE", payload),
+    UPDATE_TOGGLE: ({ commit }, payload) =>
+      commit("SET_UPDATE_TOGGLE", payload),
   },
 
   /* eslint no-param-reassign: ["error", { "props": false }] */
@@ -62,12 +66,23 @@ const todo: Module<any, any> = {
     SET_DELETE_TODO: (state, id) => {
       var index = state.todos.findIndex((todoId) => todoId == id);
       state.todos.splice(index, 1);
-      localStorage.setItem('todo-list', JSON.stringify(state.todos))
+      localStorage.setItem("todo-list", JSON.stringify(state.todos));
     },
     SET_GET_TOGGLE: (state, data) => (state.toggle = data),
-    SET_UPDATE_TOGGLE: (state,  data) => {
-      console.log(data)
-    }
+    SET_UPDATE_TOGGLE: (state, data) => {
+      console.log(data);
+    },
+    SET_UPDATE_TODO: (state, data) => {
+      const existsAtIndex = state.todos.findIndex(
+        (todoItem) => todoItem.id == data.id
+      );
+      if (existsAtIndex !== -1) {
+        state.todos[existsAtIndex] = data;
+        localStorage.setItem("todo-list", JSON.stringify(state.todos));
+      } else {
+        state.todos.push(data);
+      }
+    },
   },
 };
 export default todo;
