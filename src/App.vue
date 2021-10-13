@@ -4,61 +4,56 @@
     <router-link to="/todos">Todos</router-link> |
     <router-link to="/about">About</router-link>
   </div> -->
-  <ul class="menu flex items-center justify-center mt-12">
-    <li class="mr-3">
-      <a
-        class="
-          inline-block
-          border border-blue-500
-          rounded
-          py-1
-          px-3
-          bg-blue-500
-          text-white
-        "
-        href="#"
-        ><router-link to="/">Home</router-link></a
-      >
-    </li>
-    <li class="mr-3">
-      <a
-        class="
-          inline-block
-          border border-white
-          rounded
-          hover:border-gray-200
-          text-blue-500
-          hover:bg-gray-200
-          py-1
-          px-3
-        "
-        href="#"
-        ><router-link to="/todos">Todos</router-link></a
-      >
-    </li>
-    <li class="mr-3">
-      <a
-        class="
-          inline-block
-          border border-white
-          rounded
-          hover:border-gray-200
-          text-blue-500
-          hover:bg-gray-200
-          py-1
-          px-3
-        "
-        href="#"
-        ><router-link to="/about">About</router-link></a
-      >
-    </li>
-  </ul>
+
+  <div class="bg-red-500">
+    <div class="flex items-center">
+      <div class="p-2">
+        <button class="block ml-8">
+          <CustomToggleSvg />
+        </button>
+      </div>
+      <div class="p-2">
+        <button class="block ml-1">
+          <HomeSvg />
+        </button>
+      </div>
+      <div class="p-2">
+        <form class="block">
+          <input class="bg-red-400 ml-1" type="search" />
+        </form>
+      </div>
+    </div>
+    <!-- <ul class="menu flex items-center justify-left p-1">
+      <li></li>
+      <li class="mr-3">
+        <button>
+          <router-link to="/">Home</router-link>
+        </button>
+      </li>
+      <li class="mr-3">
+        <button>
+          <router-link to="/todos">Todos</router-link>
+        </button>
+      </li>
+      <li class="mr-3">
+        <button>
+          <router-link to="/about">About</router-link>
+        </button>
+      </li>
+    </ul> -->
+  </div>
   <router-view />
 </template>
 
 <script>
+import CustomToggleSvg from "./components/CustomToggleSvg.vue";
+import HomeSvg from "./components/HomeSvg.vue";
 export default {
   name: "App",
+  components: {
+    CustomToggleSvg,
+    HomeSvg,
+  },
 };
 </script>
 
