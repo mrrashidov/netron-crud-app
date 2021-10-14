@@ -1,4 +1,5 @@
 <template>
+  <!-- Edit Page -->
   <div class="copyright">
     <div>
       <h1>About</h1>

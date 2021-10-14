@@ -3,7 +3,7 @@
     <div class="max-w-md mx-auto mt-5 mb-5">
       <form @submit="onSubmit">
         <div class="input-area">
-          <label for="name"> Name: </label>
+          <label for="name">{{ $t("message.name") }}: </label>
           <input
             type="text"
             class="
@@ -27,7 +27,7 @@
           />
         </div>
         <div class="input-area">
-          <label for="description"> Description: </label>
+          <label for="description">{{ $t("message.description") }}: </label>
 
           <template v-if="form.description.length >= 100">
             <textarea
@@ -82,7 +82,7 @@
           </template>
         </div>
         <div class="input-area">
-          <label for="price"> Price: </label>
+          <label for="price">{{ $t("message.price") }}: </label>
           <input
             type="number"
             v-model="form.price"
@@ -130,7 +130,7 @@
           </select>
         </div>
         <div class="flex items-center items-center justify-start mb-5">
-          <label for="status">Status:</label>
+          <label for="status">{{ $t("message.status") }}:</label>
           <input
             type="checkbox"
             v-model="form.status"
@@ -154,7 +154,7 @@
               focus:outline-none focus:shadow-outline
             "
             type="submit"
-            value="Add Todo"
+            :value="$t('message.addTask')"
           />
         </div>
       </form>
