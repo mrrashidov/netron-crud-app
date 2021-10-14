@@ -4,7 +4,13 @@
       <div class="w-1/2 mx-auto rounded bg-white transform translate-y-24 p-1">
         <div class="flex justify-end">
           <button
-            class="block bg-gray-500 hover:bg-red-500 text-white text-right rounded"
+            class="
+              block
+              bg-gray-500
+              hover:bg-red-500
+              text-white text-right
+              rounded
+            "
             @click="onClose"
           >
             <ToggleCloseSvg />

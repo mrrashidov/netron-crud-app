@@ -5,16 +5,16 @@
     <router-link to="/about">About</router-link>
   </div> -->
 
-  <div class="bg-red-500">
+  <div class="bg-red-500 flex justify-between items-center">
     <div class="flex items-center">
       <div class="p-2">
-        <button class="block ml-8">
+        <button class="block ml-8 hover:bg-red-400 p-1">
           <CustomToggleSvg />
         </button>
       </div>
       <div class="p-2">
-        <button class="block ml-1">
-          <HomeSvg />
+        <button class="block ml-1 hover:bg-red-400 p-1">
+          <router-link to="/"><HomeSvg /></router-link>
         </button>
       </div>
       <div class="p-2">
@@ -22,6 +22,11 @@
           <input class="bg-red-400 ml-1" type="search" />
         </form>
       </div>
+    </div>
+    <div>
+      <button class="block mr-8 hover:bg-red-400 p-1 ">
+        <SettingsSvg />
+      </button>
     </div>
     <!-- <ul class="menu flex items-center justify-left p-1">
       <li></li>
@@ -48,11 +53,13 @@
 <script>
 import CustomToggleSvg from "./components/CustomToggleSvg.vue";
 import HomeSvg from "./components/HomeSvg.vue";
+import SettingsSvg from "./components/SettingsSvg.vue";
 export default {
   name: "App",
   components: {
     CustomToggleSvg,
     HomeSvg,
+    SettingsSvg,
   },
 };
 </script>
