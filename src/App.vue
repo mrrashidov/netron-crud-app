@@ -5,61 +5,15 @@
     <router-link to="/about">About</router-link>
   </div> -->
 
-  <div class="bg-red-500 flex justify-between items-center">
-    <div class="flex items-center">
-      <div class="p-2">
-        <button class="block ml-8 hover:bg-red-400 p-1">
-          <CustomToggleSvg />
-        </button>
-      </div>
-      <div class="p-2">
-        <button class="block ml-1 hover:bg-red-400 p-1">
-          <router-link to="/"><HomeSvg /></router-link>
-        </button>
-      </div>
-      <div class="p-2">
-        <form class="block">
-          <input class="bg-red-400 ml-1" type="search" />
-        </form>
-      </div>
-    </div>
-    <div>
-      <button class="block mr-8 hover:bg-red-400 p-1 ">
-        <SettingsSvg />
-      </button>
-    </div>
-    <!-- <ul class="menu flex items-center justify-left p-1">
-      <li></li>
-      <li class="mr-3">
-        <button>
-          <router-link to="/">Home</router-link>
-        </button>
-      </li>
-      <li class="mr-3">
-        <button>
-          <router-link to="/todos">Todos</router-link>
-        </button>
-      </li>
-      <li class="mr-3">
-        <button>
-          <router-link to="/about">About</router-link>
-        </button>
-      </li>
-    </ul> -->
-  </div>
-  <router-view />
+  <Navbar />
 </template>
 
 <script>
-import CustomToggleSvg from "./components/CustomToggleSvg.vue";
-import HomeSvg from "./components/HomeSvg.vue";
-import SettingsSvg from "./components/SettingsSvg.vue";
+import Navbar from "./components/Navbar.vue";
 export default {
   name: "App",
   components: {
-    CustomToggleSvg,
-    HomeSvg,
-    SettingsSvg,
+    Navbar,
   },
 };
 </script>

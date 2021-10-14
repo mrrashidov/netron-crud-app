@@ -14,18 +14,35 @@ const messages = {
   en: {
     message: {
       hello: "hello world",
+      general: 'General',
+      language: 'Languages',
+      setting: 'Settings',
+      search: 'Search',
+      cancel: 'Cancel',
+      update: 'Update'
     },
   },
   tr: {
     message: {
       hello: "merhaba dünya",
+      general: 'Genel',
+      language: 'Diller',
+      setting: 'Ayarlar',
+      search: 'Ara',
+      cancel: 'İptal',
+      update: 'Güncelle'
     },
   },
 };
 
+localStorage.setItem('local', 'tr')
+
+const local = localStorage.getItem('local')
+console.log('local', local)
+
 const i18n = createI18n({
   // something vue-i18n options here ...
-  locale: "tr", // set locale
+  locale: local, // set locale
   fallbackLocale: "en", // set fallback locale
   messages, // set locale messages
   // If you need to specify other options, you can set other options
