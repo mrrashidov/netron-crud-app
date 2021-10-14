@@ -13,12 +13,14 @@ interface IState {
   todo: TodoItem | {};
   toggle: boolean;
   loading: boolean;
+  leftBarToggle: boolean;
 }
 const initState: IState = {
   todos: [],
   todo: {},
   toggle: false,
   loading: true,
+  leftBarToggle: false,
 };
 const todo: Module<any, any> = {
   state: initState,
@@ -51,6 +53,8 @@ const todo: Module<any, any> = {
     GET_TOGGLE: ({ commit }, payload) => commit("SET_GET_TOGGLE", payload),
     UPDATE_TOGGLE: ({ commit }, payload) =>
       commit("SET_UPDATE_TOGGLE", payload),
+    GET_LEFTBAR_TOGGLE: ({ commit }, payload) =>
+      commit("SET_UPDATE_LEFTBAR_TOGGLE", payload),
   },
 
   /* eslint no-param-reassign: ["error", { "props": false }] */
@@ -83,6 +87,7 @@ const todo: Module<any, any> = {
         state.todos.push(data);
       }
     },
+    SET_UPDATE_LEFTBAR_TOGGLE: (state, data) => (state.leftBarToggle = data),
   },
 };
 export default todo;

@@ -14,31 +14,28 @@ const messages = {
   en: {
     message: {
       hello: "hello world",
-      general: 'General',
-      language: 'Languages',
-      setting: 'Settings',
-      search: 'Search',
-      cancel: 'Cancel',
-      update: 'Update'
+      general: "General",
+      language: "Languages",
+      setting: "Settings",
+      search: "Search",
+      cancel: "Cancel",
+      update: "Update",
     },
   },
   tr: {
     message: {
       hello: "merhaba dünya",
-      general: 'Genel',
-      language: 'Diller',
-      setting: 'Ayarlar',
-      search: 'Ara',
-      cancel: 'İptal',
-      update: 'Güncelle'
+      general: "Genel",
+      language: "Diller",
+      setting: "Ayarlar",
+      search: "Ara",
+      cancel: "İptal",
+      update: "Güncelle",
     },
   },
 };
 
-localStorage.setItem('local', 'tr')
-
-const local = localStorage.getItem('local')
-console.log('local', local)
+const local = localStorage.getItem("local");
 
 const i18n = createI18n({
   // something vue-i18n options here ...

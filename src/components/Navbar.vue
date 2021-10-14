@@ -2,7 +2,7 @@
   <div class="bg-red-500 flex justify-between items-center">
     <div class="flex items-center">
       <div class="p-2">
-        <button class="block ml-8 hover:bg-red-400 p-1">
+        <button @click="onLeftBar" class="block ml-8 hover:bg-red-400 p-1">
           <CustomToggleSvg />
         </button>
       </div>
@@ -14,7 +14,7 @@
       <div class="p-2">
         <form class="block">
           <div>
-            <button class="absolute h-6 w-6 ml-2">
+            <button class="absolute h-6 w-6 ml-2 text-gray-50">
               <SearchSvg />
             </button>
             <input
@@ -27,6 +27,7 @@
                 hover:bg-white
                 placeholder-white
                 text-black
+                cursor-pointer
               "
               type="search"
               :placeholder="$t('message.search')"
@@ -86,7 +87,7 @@
                 >
                   <option value="">--Please choose an option--</option>
                   <option value="en">English</option>
-                  <option :value="this.local" selected>Türkçe</option>
+                  <option value="tr" selected>Türkçe</option>
                 </select>
                 <template v-if="this.lang !== this.local">
                   <div>
@@ -170,11 +171,18 @@ export default {
     closeGeneralModal() {
       this.settingModal = false;
     },
-    onChangeGeneralSettings() {
-      console.log(this.lang);
+    onChangeGeneralSettings(event) {
+      event.preventDefault();
+      localStorage.setItem("local", this.lang);
+      console.log("change lang", this.lang);
+      window.location = "/";
     },
     onCancel() {
       this.lang = this.local;
+    },
+    onLeftBar() {
+      console.log("ad");
+      this.$store.dispatch("GET_LEFTBAR_TOGGLE", true);
     },
   },
 };
