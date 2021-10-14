@@ -27,7 +27,19 @@ const messages = {
       addTask: "Add Task",
       taskUpdate: "Edit",
       taskDelete: "Delete",
+      inbox: "Inbox",
+      today: "Today",
+      upComing: "Upcoming",
+      sort: "Sort"
     },
+    pages: {
+      home: "Home",
+      todos: "Tasks",
+      about: "About",
+    },
+    buttons: {
+      addTask: "Add Task"
+    }
   },
   tr: {
     message: {
@@ -45,7 +57,19 @@ const messages = {
       addTask: "Görev Ekle",
       taskUpdate: "Düzenle",
       taskDelete: "Sil",
+      inbox: "Klasör",
+      today: "Bugün",
+      upComing: "Yaklaşan",
+      sort: "Sırala"
     },
+    pages: {
+      home: "Anasayfa",
+      todos: "Görevler",
+      about: "Hakkında",
+    },
+    buttons: {
+      addTask: "Görev Ekle"
+    }
   },
 };
 

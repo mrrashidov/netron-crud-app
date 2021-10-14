@@ -1,14 +1,32 @@
 <template>
   <div class="w-2/6">
-    <div class="w-5/6 bg-gray-100">
-      <ul class="p-5">
-        <li><router-link to="/inbox"><InboxSvg />Inbox</router-link></li>
-        <li><router-link to="/today"><TodaySvg />Today</router-link></li>
-        <li><router-link to="/upcoming"><UpComingSvg />Upcoming</router-link></li>
-        <hr class="mt-2 mb-2" />
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/todos">Todos</router-link></li>
-        <li><router-link to="/about">About</router-link></li>
+    <div class="w-5/6 bg-gray-100 h-screen">
+      <ul class="pl-12 pr-12 p-7">
+        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
+          <router-link to="/inbox"
+            ><InboxSvg />{{ $t("message.inbox") }}</router-link
+          >
+        </li>
+        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
+          <router-link to="/today"
+            ><TodaySvg />{{ $t("message.today") }}</router-link
+          >
+        </li>
+        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
+          <router-link to="/upcoming"
+            ><UpComingSvg />{{ $t("message.upComing") }}</router-link
+          >
+        </li>
+        <hr class="mt-3 mb-3" />
+        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
+          <router-link to="/">{{ $t("pages.home") }}</router-link>
+        </li>
+        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
+          <router-link to="/todos">{{ $t("pages.todos") }}</router-link>
+        </li>
+        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
+          <router-link to="/about">{{ $t("pages.about") }}</router-link>
+        </li>
       </ul>
     </div>
   </div>
