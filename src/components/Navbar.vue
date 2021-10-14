@@ -2,9 +2,19 @@
   <div class="bg-red-500 flex justify-between items-center">
     <div class="flex items-center">
       <div class="p-2">
-        <button @click="onLeftBar" class="block ml-8 hover:bg-red-400 p-1">
-          <CustomToggleSvg />
-        </button>
+        <template v-if="this.isLeftBarToggle == true">
+          <button
+            @click="onCloseLeftBar"
+            class="block ml-8 hover:bg-red-400 p-1"
+          >
+            <CustomToggleSvg />
+          </button>
+        </template>
+        <template v-else>
+          <button @click="onLeftBar" class="block ml-8 hover:bg-red-400 p-1">
+            <CustomToggleSvg />
+          </button>
+        </template>
       </div>
       <div class="p-2">
         <button class="block ml-1 hover:bg-red-400 p-1">
@@ -148,6 +158,8 @@ import HomeSvg from "./HomeSvg.vue";
 import SettingsSvg from "./SettingsSvg.vue";
 import CloseSvg from "./CloseSvg.vue";
 import SearchSvg from "./SearchSvg.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
   name: "Navbar",
   components: {
@@ -181,9 +193,19 @@ export default {
       this.lang = this.local;
     },
     onLeftBar() {
-      console.log("ad");
       this.$store.dispatch("GET_LEFTBAR_TOGGLE", true);
     },
+    onCloseLeftBar() {
+      this.$store.dispatch("GET_LEFTBAR_TOGGLE", false);
+    },
+  },
+  setup() {
+    const store = useStore();
+    store.dispatch("GET_LEFTBAR_TOGGLE", false);
+    const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
+    return {
+      isLeftBarToggle,
+    };
   },
 };
 </script>
