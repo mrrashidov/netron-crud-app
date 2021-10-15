@@ -1,1 +1,0 @@
-# netron-crud-app
