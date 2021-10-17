@@ -6,26 +6,13 @@ const {
 } = require("apollo-server-core");
 const express = require("express");
 const http = require("http");
-const { importSchema } = require('graphql-import');
+const { typeDefs, resolvers } = require('./src/schema')
 
-const resolvers = {
-  Query: {
-    tasks: () => ({
-      id: 1,
-      name: "pazar",
-      description: "pazar alışverisi",
-      price: 100,
-      select: "Price",
-      status: true,
-    }),
-  },
-};
-
-async function startApolloServer(resolvers) {
+async function startApolloServer(port) {
   const app = express();
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
-    typeDefs: importSchema("./graphql/schema/schema.graphql"),
+    typeDefs,
     resolvers,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
@@ -37,8 +24,8 @@ async function startApolloServer(resolvers) {
   });
   await server.start();
   server.applyMiddleware({ app, path: "/" });
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  await new Promise((resolve) => httpServer.listen({ port: port }, resolve));
+  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
 }
 
-startApolloServer(resolvers);
+startApolloServer(4200);
