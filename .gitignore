@@ -1,10 +1,14 @@
 .DS_Store
 client/node_modules/
+client/package-lock.json
+client/yarn.lock
 client/dist/
 
 server/node_modules/
 server/dist/
-
+server/package-lock.json
+server/yarn.lock
+server/dev.sqlite3
 # local env files
 .env.local
 .env.*.local
