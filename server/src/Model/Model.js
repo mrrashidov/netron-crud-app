@@ -1,4 +1,4 @@
-export default class Model {
+module.exports = class Model {
   constructor(database, table) {
     this.database = database;
     this.table = table;

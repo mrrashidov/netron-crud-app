@@ -1,5 +1,5 @@
 const Model = require("./Model");
-export class User extends Model {
+module.exports = class User extends Model {
   constructor(database) {
     super(database, "users");
   }

@@ -1,13 +1,11 @@
-const { User } = require("./User");
+const User = require("./User");
 const knex = require("knex");
-const knexFile = require("../../knexfile");
+const { development } = require("../../knexfile");
 
-const database = knex(knexFile);
+const database = knex(development);
 
 const user = new User(database);
 
-const models = {
+module.exports = {
   user,
 };
-
-export default models;
