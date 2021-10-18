@@ -23,4 +23,6 @@ async function startApolloServer(port) {
   app.listen(port);
 }
 
-startApolloServer(4200).then(() => console.log(`🚀 Server ready`));
+startApolloServer(4200).then(() =>
+  console.log(`🚀 Server ready at http://localhost:4200/`)
+);
