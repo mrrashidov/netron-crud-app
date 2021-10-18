@@ -1,5 +1,9 @@
 module.exports = {
   Query: {
-    hello: () => "String",
+    users: async (parent, args, {model, user}, info) => {
+      const users = await model
+      console.log(model)
+      return users
+    }
   },
 };

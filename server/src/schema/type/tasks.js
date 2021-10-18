@@ -1,10 +1,12 @@
 const { gql } = require("apollo-server-core");
 module.exports = gql`
-  type Hello {
-    message: String
+  type Users {
+    first_name: String,
+    email: String,
+    role_id: Int
   }
 
   type Query {
-    hello: Hello
+    users: Users
   }
 `;
