@@ -1,24 +1,13 @@
 <template>
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/todos">Todos</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
   <Navbar />
 </template>
 
 <script>
 import Navbar from "./components/Navbar.vue";
-import { useClient } from "villus";
 export default {
   name: "App",
   components: {
     Navbar,
-  },
-  setup() {
-    useClient({
-      url: "http://localhost:4000/",
-    });
   },
 };
 </script>

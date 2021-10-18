@@ -30,9 +30,9 @@
         <Todo :todo="todo" />
       </tbody>
     </table>
-  </div>
-  <div v-for="(todo, index) in todos" :key="index">
-    <Modal :todo="todo" />
+    <div v-for="(todo, index) in todos" :key="index">
+      <Modal :todo="todo" />
+    </div>
   </div>
 </template>
 

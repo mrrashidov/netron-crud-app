@@ -1,5 +1,5 @@
 <template>
-  <template v-if="this.isLeftBarToggle == true">
+  <div v-if="this.isLeftBarToggle == true">
     <div class="home flex">
       <Leftbar />
       <div class="w-full card">
@@ -18,8 +18,8 @@
         </div>
       </div>
     </div>
-  </template>
-  <template v-else>
+  </div>
+  <div v-else>
     <div class="home flex">
       <div class="w-full card">
         <div
@@ -38,12 +38,12 @@
         </div>
       </div>
     </div>
-  </template>
+  </div>
 </template>
 
 <script>
 import AddTodo from "@/components/AddTodo.vue";
-import Leftbar from "../components/Leftbar.vue";
+import Leftbar from "@/components/Leftbar.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
 export default {
