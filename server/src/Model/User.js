@@ -1,12 +1,9 @@
-export default class User {
-  constructor(database, table) {
-    this.database = database;
-    this.table = this.table;
+const Model = require("./Model");
+export class User extends Model {
+  constructor(database) {
+    super(database, "users");
   }
-  all () {
-    return this.database("users").select().from("users")
-  }
-  insert (name) {
-    return this.database(this.table).insert(name)
+  async getUsers() {
+    return this.database("users").select();
   }
 }
