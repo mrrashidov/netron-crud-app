@@ -5,6 +5,9 @@ const {
 } = require("apollo-server-core");
 const express = require("express");
 const { typeDefs, resolvers } = require("./src/schema");
+const env = require("dotenv").config();
+
+const port = process.env.PORT;
 
 async function startApolloServer(port) {
   const app = express();
@@ -23,6 +26,6 @@ async function startApolloServer(port) {
   app.listen(port);
 }
 
-startApolloServer(4200).then(() =>
-  console.log(`🚀 Server ready at http://localhost:4200/`)
+startApolloServer(port).then(() =>
+  console.log(`🚀 Server ready at http://localhost:${port}/`)
 );
