@@ -4,6 +4,7 @@ import About from "@/views/About.vue";
 import Todos from "@/views/Todos.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
+import Inbox from "@/views/Inbox.vue";
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     name: "Login",
     component: Login,
   },
+  {
+    path: "/inbox",
+    name: "Inbox",
+    component: Inbox,
+  }
 ];
 
 const router = createRouter({

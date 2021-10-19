@@ -2,12 +2,13 @@
   <div class="w-2/6">
     <div class="w-5/6 bg-gray-100 h-screen">
       <ul class="pl-12 pr-12 p-7">
-        <!-- <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
-          <router-link to="/inbox"
-            ><InboxSvg />{{ $t("message.inbox") }}</router-link
-          >
-        </li>
+        <router-link to="/inbox"
+        >
         <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
+          <InboxSvg />{{ $t("message.inbox") }}
+        </li>
+        </router-link>
+        <!-- <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
           <router-link to="/today"
             ><TodaySvg />{{ $t("message.today") }}</router-link
           >
@@ -34,8 +35,12 @@
 </template>
 
 <script>
+import InboxSvg from "@/components/InboxSvg.vue";
 export default {
   name: "Leftbar",
+  components: {
+    InboxSvg
+  }
 };
 </script>
 
