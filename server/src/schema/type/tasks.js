@@ -7,12 +7,12 @@ module.exports = gql`
   }
   
   type Task {
-    header: String
+    title: String
     description: String
   }
   
   input addTask {
-    header: String,
+    title: String,
     description: String
   }
 
@@ -21,5 +21,13 @@ module.exports = gql`
     users: [User]
     task(id: ID!): Task  
     tasks: [Task]
+  }
+  input AddTaskInput {
+    title: String!
+    description: String
+  }
+  
+  type Mutation {
+    addTask(input: AddTaskInput): Task
   }
 `;

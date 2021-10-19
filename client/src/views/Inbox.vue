@@ -113,6 +113,13 @@ export default {
     }
     `;
 
+    const addTask = `
+    mutation{
+    task(#id: ID){
+    }
+    }
+    `;
+
     const {data} = useQuery({
       query: getTasks
     })
