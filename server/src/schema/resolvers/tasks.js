@@ -1,5 +1,5 @@
 const {user} = require("../../model");
-const {todo} = require("../../model")
+const {todo} = require("../../model");
 module.exports = {
     Query: {
         users: () => user.all(),

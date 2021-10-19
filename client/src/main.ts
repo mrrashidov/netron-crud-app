@@ -62,6 +62,13 @@ const messages = {
       goToHomePage: "Go to home page",
       privacyPolice:
         "By continuing with Google, Apple or Email, you agree to Todoist's Terms of Service and Privacy Policy.",
+    },
+    inboxPage: {
+      today: "Today",
+      dt: "Tue 19 Oct",
+      addTask: "Add a task",
+      sort: "Sort",
+      cancel: "Cancel"
     }
   },
   tr: {
@@ -115,6 +122,13 @@ const messages = {
       goToHomePage: "Giriş sayfasına git",
       privacyPolice:
         "E-posta ile devam ederek, Todo App'in Hizmet Kullanım Koşulları ve Gizlilik Politikasını kabul etmiş olursun.",
+    },
+    inboxPage: {
+      today: "Bugün",
+      dt: "Sal 19 Oct",
+      addTask: "Görev ekle",
+      sort: "Sırala",
+      cancel: "İptal"
     }
   },
 };

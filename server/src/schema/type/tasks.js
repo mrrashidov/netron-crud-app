@@ -10,6 +10,11 @@ module.exports = gql`
     header: String
     description: String
   }
+  
+  input addTask {
+    header: String,
+    description: String
+  }
 
   type Query {
     user(id: ID!): User
