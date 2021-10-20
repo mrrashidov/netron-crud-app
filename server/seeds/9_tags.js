@@ -5,7 +5,7 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('tags').insert([
-        {tags_name: "general"},
+        {user_id: 2},
       ]);
     });
 };

@@ -3,7 +3,7 @@ exports.up = function (knex) {
     table.increments("id");
     table.integer("lang_id", 11);
     table.integer("todo_id", 11);
-    table.string("header", 50);
+    table.string("title", 50);
     table.string("description", 50);
   });
 };

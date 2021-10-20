@@ -6,8 +6,7 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("todos").insert([
         {
-          header: "hava",
-          description: "koşulları",
+          user_id: 1
         },
       ]);
     });

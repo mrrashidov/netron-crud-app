@@ -7,8 +7,10 @@ module.exports = {
         task: (_, {id}) => todo.findOne({id}),
     },
     Mutation: {
-        addTask: (_, {input}) => {
+        addTask: async (_, {input}) => {
             console.log(input)
+            const result = await todo.insert(input)
+            return result
         }
     }
 };

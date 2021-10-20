@@ -5,7 +5,7 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('groups').insert([
-        {user_id: 1, group_name: "friends"},
+        {user_id: 1},
       ]);
     });
 };

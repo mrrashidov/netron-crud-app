@@ -6,4 +6,7 @@ module.exports = class Todo extends Model {
     async getTodos(){
         return this.database("todos").select();
     }
+    async addTodos(){
+        return this.database("todos").select();
+    }
 }
