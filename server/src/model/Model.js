@@ -8,7 +8,6 @@ module.exports = class Model {
       return this.database(table ? table : this.table).select(select ? select : '*');
     }
 
-
     find(conditions) {
         return this.database(this.table).where(conditions).select();
     }

@@ -75,7 +75,6 @@
             >
               {{ t("inboxPage.addTask") }}
             </button>
-            <button @click="execute()">asdsadasda</button>
           </div>
         </div>
       </div>
@@ -180,22 +179,22 @@ mutation addTask($input:StoreTask!){
 
     const variables = {
       input: {
-      user_id: 1,
-      status: "active",
-      languages: [
-        {
-          lang_id: 1,
-          title: "Hello task",
-          description: "Hello description",
-        },
-        {
-          lang_id: 2,
-          title: "Selam gorev",
-          description: "Selam aciklama",
-        },
-      ],
-    }
-    }
+        user_id: 1,
+        status: "active",
+        languages: [
+          {
+            lang_id: 1,
+            title: "Hello task",
+            description: "Hello description",
+          },
+          {
+            lang_id: 2,
+            title: "Selam gorev",
+            description: "Selam aciklama",
+          },
+        ],
+      },
+    };
 
     function onSubmit(event) {
       event.preventDefault();

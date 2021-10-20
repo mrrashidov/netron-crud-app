@@ -9,7 +9,6 @@ module.exports = {
     },
     Mutation: {
         addTask: async (_, {input}) => {
-
             const taskId = await todo.store().insert({
                 user_id: input.user_id,
                 status: status[input.status].id
@@ -44,10 +43,9 @@ module.exports = {
                         status: 'active',
                         created_at: item.created_at,
                         languages: []
-
-
                     }
                 })
-        }
+        },
+        // addUser
     }
 };

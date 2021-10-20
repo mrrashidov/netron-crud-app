@@ -8,12 +8,14 @@
   },
   "dependencies": {
     "graphql": "^15.6.1",
+    "vee-validate": "^4.5.3",
     "villus": "^1.0.0-rc.21",
     "vue": "^3.2.16",
     "vue-i18n": "^9.1.6",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2",
-    "vuex-webextensions": "^1.3.3"
+    "vuex-webextensions": "^1.3.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",

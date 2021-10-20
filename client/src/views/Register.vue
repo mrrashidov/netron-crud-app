@@ -2,7 +2,9 @@
   <div class="w-full mt-5">
     <div class="card w-2/4 mx-auto">
       <form @submit="onSubmit" class="block ml-5 mt-5 mb-5 mr-5">
-        <div class="w-3/5 p-3 mt-5 mb-5 mx-auto border border-gray-400 rounded">
+        <div
+          class="w-4/5 p-12 mt-5 mb-5 mx-auto border border-gray-300 rounded-lg"
+        >
           <h1 class="font-bold mb-5 mt-5 text-2xl">
             {{ t("registerPage.header") }}
           </h1>
@@ -19,6 +21,7 @@
               :placeholder="t('registerPage.name')"
               id="name"
             />
+            <span class="text-red-500">{{ nameError }}</span>
           </div>
           <div class="mb-5">
             <label for="email" class="block mb-1"
@@ -26,10 +29,13 @@
             </label>
             <input
               type="email"
+              name="email"
+              v-model="email"
               class="block w-full h-8 border pl-2 border-gray-700"
               :placeholder="t('registerPage.email')"
               id="email"
             />
+            <span class="text-red-500">{{ emailError }}</span>
           </div>
 
           <div class="mb-5">
@@ -38,10 +44,13 @@
             </label>
             <input
               type="password"
+              name="password"
+              v-model="password"
               class="block w-full h-8 border pl-2 border-gray-700"
               placeholder="*****"
               id="password"
             />
+            <span class="text-red-500">{{ passwordError }}</span>
           </div>
 
           <div class="mb-5">
@@ -50,10 +59,13 @@
             </label>
             <input
               type="password"
+              name="cpassword"
+              v-model="cpassword"
               class="block w-full h-8 border pl-2 border-gray-700"
               placeholder="*****"
               id="cpassword"
             />
+            <span class="text-red-500">{{ cpasswordError }}</span>
           </div>
 
           <input
@@ -96,6 +108,9 @@
 
 <script>
 import { useI18n } from "vue-i18n";
+import { useForm, useField } from "vee-validate";
+import * as yup from "yup";
+
 export default {
   name: "Register",
   data() {
@@ -104,14 +119,45 @@ export default {
     };
   },
   methods: {
-    onSubmit(event){
+    onSubmit(event) {
       event.preventDefault();
-      console.log(this.name)
-    }
+      console.log(this.name);
+    },
   },
   setup() {
     const { t } = useI18n();
+    const schema = yup.object({
+      name: yup.string().required().min(8),
+      email: yup.string().required().email(),
+      password: yup.string().required().min(8),
+      cpassword: yup.string().required().min(8),
+    });
+
+    useForm({
+      validationSchema: schema,
+    });
+
+    const { value: name, errorMessage: nameError } = useField("name");
+    const { value: email, errorMessage: emailError } = useField("email");
+    const { value: password, errorMessage: passwordError } =
+      useField("password");
+    const { value: cpassword, errorMessage: cpasswordError } =
+      useField("cpassword");
+
+    function onSubmit(event) {
+      event.preventDefault();
+      console.log(this.name);
+    }
     return {
+      name,
+      nameError,
+      email,
+      emailError,
+      password,
+      passwordError,
+      cpassword,
+      cpasswordError,
+      onSubmit,
       t,
     };
   },

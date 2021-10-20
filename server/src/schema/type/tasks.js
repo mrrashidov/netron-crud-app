@@ -19,6 +19,7 @@ module.exports = gql`
         languages: [LanguageInput!]!
         status: StatusType!
     }
+    
     type User {
         first_name: String
         email: String
