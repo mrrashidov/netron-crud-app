@@ -1,26 +1,31 @@
 module.exports = class Model {
-  constructor(database, table) {
-    this.database = database;
-    this.table = table;
-  }
+    constructor(database, table) {
+        this.database = database;
+        this.table = table;
+    }
 
-  all() {
-    return this.database(this.table).select();
-  }
+    all(table = null, select = false) {
+      return this.database(table ? table : this.table).select(select ? select : '*');
+    }
 
-  find(conditions) {
-    return this.database(this.table).where(conditions).select();
-  }
 
-  findOne(conditions) {
-    return this.database(this.table).where(conditions).first();
-  }
+    find(conditions) {
+        return this.database(this.table).where(conditions).select();
+    }
 
-  findById(id) {
-    return this.database(this.table).where({ id }).select().first();
-  }
+    findOne(conditions) {
+        return this.database(this.table).where(conditions).first();
+    }
 
-  insert(values) {
-    return this.database(this.table).insert(values);
-  }
+    findById(id) {
+        return this.database(this.table).where({id}).select().first();
+    }
+
+    insert(values) {
+        return this.database(this.table).insert(values);
+    }
+
+    store(table = null) {
+        return this.database(table ? table : this.table);
+    }
 }
