@@ -1,5 +1,10 @@
 <template>
-  <svg width="24" height="24" viewBox="0 0 24 24" class="text-purple-500 inline">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    class="text-purple-500 inline"
+  >
     <g fill="currentColor" fill-rule="nonzero">
       <path
         d="M6 4.5h12A1.5 1.5 0 0119.5 6v2.5h-15V6A1.5 1.5 0 016 4.5z"

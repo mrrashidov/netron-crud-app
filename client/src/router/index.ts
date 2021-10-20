@@ -5,6 +5,8 @@ import Todos from "@/views/Todos.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Inbox from "@/views/Inbox.vue";
+import Today from "@/views/Today.vue";
+import Upcoming from "@/views/Upcoming.vue";
 
 const routes = [
   {
@@ -36,7 +38,17 @@ const routes = [
     path: "/inbox",
     name: "Inbox",
     component: Inbox,
-  }
+  },
+  {
+    path: "/today",
+    name: "Today",
+    component: Today,
+  },
+  {
+    path: "/upcoming",
+    name: "Upcoming",
+    component: Upcoming,
+  },
 ];
 
 const router = createRouter({
