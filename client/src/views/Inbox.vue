@@ -106,6 +106,7 @@
                     v-model="description"
                     class="
                       w-full
+                      h-auto
                       outline-none
                       mt-2
                       pl-3
@@ -271,7 +272,17 @@
               </div>
               <div class="flex justify-between items-center mt-2">
                 <div>
-                  <button class="p-1 add-task text-white rounded">
+                  <button
+                    class="
+                      p-1
+                      pl-2
+                      pr-2
+                      add-task
+                      font-medium
+                      text-white
+                      rounded
+                    "
+                  >
                     {{ t("inboxPage.addTask") }}
                   </button>
                   <button
@@ -457,5 +468,6 @@ textarea {
 
 .add-task {
   background-color: #db4c3f;
+  font-size: 16px;
 }
 </style>
