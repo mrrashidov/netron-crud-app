@@ -68,7 +68,12 @@ const messages = {
       dt: "Tue 19 Oct",
       addTask: "Add a task",
       sort: "Sort",
-      cancel: "Cancel"
+      cancel: "Cancel",
+      header: "Get a clear view of the day",
+      text: "Your tasks due today will appear here."
+    },
+    leftBar: {
+      label: "Labels"
     }
   },
   tr: {
@@ -128,7 +133,12 @@ const messages = {
       dt: "Sal 19 Oct",
       addTask: "Görev ekle",
       sort: "Sırala",
-      cancel: "İptal"
+      cancel: "İptal",
+      header: "Günün net bir görünümünü edin",
+      text: "Bitiş tarihi bugün olan görevlerin burada gözükecek."
+    },
+    leftBar: {
+      labels: "Etiketler"
     }
   },
 };

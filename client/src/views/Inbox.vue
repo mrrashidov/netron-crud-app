@@ -214,10 +214,10 @@
           <div class="">
             <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
             <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
-              Günün net bir görünümünü edin
+              {{t('inboxPage.header')}}
             </h1>
             <p class="add-task-text text-center text-gray-500 mb-2">
-              Bitiş tarihi bugün olan görevlerin burada gözükecek.
+              {{t('inboxPage.text')}}
             </p>
             <div class="text-center">
               <button
