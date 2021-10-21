@@ -37,14 +37,16 @@
             <RightArrow class="ml-3 -mb-5 origin-left transform -rotate-90" />
             <div class="tag w-full flex justify-between">
               <p class="font-medium">{{ t("leftBar.labels") }}</p>
-              <button class="hidden"><AddLabelSvg /></button>
+              <button class="hidden" @click="onLabelToggle"><AddLabelSvg /></button>
             </div>
           </div>
           <div @click="onCancel" class="flex items-center" v-else>
             <RightArrow class="ml-3 mt-1 mr-2 origin-left transform" />
             <div class="tag w-full flex justify-between">
               <p class="font-medium">{{ t("leftBar.labels") }}</p>
-              <button class="hidden"><AddLabelSvg /></button>
+              <button class="hidden" @click="onLabelToggle">
+                <AddLabelSvg />
+              </button>
             </div>
           </div>
         </li>
@@ -73,6 +75,7 @@ export default {
   data() {
     return {
       isArrow: false,
+      isLabelToggle: false,
     };
   },
   methods: {
@@ -81,6 +84,10 @@ export default {
     },
     onCancel() {
       this.isArrow = false;
+    },
+    onLabelToggle() {
+      this.isLabelToggle = true;
+      this.$emit("label-toggle", this.isLabelToggle)
     },
   },
   setup() {

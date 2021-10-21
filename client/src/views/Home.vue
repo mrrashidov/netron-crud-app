@@ -1,7 +1,116 @@
 <template>
   <div v-if="this.isLeftBarToggle == true">
     <div class="home flex">
-      <Leftbar />
+      <Leftbar @label-toggle="labelToggle" />
+      <div v-if="this.isTagToggle == true">
+        <div
+          class="
+            absolute
+            left-0
+            top-0
+            bg-gray-900
+            min-h-screen
+            w-full
+            z-0
+            bg-opacity-80
+          "
+        >
+          <div
+            class="
+              card
+              bg-white bg-opacity-100
+              z-40
+              w-1/4
+              mx-auto
+              transform
+              translate-y-52
+              rounded-xl
+            "
+          >
+            <div
+              class="
+                bg-gray-50
+                border-b border-gray-300
+                p-5
+                rounded-t-xl
+                flex
+                justify-between
+              "
+            >
+              <h1 class="label-header font-bold">Add label</h1>
+              <button
+                title="Click to find out about labels and how to use them"
+              >
+                <QuestionSvg />
+              </button>
+            </div>
+            <div>
+              <form>
+                <div class="p-5">
+                  <label class="label-name font-bold" for="label"
+                    >Label name</label
+                  >
+                  <input
+                    class="
+                      border
+                      w-full
+                      mt-1
+                      rounded
+                      h-8
+                      pl-2
+                      border-gray-300
+                      outline-none
+                    "
+                    id="label"
+                    type="text"
+                  />
+                </div>
+                <div class="p-5">
+                  <label class="label-color font-bold" for="label"
+                    >Label color</label
+                  >
+                  <input
+                    class="
+                      border
+                      w-full
+                      mt-1
+                      rounded
+                      h-8
+                      pl-2
+                      border-gray-300
+                      outline-none
+                    "
+                    id="label"
+                    type="text"
+                  />
+                </div>
+                <hr class="mb-3 border-gray-300" />
+                <div class="flex justify-end items-center p-5">
+                  <button
+                    @click="onLabelToggleClose"
+                    class="
+                      p-1
+                      border border-gray-400
+                      hover:border-gray-600
+                      bg-gray-100
+                      rounded
+                      mr-3
+                      pr-3
+                      pl-3
+                    "
+                  >
+                    Cancel
+                  </button>
+                  <button class="add-label p-1 pr-5 pl-5 rounded text-white">
+                    Add
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else></div>
       <div class="w-full card">
         <div
           class="
@@ -44,6 +153,7 @@
 <script>
 import AddTodo from "@/components/AddTodo.vue";
 import Leftbar from "@/components/Leftbar.vue";
+import QuestionSvg from "@/components/icons/QuestionSvg.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
 export default {
@@ -51,6 +161,20 @@ export default {
   components: {
     AddTodo,
     Leftbar,
+    QuestionSvg,
+  },
+  data() {
+    return {
+      isTagToggle: false,
+    };
+  },
+  methods: {
+    labelToggle(value) {
+      this.isTagToggle = value;
+    },
+    onLabelToggleClose() {
+      this.isTagToggle = false;
+    },
   },
   setup() {
     const store = useStore();
@@ -62,3 +186,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.add-label {
+  background-color: #db4c3f;
+}
+.label-header {
+  font-size: 16px;
+}
+.label-name {
+  font-size: 14px;
+}
+.label-color {
+  font-size: 14px;
+}
+</style>
