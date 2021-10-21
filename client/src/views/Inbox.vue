@@ -271,7 +271,7 @@
               </div>
               <div class="flex justify-between items-center mt-2">
                 <div>
-                  <button class="p-1 bg-red-500 text-white rounded">
+                  <button class="p-1 add-task text-white rounded">
                     {{ t("inboxPage.addTask") }}
                   </button>
                   <button
@@ -279,11 +279,14 @@
                     class="
                       ml-4
                       p-1
+                      w-14
+                      font-medium
+                      border border-gray-300
                       bg-white
                       text-black
                       border
                       rounded
-                      border-gray-300
+                      hover:bg-gray-200 hover:border-gray-400
                     "
                   >
                     {{ t("inboxPage.cancel") }}
@@ -446,6 +449,13 @@ mutation addTask($input:StoreTask!){
 
 .add-task-button-general {
   font-size: 13px;
+  background-color: #db4c3f;
+}
+textarea {
+  font-size: 13px;
+}
+
+.add-task {
   background-color: #db4c3f;
 }
 </style>
