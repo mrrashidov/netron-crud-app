@@ -37,10 +37,8 @@
                 justify-between
               "
             >
-              <h1 class="label-header font-bold">Add label</h1>
-              <button
-                title="Click to find out about labels and how to use them"
-              >
+              <h1 class="label-header font-bold">{{ t("homePage.header") }}</h1>
+              <button :title="t('homePage.title')">
                 <QuestionSvg />
               </button>
             </div>
@@ -48,9 +46,9 @@
               <form>
                 <div class="p-5">
                   <div class="flex justify-between">
-                    <label class="label-name font-bold" for="label"
-                      >Label name</label
-                    >
+                    <label class="label-name font-bold" for="label">{{
+                      t("homePage.label")
+                    }}</label>
                     <p class="text-xs text-red-500">{{ labelError }}</p>
                   </div>
                   <input
@@ -71,9 +69,9 @@
                   />
                 </div>
                 <div class="p-5">
-                  <label class="label-color font-bold" for="label"
-                    >Label color</label
-                  >
+                  <label class="label-color font-bold" for="label">{{
+                    t("homePage.color")
+                  }}</label>
                   <select
                     class="
                       border
@@ -111,10 +109,10 @@
                       pl-3
                     "
                   >
-                    Cancel
+                    {{ t("homePage.cancel") }}
                   </button>
                   <button class="add-label p-1 pr-5 pl-5 rounded text-white">
-                    Add
+                    {{ t("homePage.add") }}
                   </button>
                 </div>
                 <div class="flex justify-end items-center p-5" v-else>
@@ -131,7 +129,7 @@
                       pl-3
                     "
                   >
-                    Cancel
+                    {{ t("homePage.cancel") }}
                   </button>
                   <button
                     class="
@@ -145,7 +143,7 @@
                       disabled
                     "
                   >
-                    Add
+                    {{ t("homePage.add") }}
                   </button>
                 </div>
               </form>

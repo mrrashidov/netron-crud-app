@@ -26,6 +26,16 @@ module.exports = gql`
         role_id: Int
     }
     
+    input TagInput {
+        user_id: Int
+        status: StatusType
+    }
+    
+    type Tag {
+        user_id: Int
+        status: StatusType
+    }
+    
     type User {
         first_name: String
         email: String
@@ -57,6 +67,8 @@ module.exports = gql`
         users: [User]
         task(id: ID! lang: String!): Task
         tasks(lang:String!): [Task]
+        tag(id: ID): Tag
+        tags: [Tag]
     }
     
     type Mutation {

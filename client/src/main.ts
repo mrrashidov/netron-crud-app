@@ -70,11 +70,19 @@ const messages = {
       sort: "Sort",
       cancel: "Cancel",
       header: "Get a clear view of the day",
-      text: "Your tasks due today will appear here."
+      text: "Your tasks due today will appear here.",
     },
     leftBar: {
-      label: "Labels"
-    }
+      labels: "Labels",
+    },
+    homePage: {
+      header: "Add label",
+      label: "Label name",
+      color: "Label color",
+      cancel: "Cancel",
+      add: "Add",
+      title: "Click to find out about labels and how to use them.",
+    },
   },
   tr: {
     message: {
@@ -135,11 +143,19 @@ const messages = {
       sort: "Sırala",
       cancel: "İptal",
       header: "Günün net bir görünümünü edin",
-      text: "Bitiş tarihi bugün olan görevlerin burada gözükecek."
+      text: "Bitiş tarihi bugün olan görevlerin burada gözükecek.",
     },
     leftBar: {
-      labels: "Etiketler"
-    }
+      labels: "Etiketler",
+    },
+    homePage: {
+      header: "Etiket ekle",
+      label: "Etiket adı",
+      color: "Etiket rengi",
+      cancel: "İptal",
+      add: "Ekle",
+      title: "Projeleri ve onları nasıl kullanabileceğini öğrenmek için tıkla.",
+    },
   },
 };
 
