@@ -1,6 +1,6 @@
 function roleGenerator(role_id, permissionsCount) {
     const items = []
-    for (let permissionsCountKey = 1; permissionsCountKey => permissionsCount; permissionsCountKey++) {
+    for (let permissionsCountKey = 1; permissionsCountKey <= permissionsCount; permissionsCountKey++) {
         items.push({
             role_id: role_id,
             permission_id: permissionsCountKey
