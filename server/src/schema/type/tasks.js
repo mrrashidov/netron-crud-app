@@ -19,6 +19,12 @@ module.exports = gql`
         languages: [LanguageInput!]!
         status: StatusType!
     }
+
+    input UserInput {
+        first_name: String
+        email: String
+        role_id: Int
+    }
     
     type User {
         first_name: String
@@ -55,5 +61,6 @@ module.exports = gql`
     
     type Mutation {
         addTask(input: StoreTask): TaskItem
+        addUser(input: UserInput): User
     }
 `;

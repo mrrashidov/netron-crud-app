@@ -252,7 +252,7 @@
                     type="text"
                     name="title"
                     v-model="title"
-                    class="w-full outline-none pl-3"
+                    class="w-full outline-none pl-3 overflow-y-auto"
                     placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
                   />
                 </div>
@@ -260,16 +260,13 @@
                   <textarea
                     name="description"
                     v-model="description"
-                    class="
-                      w-full
-                      outline-none
-                      mt-2
-                      pl-3
-                      resize-none
-                      overflow-y-hidden
-                    "
+                    class="w-full outline-none mt-2 pl-3 resize-none h-24"
                     placeholder="Açıklama"
                   ></textarea>
+                  <div class="m-2">
+                    <p class="text-red-500">{{ titleError }}</p>
+                    <p class="text-red-500">{{ descriptionError }}</p>
+                  </div>
                 </div>
               </div>
               <div class="flex justify-between items-center mt-2">
@@ -301,10 +298,6 @@
                   </template>
                 </div>
               </div>
-              <div class="mt-2">
-                <p class="text-red-500">{{ titleError }}</p>
-                <p class="text-red-500">{{ descriptionError }}</p>
-              </div>
             </form>
           </div>
         </div>
@@ -333,6 +326,7 @@ export default {
       isActive: false,
       isTick: false,
       description: "",
+      title: "",
     };
   },
   components: {
@@ -361,8 +355,8 @@ export default {
     const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
 
     const schema = yup.object({
-      title: yup.string().required().min(16),
-      description: yup.string().required().max(130),
+      title: yup.string().required().min(1).max(500),
+      description: yup.string().required().max(1000),
     });
 
     useForm({

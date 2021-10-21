@@ -47,5 +47,9 @@ module.exports = {
                 })
         },
         // addUser
+        addUser: async (_, {input}) => {
+            console.log(input);
+            return user;
+        }
     }
 };
