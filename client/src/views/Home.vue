@@ -47,10 +47,15 @@
             <div>
               <form>
                 <div class="p-5">
-                  <label class="label-name font-bold" for="label"
-                    >Label name</label
-                  >
+                  <div class="flex justify-between">
+                    <label class="label-name font-bold" for="label"
+                      >Label name</label
+                    >
+                    <p class="text-xs text-red-500">{{ labelError }}</p>
+                  </div>
                   <input
+                    name="labelName"
+                    v-model="labelName"
                     class="
                       border
                       w-full
@@ -69,9 +74,10 @@
                   <label class="label-color font-bold" for="label"
                     >Label color</label
                   >
-                  <input
+                  <select
                     class="
                       border
+                      cursor-pointer
                       w-full
                       mt-1
                       rounded
@@ -81,11 +87,17 @@
                       outline-none
                     "
                     id="label"
-                    type="text"
-                  />
+                  >
+                    <option>Red</option>
+                    <option>Yellow</option>
+                    <option selected>Blue</option>
+                  </select>
                 </div>
                 <hr class="mb-3 border-gray-300" />
-                <div class="flex justify-end items-center p-5">
+                <div
+                  class="flex justify-end items-center p-5"
+                  v-if="this.labelName"
+                >
                   <button
                     @click="onLabelToggleClose"
                     class="
@@ -102,6 +114,37 @@
                     Cancel
                   </button>
                   <button class="add-label p-1 pr-5 pl-5 rounded text-white">
+                    Add
+                  </button>
+                </div>
+                <div class="flex justify-end items-center p-5" v-else>
+                  <button
+                    @click="onLabelToggleClose"
+                    class="
+                      p-1
+                      border border-gray-400
+                      hover:border-gray-600
+                      bg-gray-100
+                      rounded
+                      mr-3
+                      pr-3
+                      pl-3
+                    "
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    class="
+                      bg-red-200
+                      cursor-not-allowed
+                      p-1
+                      pr-5
+                      pl-5
+                      rounded
+                      text-white
+                      disabled
+                    "
+                  >
                     Add
                   </button>
                 </div>
@@ -154,8 +197,12 @@
 import AddTodo from "@/components/AddTodo.vue";
 import Leftbar from "@/components/Leftbar.vue";
 import QuestionSvg from "@/components/icons/QuestionSvg.vue";
+import { useForm, useField } from "vee-validate";
+import * as yup from "yup";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+
 export default {
   name: "Home",
   components: {
@@ -166,6 +213,7 @@ export default {
   data() {
     return {
       isTagToggle: false,
+      labelName: "",
     };
   },
   methods: {
@@ -177,11 +225,26 @@ export default {
     },
   },
   setup() {
+    const { t } = useI18n();
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
     const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
+    const schema = yup.object({
+      labelName: yup.string().required().min(1).max(60),
+    });
+
+    useForm({
+      validationSchema: schema,
+    });
+
+    const { value: labelName, errorMessage: labelError } =
+      useField("labelName");
+
     return {
+      labelName,
+      labelError,
       isLeftBarToggle,
+      t,
     };
   },
 };
