@@ -47,9 +47,9 @@ module.exports = {
                 })
         },
         // addUser
-        addUser: async (_, {input}) => {
+        addTag: async (_, {input}) => {
             console.log(input);
-            return user;
+            return input;
         }
     }
 };

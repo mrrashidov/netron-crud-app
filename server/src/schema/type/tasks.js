@@ -28,11 +28,15 @@ module.exports = gql`
     
     input TagInput {
         user_id: Int
+        name: String!
+        color: String
         status: StatusType
     }
     
     type Tag {
         user_id: Int
+        name: String!
+        color: String
         status: StatusType
     }
     
@@ -74,5 +78,6 @@ module.exports = gql`
     type Mutation {
         addTask(input: StoreTask): TaskItem
         addUser(input: UserInput): User
+        addTag(input: TagInput): Tag
     }
 `;

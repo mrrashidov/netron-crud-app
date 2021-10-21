@@ -1,11 +1,24 @@
+const groups = [
+    {
+        user_id: 1,
+        title: "friend",
+        description: "",
+        status: "active",
+        role_id: 1,
+    },
+    {
+        user_id: 2,
+        title: "company",
+        description: "",
+        status: "active",
+        role_id: 1,
+    },
+    {
+        user_id: 3,
+        title: "",
+        description: "other",
+        status: "active",
+    },
 
-exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex('groups').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('groups').insert([
-        {user_id: 1},
-      ]);
-    });
-};
+]
+exports.seed = (knex) => knex('groups').del().then(() => knex('groups').insert(groups));
