@@ -29,18 +29,22 @@
         </li>
         <hr class="mt-3 mb-3" />
         <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
-          <div class="flex items-center" v-if="this.isArrow == false">
+          <div
+            @click="onClick"
+            class="flex items-center"
+            v-if="this.isArrow == false"
+          >
             <RightArrow class="ml-3 -mb-5 origin-left transform -rotate-90" />
             <div class="tag w-full flex justify-between">
-              <router-link to="/about">{{ t("leftBar.labels") }}</router-link>
-              <button class="hidden">+</button>
+              <p class="font-medium">{{ t("leftBar.labels") }}</p>
+              <button class="hidden"><AddLabelSvg /></button>
             </div>
           </div>
-          <div v-else>
-            <RightArrow class="ml-3 -mb-5 origin-left transform" />
+          <div @click="onCancel" class="flex items-center" v-else>
+            <RightArrow class="ml-3 mt-1 mr-2 origin-left transform" />
             <div class="tag w-full flex justify-between">
-              <router-link to="/about">{{ t("leftBar.labels") }}</router-link>
-              <button class="hidden">+</button>
+              <p class="font-medium">{{ t("leftBar.labels") }}</p>
+              <button class="hidden"><AddLabelSvg /></button>
             </div>
           </div>
         </li>
@@ -55,6 +59,7 @@ import InboxSvg from "@/components/InboxSvg.vue";
 import TodaySvg from "@/components/TodaySvg.vue";
 import UpComingSvg from "@/components/UpComingSvg.vue";
 import RightArrow from "@/components/icons/RightArrow.vue";
+import AddLabelSvg from "@/components/icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
 export default {
   name: "Leftbar",
@@ -63,11 +68,20 @@ export default {
     TodaySvg,
     UpComingSvg,
     RightArrow,
+    AddLabelSvg,
   },
   data() {
     return {
       isArrow: false,
     };
+  },
+  methods: {
+    onClick() {
+      this.isArrow = true;
+    },
+    onCancel() {
+      this.isArrow = false;
+    },
   },
   setup() {
     const { t } = useI18n();
