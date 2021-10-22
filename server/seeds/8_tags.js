@@ -1,21 +1,22 @@
+const {status} = require("../src/helpers/constants");
 const tags = [
     {
         user_id: 1,
         name: "meet",
         color: "red",
-        status: "active"
+        status: status.active.id
     },
     {
         user_id: 2,
         name: "visit",
         color: "yellow",
-        status: "active"
+        status: status.active.id
     },
     {
         user_id: 3,
         name: "other",
         color: "blue",
-        status: "active"
+        status: status.active.id
     },
 
 ]

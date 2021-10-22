@@ -2,7 +2,7 @@
   <div class="flex" v-if="this.isLeftBarToggle == true">
     <LeftBar />
     <div class="w-full mt-5 p-4">
-      <p>{{td}}</p>
+      <p>{{ td }}</p>
       <div class="w-1/2 mx-auto">
         <div class="w-full flex justify-between items-center">
           <div class="flex items-center">
@@ -338,7 +338,7 @@ import * as yup from "yup";
 export default {
   name: "Inbox",
   props: {
-    td: Boolean
+    td: Boolean,
   },
   data() {
     return {
