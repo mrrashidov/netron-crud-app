@@ -303,7 +303,7 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 import SortSvg from "@icons/SortSvg.vue";
 import AddTodoSvg from "@icons/AddTodoSvg.vue";
-import AddTaskSvg from "@/components/AddTaskSvg.vue";
+import AddTaskSvg from "@icons/AddTaskSvg.vue";
 import TickSvg from "@icons/TickSvg.vue";
 import LeftBar from "@/components/Leftbar.vue";
 import { useI18n } from "vue-i18n";

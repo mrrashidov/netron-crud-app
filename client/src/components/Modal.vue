@@ -212,7 +212,7 @@
 </template>
 
 <script>
-import ToggleCloseSvg from "@/components/ToggleCloseSvg.vue";
+import ToggleCloseSvg from "@icons/ToggleCloseSvg.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
 export default {
