@@ -1,4 +1,4 @@
-const { user, todo, todoTranslations, tag } = require("../../model");
+const { user, todo, tag } = require("../../model");
 const { status } = require("../../helpers/constants");
 module.exports = {
   Query: {
@@ -15,16 +15,8 @@ module.exports = {
           user_id: input.user_id,
           status: status[input.status].id,
         })
-        .then(async (res) => {
+        .then((res) => {
           const lastInsertId = res[0];
-          for await (let lang of input.languages) {
-            await todo.store("todo_translations").insert({
-              todo_id: lastInsertId,
-              lang_id: lang.lang_id,
-              title: lang.title,
-              description: lang.description,
-            });
-          }
           return lastInsertId;
         });
       return await todo
@@ -32,11 +24,7 @@ module.exports = {
           "todos.id",
           "todos.created_at",
           "todos.status",
-          "todo_translations.lang_id",
-          "todo_translations.title",
-          "todo_translations.description",
         ])
-        .innerJoin("todo_translations", "todos.id", "todo_translations.todo_id")
         .whereNot("todos.status", status.delete.id)
         .where("todos.id", taskId)
         .then((response) => {
