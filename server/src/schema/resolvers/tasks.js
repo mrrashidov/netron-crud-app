@@ -13,6 +13,8 @@ module.exports = {
         .store()
         .insert({
           user_id: input.user_id,
+          title: input.title,
+          description: input.description,
           status: status[input.status].id,
         })
         .then((res) => {
@@ -22,19 +24,23 @@ module.exports = {
       return await todo
         .all(null, [
           "todos.id",
-          "todos.created_at",
+          "todos.user_id",
+          "todos.title",
+          "todos.description",
           "todos.status",
+          "todos.created_at",
         ])
-        .whereNot("todos.status", status.delete.id)
         .where("todos.id", taskId)
         .then((response) => {
           const item = response[0];
           console.log(item);
           return {
-            id: item.id,
+            id: taskId,
+            user_id: item.user_id,
+            title: item.title,
+            description: item.description,
             status: "active",
             created_at: item.created_at,
-            languages: [],
           };
         });
     },

@@ -200,10 +200,9 @@ import QuestionSvg from "@/components/icons/QuestionSvg.vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useMutation } from "villus";
-import { ref } from "vue";
 
 export default {
   name: "Home",

@@ -324,7 +324,7 @@
 
 <script>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import SortSvg from "@icons/SortSvg.vue";
 import AddTodoSvg from "@icons/AddTodoSvg.vue";
 import AddTaskSvg from "@icons/AddTaskSvg.vue";
@@ -368,6 +368,8 @@ export default {
     },
   },
   setup() {
+    const title = ref('');
+    const description = ref('');
     const { t } = useI18n();
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);

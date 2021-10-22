@@ -7,16 +7,12 @@ module.exports = gql`
         delete
         complete
         pending
-        
     }
-    input LanguageInput {
-        lang_id:ID
-        title: String
-        description: String
-    }
+
     input StoreTask {
         user_id: ID!
-        languages: [LanguageInput!]!
+        title: String!
+        description: String
         status: StatusType!
     }
 
@@ -59,9 +55,12 @@ module.exports = gql`
         title:String
         description:String
     }
+
     type TaskItem {
-        id: ID
-        languages: TaskTranslation
+        id: ID,
+        user_id: ID,
+        title: String
+        description: String
         status: StatusType
         created_at: String
     }
