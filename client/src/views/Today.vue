@@ -15,9 +15,9 @@
             {{ t("inboxPage.sort") }}
           </button>
         </div>
-        <div v-if="data">
+        <!-- <div v-if="data">
           <hr class="mt-2" />
-          <div v-for="todo in data.tasks">
+          <div v-for="todo in data.tasks" >
             <div class="flex">
               <div
                 @click="onTick"
@@ -40,7 +40,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <hr class="mt-3" />
         <div v-if="this.isActive == false">
           <div>
@@ -124,6 +124,7 @@
                   </button>
                   <button
                     @click="onCancel"
+                    type="button"
                     class="
                       ml-4
                       p-1
@@ -156,7 +157,6 @@
       </div>
     </div>
   </div>
-
   <div v-else>
     <div class="mt-5 p-4">
       <div class="w-1/2 mx-auto">
@@ -172,10 +172,9 @@
             {{ t("inboxPage.sort") }}
           </button>
         </div>
-        <div v-if="data">
+        <!-- <div v-if="data">
           <hr class="mt-2" />
-          
-        </div>
+        </div> -->
         <hr class="mt-3" />
         <div v-if="this.isActive == false">
           <div>
@@ -265,6 +264,7 @@
                   </button>
                   <button
                     @click="onCancel"
+                    type="button"
                     class="
                       ml-4
                       p-1
@@ -307,15 +307,10 @@ import AddTaskSvg from "@icons/AddTaskSvg.vue";
 import TickSvg from "@icons/TickSvg.vue";
 import LeftBar from "@/components/Leftbar.vue";
 import { useI18n } from "vue-i18n";
+import { useForm, useField } from "vee-validate";
+import * as yup from "yup";
 export default {
   name: "Today",
-  components: {
-    SortSvg,
-    AddTaskSvg,
-    AddTodoSvg,
-    LeftBar,
-    TickSvg
-  },
   data() {
     return {
       isActive: false,
@@ -324,15 +319,26 @@ export default {
       title: "",
     };
   },
+  components: {
+    SortSvg,
+    AddTaskSvg,
+    AddTodoSvg,
+    LeftBar,
+    TickSvg,
+  },
+
   methods: {
     onClick() {
       this.isActive = true;
+      console.log("is active", true);
     },
     onCancel() {
       this.isActive = false;
+      console.log("is active", false);
     },
     onTick() {
       this.isTick = true;
+      console.log("is tick", true);
       console.log(this.isTick);
     },
   },
@@ -341,9 +347,27 @@ export default {
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
     const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
+
+    const schema = yup.object({
+      title: yup.string().required().min(1).max(500),
+      description: yup.string().required().max(1000),
+    });
+
+    useForm({
+      validationSchema: schema,
+    });
+
+    const { value: title, errorMessage: titleError } = useField("title");
+    const { value: description, errorMessage: descriptionError } =
+      useField("description");
+
     return {
       t,
-      isLeftBarToggle
+      title,
+      titleError,
+      description,
+      descriptionError,
+      isLeftBarToggle,
     };
   },
 };

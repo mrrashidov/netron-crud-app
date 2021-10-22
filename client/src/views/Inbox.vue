@@ -2,6 +2,7 @@
   <div class="flex" v-if="this.isLeftBarToggle == true">
     <LeftBar />
     <div class="w-full mt-5 p-4">
+      <p>{{td}}</p>
       <div class="w-1/2 mx-auto">
         <div class="w-full flex justify-between items-center">
           <div class="flex items-center">
@@ -15,7 +16,7 @@
             {{ t("inboxPage.sort") }}
           </button>
         </div>
-        <div v-if="data">
+        <!-- <div v-if="data">
           <hr class="mt-2" />
           <div v-for="todo in data.tasks">
             <div class="flex">
@@ -40,7 +41,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <hr class="mt-3" />
         <div v-if="this.isActive == false">
           <div>
@@ -124,6 +125,7 @@
                   </button>
                   <button
                     @click="onCancel"
+                    type="button"
                     class="
                       ml-4
                       p-1
@@ -156,7 +158,6 @@
       </div>
     </div>
   </div>
-
   <div v-else>
     <div class="mt-5 p-4">
       <div class="w-1/2 mx-auto">
@@ -214,10 +215,10 @@
           <div class="">
             <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
             <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
-              {{t('inboxPage.header')}}
+              {{ t("inboxPage.header") }}
             </h1>
             <p class="add-task-text text-center text-gray-500 mb-2">
-              {{t('inboxPage.text')}}
+              {{ t("inboxPage.text") }}
             </p>
             <div class="text-center">
               <button
@@ -287,6 +288,7 @@
                   </button>
                   <button
                     @click="onCancel"
+                    type="button"
                     class="
                       ml-4
                       p-1
@@ -335,6 +337,9 @@ import * as yup from "yup";
 
 export default {
   name: "Inbox",
+  props: {
+    td: Boolean
+  },
   data() {
     return {
       isActive: false,

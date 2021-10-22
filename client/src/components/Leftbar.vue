@@ -4,7 +4,7 @@
       <ul class="pl-12 pr-12 p-7">
         <router-link to="/inbox">
           <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
-            <InboxSvg />{{ t("message.inbox") }}
+            <InboxSvg  />{{ t("message.inbox") }}
           </li>
         </router-link>
         <router-link to="/today">
@@ -89,6 +89,7 @@ export default {
     },
     onLabelToggle() {
       this.isLabelToggle = true;
+      console.log("isToggle", this.isLabelToggle)
       this.$emit("label-toggle", this.isLabelToggle);
     },
   },

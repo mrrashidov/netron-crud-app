@@ -43,7 +43,7 @@
               </button>
             </div>
             <div>
-              <form>
+              <form @submit="onSubmit">
                 <div class="p-5">
                   <div class="flex justify-between">
                     <label class="label-name font-bold" for="label">{{
@@ -52,8 +52,8 @@
                     <p class="text-xs text-red-500">{{ labelError }}</p>
                   </div>
                   <input
-                    name="labelName"
-                    v-model="labelName"
+                    name="name"
+                    v-model="name"
                     class="
                       border
                       w-full
@@ -73,6 +73,8 @@
                     t("homePage.color")
                   }}</label>
                   <select
+                    name="color"
+                    v-model="color"
                     class="
                       border
                       cursor-pointer
@@ -86,18 +88,17 @@
                     "
                     id="label"
                   >
-                    <option>Red</option>
-                    <option>Yellow</option>
-                    <option selected>Blue</option>
+                    <option value="" selected>Select one</option>
+                    <option value="red">Red</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="blue">Blue</option>
                   </select>
                 </div>
                 <hr class="mb-3 border-gray-300" />
-                <div
-                  class="flex justify-end items-center p-5"
-                  v-if="this.labelName"
-                >
+                <div class="flex justify-end items-center p-5" v-if="this.name">
                   <button
                     @click="onLabelToggleClose"
+                    type="button"
                     class="
                       p-1
                       border border-gray-400
@@ -118,6 +119,7 @@
                 <div class="flex justify-end items-center p-5" v-else>
                   <button
                     @click="onLabelToggleClose"
+                    type="button"
                     class="
                       p-1
                       border border-gray-400
@@ -200,6 +202,8 @@ import * as yup from "yup";
 import { useStore } from "vuex";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useMutation } from "villus";
+import { ref } from "vue";
 
 export default {
   name: "Home",
@@ -211,7 +215,10 @@ export default {
   data() {
     return {
       isTagToggle: false,
-      labelName: "",
+      form: {
+        labelName: "",
+        labelColor: "",
+      },
     };
   },
   methods: {
@@ -223,6 +230,8 @@ export default {
     },
   },
   setup() {
+    const name = ref();
+    const color = ref();
     const { t } = useI18n();
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
@@ -238,7 +247,47 @@ export default {
     const { value: labelName, errorMessage: labelError } =
       useField("labelName");
 
+    const addTag = `
+      mutation addTag($input: TagInput!){
+  addTag(input:$input){
+    user_id
+    name
+    color
+    status
+  }
+}`;
+
+    const { data, execute } = useMutation(addTag);
+
+    // const variables = {
+    //   input: {
+    //     user_id: 1,
+    //     name: form.value,
+    //     color: "asdsadas",
+    //     status: "active",
+    //   },
+    // };
+
+    function onSubmit(event) {
+      event.preventDefault();
+      execute({
+        input: {
+          user_id: 1,
+          name: name.value,
+          color: color.value,
+          status: "active",
+        },
+      });
+      console.log(name.value);
+      console.log(color.value);
+    }
+
     return {
+      name,
+      color,
+      data,
+      execute,
+      onSubmit,
       labelName,
       labelError,
       isLeftBarToggle,
