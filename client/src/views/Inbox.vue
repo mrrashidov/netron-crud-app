@@ -375,8 +375,8 @@ export default {
     },
   },
   setup() {
-    // const title = ref('');
-    // const description = ref('');
+    // const todoTitle = ref('');
+    // const todoDescription = ref('');
     const { t } = useI18n();
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);

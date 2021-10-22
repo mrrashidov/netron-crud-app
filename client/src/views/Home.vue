@@ -43,17 +43,18 @@
               </button>
             </div>
             <div>
-              <form @submit="onSubmit">
+              <Form @submit="onSubmit">
                 <div class="p-5">
                   <div class="flex justify-between">
                     <label class="label-name font-bold" for="label">{{
                       t("homePage.label")
                     }}</label>
-                    <p class="text-xs text-red-500">{{ labelError }}</p>
+                    <p class="text-xs text-red-500"><ErrorMessage name="name" /></p>
                   </div>
-                  <input
+                  <Field
                     name="name"
                     v-model="name"
+                    :rules="nameRules"
                     class="
                       border
                       w-full
@@ -148,7 +149,7 @@
                     {{ t("homePage.add") }}
                   </button>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
@@ -196,8 +197,8 @@
 <script>
 import AddTodo from "@/components/AddTodo.vue";
 import Leftbar from "@/components/Leftbar.vue";
-import QuestionSvg from "@/components/icons/QuestionSvg.vue";
-import { useForm, useField } from "vee-validate";
+// import QuestionSvg from "@/components/icons/QuestionSvg.vue";
+import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
@@ -209,15 +210,16 @@ export default {
   components: {
     AddTodo,
     Leftbar,
-    QuestionSvg,
+    Form,
+    Field,
+    ErrorMessage
   },
   data() {
     return {
       isTagToggle: false,
-      form: {
-        labelName: "",
-        labelColor: "",
-      },
+      labelName: "",
+      labelColor: "",
+      nameRules: yup.string().required().min(1).max(60),
     };
   },
   methods: {
@@ -235,20 +237,21 @@ export default {
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
     const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
-    const schema = yup.object({
-      labelName: yup.string().required().min(1).max(60),
-    });
+    // const schema = yup.object({
+    //   name: yup.string().required().min(1).max(60),
+    //   color: yup.string().max(20),
+    // });
 
-    useForm({
-      validationSchema: schema,
-    });
+    // useForm({
+    //   validationSchema: schema,
+    // });
 
-    const { value: labelName, errorMessage: labelError } =
-      useField("labelName");
+    //  const { value: labelName, errorMessage: nameError } = useField("name");
+    //  const { value: labelColor, errorMessage: colorError } = useField("color");
 
     const addTag = `
       mutation addTag($input: TagInput!){
-  addTag(input:$input){
+      addTag(input:$input){
     user_id
     name
     color
@@ -258,17 +261,8 @@ export default {
 
     const { data, execute } = useMutation(addTag);
 
-    // const variables = {
-    //   input: {
-    //     user_id: 1,
-    //     name: form.value,
-    //     color: "asdsadas",
-    //     status: "active",
-    //   },
-    // };
-
     function onSubmit(event) {
-      event.preventDefault();
+      // event.preventDefault();
       execute({
         input: {
           user_id: 1,
@@ -287,8 +281,6 @@ export default {
       data,
       execute,
       onSubmit,
-      labelName,
-      labelError,
       isLeftBarToggle,
       t,
     };
