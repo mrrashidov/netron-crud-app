@@ -2,19 +2,19 @@ const todos = [
     {
         user_id: 1,
         title: "business visit",
-        description: "",
+        description: "business visit",
         status: "active",
     },
     {
         user_id: 2,
         title: "school visit",
-        description: "",
+        description: "school visit",
         status: "active",
     },
     {
         user_id: 3,
         title: "other visit",
-        description: "asdasd",
+        description: "other visit",
         status: "active",
     },
 
