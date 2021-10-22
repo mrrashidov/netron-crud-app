@@ -3,23 +3,20 @@
     <div class="flex items-center">
       <div class="pl-2">
         <template v-if="this.isLeftBarToggle == true">
-          <button
-              @click="onCloseLeftBar"
-              class="block ml-8"
-          >
-            <CustomToggleSvg/>
+          <button @click="onCloseLeftBar" class="block ml-8">
+            <CustomToggleSvg />
           </button>
         </template>
         <template v-else>
           <button @click="onLeftBar" class="block ml-8">
-            <CustomToggleSvg/>
+            <CustomToggleSvg />
           </button>
         </template>
       </div>
       <div class="p-2">
         <button class="block home-button">
           <router-link to="/">
-            <HomeSvg/>
+            <HomeSvg />
           </router-link>
         </button>
       </div>
@@ -27,18 +24,12 @@
         <form class="block">
           <div>
             <button class="search-button absolute text-gray-50">
-              <SearchSvg/>
+              <SearchSvg />
             </button>
             <input
-                class="
-                search-button
-                block
-                outline-none
-                cursor-pointer
-                rounded
-              "
-                type="search"
-                :placeholder="$t('message.search')"
+              class="search-button block outline-none cursor-pointer rounded"
+              type="search"
+              :placeholder="$t('message.search')"
             />
           </div>
         </form>
@@ -46,12 +37,12 @@
     </div>
     <div>
       <button @click="onSettingModal" class="block mr-8 hover:bg-red-400 p-1">
-        <SettingsSvg/>
+        <SettingsSvg />
       </button>
     </div>
     <template v-if="this.settingModal == true">
       <div
-          class="absolute top-0 left-0 h-full w-full bg-gray-900 bg-opacity-75"
+        class="absolute top-0 left-0 h-full w-full bg-gray-900 bg-opacity-75"
       >
         <div class="flex mx-auto transform translate-y-24 w-4/6">
           <div class="bg-gray-200 w-1/5 rounded-l-lg">
@@ -68,21 +59,21 @@
             <div class="flex items-center justify-between">
               <h1 class="ml-3 mt-3 font-bold">{{ $t("message.general") }}</h1>
               <button
-                  @click="closeGeneralModal"
-                  class="mr-3 mt-3 hover:bg-gray-200"
+                @click="closeGeneralModal"
+                class="mr-3 mt-3 hover:bg-gray-200"
               >
-                <CloseSvg/>
+                <CloseSvg />
               </button>
             </div>
-            <hr class="mt-3"/>
+            <hr class="mt-3" />
             <div>
               <h1 class="font-bold ml-3 mt-3">{{ $t("message.language") }}</h1>
               <form @submit="onChangeGeneralSettings">
                 <select
-                    name="lang"
-                    id="lang"
-                    value="tr"
-                    class="
+                  name="lang"
+                  id="lang"
+                  value="tr"
+                  class="
                     w-2/4
                     ml-3
                     mt-2
@@ -91,7 +82,7 @@
                     outline-none
                     border border-gray-700
                   "
-                    v-model="lang"
+                  v-model="lang"
                 >
                   <option value="">--Please choose an option--</option>
                   <option value="en">English</option>
@@ -99,11 +90,11 @@
                 </select>
                 <template v-if="this.lang !== this.local">
                   <div>
-                    <hr class="mt-3"/>
+                    <hr class="mt-3" />
                     <div class="flex justify-end">
                       <button
-                          @click="onCancel"
-                          class="
+                        @click="onCancel"
+                        class="
                           bg-white
                           hover:bg-gray-100
                           border border-gray-500
@@ -121,7 +112,7 @@
                         {{ $t("message.cancel") }}
                       </button>
                       <input
-                          class="
+                        class="
                           bg-red-500
                           hover:bg-red-700
                           text-white
@@ -134,8 +125,8 @@
                           mb-2
                           cursor-pointer
                         "
-                          type="submit"
-                          :value="$t('message.update')"
+                        type="submit"
+                        :value="$t('message.update')"
                       />
                     </div>
                   </div>
@@ -151,13 +142,13 @@
 </template>
 
 <script>
-import CustomToggleSvg from "./CustomToggleSvg.vue";
-import HomeSvg from "./HomeSvg.vue";
-import SettingsSvg from "./SettingsSvg.vue";
-import CloseSvg from "./CloseSvg.vue";
-import SearchSvg from "./SearchSvg.vue";
-import {useStore} from "vuex";
-import {computed} from "vue";
+import CustomToggleSvg from "@icons/CustomToggleSvg.vue";
+import HomeSvg from "@icons/HomeSvg.vue";
+import SettingsSvg from "@icons/SettingsSvg.vue";
+import CloseSvg from "@icons/CloseSvg.vue";
+import SearchSvg from "@icons/SearchSvg.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
   name: "Navbar",
@@ -212,7 +203,7 @@ export default {
 <style scoped>
 .navbar {
   height: 44px;
-  background-color: #DB4C3F;
+  background-color: #db4c3f;
 }
 
 button {
@@ -227,37 +218,36 @@ button:hover {
   margin-left: -6px;
 }
 
-input::placeholder{
+input::placeholder {
   color: #ffffff;
   padding-left: 30px;
   font-size: 13px;
 }
 
-input::placeholder:hover{
+input::placeholder:hover {
   color: black;
 }
 
-input::placeholder:hover{
+input::placeholder:hover {
   color: black;
 }
 
-input[type="search"]{
+input[type="search"] {
   background-color: rgba(238, 238, 238, 0.3);
   padding: 2px 5px;
   margin-left: -10px;
 }
 
-input[type="search"]:hover{
+input[type="search"]:hover {
   background-color: white;
 }
 
-input[type="search"]:focus{
+input[type="search"]:focus {
   background-color: white;
   padding-left: 35px;
 }
 
-.search-button{
+.search-button {
   margin-left: -10px;
 }
-
 </style>
