@@ -2,7 +2,6 @@
   <div class="flex" v-if="this.isLeftBarToggle == true">
     <LeftBar />
     <div class="w-full mt-5 p-4">
-      <p>{{ td }}</p>
       <div class="w-1/2 mx-auto">
         <div class="w-full flex justify-between items-center">
           <div class="flex items-center">
@@ -11,7 +10,15 @@
               t("inboxPage.dt")
             }}</span>
           </div>
-          <button>
+          <button
+            class="
+              pl-2
+              pr-2
+              text-gray-600
+              hover:text-gray-900 hover:bg-gray-200
+              rounded
+            "
+          >
             <SortSvg />
             {{ t("inboxPage.sort") }}
           </button>
@@ -368,8 +375,8 @@ export default {
     },
   },
   setup() {
-    const title = ref('');
-    const description = ref('');
+    // const title = ref('');
+    // const description = ref('');
     const { t } = useI18n();
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
