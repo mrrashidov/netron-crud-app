@@ -59,11 +59,11 @@
 </template>
 
 <script>
-import InboxSvg from "@/components/InboxSvg.vue";
-import TodaySvg from "@/components/TodaySvg.vue";
-import UpComingSvg from "@/components/UpComingSvg.vue";
-import RightArrow from "@/components/icons/RightArrow.vue";
-import AddLabelSvg from "@/components/icons/AddLabelSvg.vue";
+import InboxSvg from "@icons/InboxSvg.vue";
+import TodaySvg from "@icons/TodaySvg.vue";
+import UpComingSvg from "@icons/UpComingSvg.vue";
+import RightArrow from "@icons/RightArrow.vue";
+import AddLabelSvg from "@icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
 export default {
   name: "Leftbar",
