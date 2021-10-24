@@ -64,7 +64,7 @@ const messages = {
         "By continuing with Google, Apple or Email, you agree to Todoist's Terms of Service and Privacy Policy.",
     },
     inboxPage: {
-      today: "Today",
+      headerTop: "Inbox",
       dt: "Tue 19 Oct",
       addTask: "Add a task",
       sort: "Sort",
@@ -82,6 +82,15 @@ const messages = {
       cancel: "Cancel",
       add: "Add",
       title: "Click to find out about labels and how to use them.",
+    },
+    todayPage: {
+      today: "Today",
+      dt: "Tue 19 Oct",
+      addTask: "Add a task",
+      sort: "Sort",
+      cancel: "Cancel",
+      header: "Get a clear view of the day",
+      text: "Your tasks due today will appear here.",
     },
   },
   tr: {
@@ -137,7 +146,7 @@ const messages = {
         "E-posta ile devam ederek, Todo App'in Hizmet Kullanım Koşulları ve Gizlilik Politikasını kabul etmiş olursun.",
     },
     inboxPage: {
-      today: "Bugün",
+      headerTop: "Klasör",
       dt: "Sal 19 Oct",
       addTask: "Görev ekle",
       sort: "Sırala",
@@ -155,6 +164,15 @@ const messages = {
       cancel: "İptal",
       add: "Ekle",
       title: "Projeleri ve onları nasıl kullanabileceğini öğrenmek için tıkla.",
+    },
+    todayPage: {
+      today: "Bugün",
+      dt: "Tue 19 Oct",
+      addTask: "Görev ekle",
+      sort: "Sırala",
+      cancel: "İptal",
+      header: "Günün net bir görünümünü edin",
+      text: "Bitiş tarihi bugün olan görevlerin burada gözükecek.",
     },
   },
 };

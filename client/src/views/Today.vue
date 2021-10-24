@@ -5,14 +5,14 @@
       <div class="w-1/2 mx-auto">
         <div class="w-full flex justify-between items-center">
           <div class="flex items-center">
-            <h1 class="today-header font-bold">{{ t("inboxPage.today") }}</h1>
+            <h1 class="today-header font-bold">{{ t("todayPage.today") }}</h1>
             <span class="today-span ml-2 text-gray-400">{{
-              t("inboxPage.dt")
+              t("todayPage.dt")
             }}</span>
           </div>
           <button>
             <SortSvg />
-            {{ t("inboxPage.sort") }}
+            {{ t("todayPage.sort") }}
           </button>
         </div>
         <!-- <div v-if="data">
@@ -50,7 +50,7 @@
             >
               <AddTaskSvg class="add-task-svg mt-1 mr-1" />
               <p class="add-task-text text-gray-500">
-                {{ t("inboxPage.addTask") }}
+                {{ t("todayPage.addTask") }}
               </p>
             </button>
           </div>
@@ -75,7 +75,7 @@
                   text-white
                 "
               >
-                {{ t("inboxPage.addTask") }}
+                {{ t("todayPage.addTask") }}
               </button>
             </div>
           </div>
@@ -120,7 +120,7 @@
               <div class="flex justify-between items-center mt-2">
                 <div>
                   <button class="p-1 bg-red-500 text-white rounded">
-                    {{ t("inboxPage.addTask") }}
+                    {{ t("todayPage.addTask") }}
                   </button>
                   <button
                     @click="onCancel"
@@ -135,7 +135,7 @@
                       border-gray-300
                     "
                   >
-                    {{ t("inboxPage.cancel") }}
+                    {{ t("todayPage.cancel") }}
                   </button>
                 </div>
                 <div>
@@ -162,14 +162,14 @@
       <div class="w-1/2 mx-auto">
         <div class="w-full flex justify-between items-center">
           <div class="flex items-center">
-            <h1 class="today-header font-bold">{{ t("inboxPage.today") }}</h1>
+            <h1 class="today-header font-bold">{{ t("todayPage.today") }}</h1>
             <span class="today-span ml-2 text-gray-400">{{
-              t("inboxPage.dt")
+              t("todayPage.dt")
             }}</span>
           </div>
           <button>
             <SortSvg />
-            {{ t("inboxPage.sort") }}
+            {{ t("todayPage.sort") }}
           </button>
         </div>
         <!-- <div v-if="data">
@@ -184,17 +184,17 @@
             >
               <AddTaskSvg class="add-task-svg mt-1 mr-1" />
               <p class="add-task-text text-gray-500">
-                {{ t("inboxPage.addTask") }}
+                {{ t("todayPage.addTask") }}
               </p>
             </button>
           </div>
           <div class="">
             <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
             <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
-              {{ t("inboxPage.header") }}
+              {{ t("todayPage.header") }}
             </h1>
             <p class="add-task-text text-center text-gray-500 mb-2">
-              {{ t("inboxPage.text") }}
+              {{ t("todayPage.text") }}
             </p>
             <div class="text-center">
               <button
@@ -209,7 +209,7 @@
                   text-white
                 "
               >
-                {{ t("inboxPage.addTask") }}
+                {{ t("todayPage.addTask") }}
               </button>
             </div>
           </div>
@@ -260,7 +260,7 @@
                       rounded
                     "
                   >
-                    {{ t("inboxPage.addTask") }}
+                    {{ t("todayPage.addTask") }}
                   </button>
                   <button
                     @click="onCancel"
@@ -278,7 +278,7 @@
                       hover:bg-gray-200 hover:border-gray-400
                     "
                   >
-                    {{ t("inboxPage.cancel") }}
+                    {{ t("todayPage.cancel") }}
                   </button>
                 </div>
                 <div>

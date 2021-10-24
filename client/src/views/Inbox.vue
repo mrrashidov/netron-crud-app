@@ -5,10 +5,12 @@
       <div class="w-1/2 mx-auto">
         <div class="w-full flex justify-between items-center">
           <div class="flex items-center">
-            <h1 class="today-header font-bold">{{ t("inboxPage.today") }}</h1>
-            <span class="today-span ml-2 text-gray-400">{{
+            <h1 class="today-header font-bold">
+              {{ t("inboxPage.headerTop") }}
+            </h1>
+            <!-- <span class="today-span ml-2 text-gray-400">{{
               t("inboxPage.dt")
-            }}</span>
+            }}</span> -->
           </div>
           <button
             class="
@@ -170,10 +172,12 @@
       <div class="w-1/2 mx-auto">
         <div class="w-full flex justify-between items-center">
           <div class="flex items-center">
-            <h1 class="today-header font-bold">{{ t("inboxPage.today") }}</h1>
-            <span class="today-span ml-2 text-gray-400">{{
+            <h1 class="today-header font-bold">
+              {{ t("inboxPage.headerTop") }}
+            </h1>
+            <!-- <span class="today-span ml-2 text-gray-400">{{
               t("inboxPage.dt")
-            }}</span>
+            }}</span> -->
           </div>
           <button>
             <SortSvg />

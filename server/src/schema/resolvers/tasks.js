@@ -78,5 +78,8 @@ module.exports = {
           };
         });
     },
+    addUser: (_, { input }) => {
+      console.log(input);
+    },
   },
 };

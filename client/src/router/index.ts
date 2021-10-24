@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Todos from "@/views/Todos.vue";
 import Login from "@/views/Login.vue";
@@ -11,8 +10,8 @@ import Upcoming from "@/views/Upcoming.vue";
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Inbox",
+    component: Inbox,
   },
   {
     path: "/todos",
@@ -33,11 +32,6 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
-  },
-  {
-    path: "/inbox",
-    name: "Inbox",
-    component: Inbox,
   },
   {
     path: "/today",
