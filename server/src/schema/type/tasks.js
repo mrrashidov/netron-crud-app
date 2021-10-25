@@ -39,7 +39,6 @@ module.exports = gql`
 
     type Token {
         email: String
-        password: String
         token: String
     }
     

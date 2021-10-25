@@ -113,7 +113,6 @@ export default {
     mutation loginUser($input: LoginInput!){
       loginUser(input:$input){
       email
-      password
       token
       }
     }
