@@ -50,7 +50,7 @@ module.exports = gql`
         last_name: String
         avatar: String
         email: String
-        status: StatusType
+        status: StatusType!
         created_at: String
     }
 

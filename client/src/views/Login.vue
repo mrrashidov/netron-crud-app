@@ -109,13 +109,25 @@ export default {
     const email = ref();
     const password = ref();
 
-    const loginUser = ``;
+    const loginUser = `
+    mutation loginUser($input: LoginInput!){
+      loginUser(input:$input){
+      email
+      }
+    }
+  `;
 
     const { data, execute } = useMutation(loginUser);
 
     function onSubmit() {
       console.log(email.value);
       console.log(password.value);
+      execute({
+        input: {
+          email: email.value,
+          password: password.value,
+        },
+      });
     }
     return {
       email,

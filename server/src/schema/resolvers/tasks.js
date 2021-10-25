@@ -79,46 +79,57 @@ module.exports = {
         });
     },
     addUser: async (_, { input }) => {
-      const {
-        first_name,
-        last_name,
-        avatar,
-        status,
-        email,
-        password,
-        created_at,
-      } = input;
+      const { first_name, last_name, avatar, email, password } = input;
       const isUser = await user.findOne({ email });
       if (isUser) {
         throw new Error("Email already");
       }
       const hash = await user.hash(password);
-      const result = await user.insert({
-        first_name,
-        last_name,
-        avatar,
-        email,
-        status,
+      const resultId = await user.insert({
+        first_name: first_name,
+        last_name: last_name,
+        avatar: avatar,
+        email: email,
+        status: status[input.status].id,
         password: hash,
       });
-      return {
-        first_name,
-        last_name,
-        avatar,
-        email,
-        status,
-        password: hash,
-        created_at,
-      };
+      return await user
+        .all(null, [
+          "users.id",
+          "users.first_name",
+          "users.last_name",
+          "users.avatar",
+          "users.email",
+          "users.status",
+          "users.created_at",
+        ])
+        .where("users.id", resultId)
+        .then((res) => {
+          const item = res[0];
+          console.log(item);
+          return {
+            id: item.id,
+            first_name: item.first_name,
+            last_name: item.last_name,
+            avatar: item.avatar,
+            email: item.email,
+            status: "active",
+            created_at: item.created_at,
+          };
+        });
     },
     loginUser: async (_, { input }) => {
       const { email, password } = input;
-      const isUser = await user.findOne({email})
+      const isUser = await user.findOne({ email });
 
-      if(!isUser) {throw new Error("Invalid credentials")}
-      if(!await user.compare(isUser.password, password)) {throw new Error("Invalid credentials")}
-      console.log(user.generateToken(isUser))
-      return user.generateToken(isUser)
+      if (!isUser) {
+        throw new Error("Invalid credentials");
+      }
+      if (!(await user.compare(isUser.password, password))) {
+        throw new Error("Invalid credentials");
+      }
+      console.log(user.generateToken(isUser));
+      return user.generateToken(isUser);
     },
   },
 };

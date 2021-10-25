@@ -159,6 +159,7 @@ export default {
     const addUser = `
     mutation addUser($input:UserInput){
       addUser(input:$input){
+        id
         first_name
         last_name
         avatar
@@ -167,7 +168,7 @@ export default {
         created_at
       }
     }
-  `;
+    `;
 
     const { data, execute } = useMutation(addUser);
 
