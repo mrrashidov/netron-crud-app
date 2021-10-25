@@ -18,8 +18,11 @@ module.exports = gql`
 
     input UserInput {
         first_name: String
+        last_name: String
+        avatar: String
         email: String
-        role_id: Int
+        password: String
+        status: StatusType
     }
     
     input TagInput {
@@ -27,6 +30,11 @@ module.exports = gql`
         name: String!
         color: String
         status: StatusType
+    }
+
+    input LoginInput {
+        email: String
+        password: String
     }
     
     type Tag {
@@ -37,9 +45,13 @@ module.exports = gql`
     }
     
     type User {
+        id: ID
         first_name: String
+        last_name: String
+        avatar: String
         email: String
-        role_id: Int
+        status: StatusType
+        created_at: String
     }
 
     type Task {
@@ -77,6 +89,7 @@ module.exports = gql`
     type Mutation {
         addTask(input: StoreTask): TaskItem
         addUser(input: UserInput): User
+        loginUser(input: LoginInput): User
         addTag(input: TagInput): Tag
     }
 `;

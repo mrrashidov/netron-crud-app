@@ -78,8 +78,47 @@ module.exports = {
           };
         });
     },
-    addUser: (_, { input }) => {
-      console.log(input);
+    addUser: async (_, { input }) => {
+      const {
+        first_name,
+        last_name,
+        avatar,
+        status,
+        email,
+        password,
+        created_at,
+      } = input;
+      const isUser = await user.findOne({ email });
+      if (isUser) {
+        throw new Error("Email already");
+      }
+      const hash = await user.hash(password);
+      const result = await user.insert({
+        first_name,
+        last_name,
+        avatar,
+        email,
+        status,
+        password: hash,
+      });
+      return {
+        first_name,
+        last_name,
+        avatar,
+        email,
+        status,
+        password: hash,
+        created_at,
+      };
+    },
+    loginUser: async (_, { input }) => {
+      const { email, password } = input;
+      const isUser = await user.findOne({email})
+
+      if(!isUser) {throw new Error("Invalid credentials")}
+      if(!await user.compare(isUser.password, password)) {throw new Error("Invalid credentials")}
+      console.log(user.generateToken(isUser))
+      return user.generateToken(isUser)
     },
   },
 };

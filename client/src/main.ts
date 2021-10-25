@@ -1,14 +1,9 @@
 import { createApp } from "vue";
-// import { createClient } from "villus";
 import { createI18n } from "vue-i18n";
 import App from "@/App.vue";
 import router from "@/router";
 import store from "@/store";
 import "@/index.css";
-
-// const client = createClient({
-//   url: "http://localhost:4000/", // your endpoint.
-// });
 
 const messages = {
   en: {
@@ -56,6 +51,7 @@ const messages = {
       email: "Email",
       password: "Password",
       name: "Name",
+      surname: "Surname",
       verifyPassword: "Verify Password",
       registerButton: "Sign up",
       AlreadyRegisterExist: "Have you already signed up?",
@@ -138,6 +134,7 @@ const messages = {
       email: "E-posta",
       password: "Parola",
       name: "İsim",
+      surname: "Soyisim",
       verifyPassword: "Parola Doğrula",
       registerButton: "Kaydol",
       AlreadyRegisterExist: "Zaten kayıt oldun mu?",
