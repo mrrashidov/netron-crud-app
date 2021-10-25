@@ -12,7 +12,7 @@ module.exports = class User extends Model {
     return bcrypt.compare(password, hash);
   }
 
-  async generateToken(user) {
+  generateToken(user) {
     /* knex return a RowDataPacket object and jwt.sign function
       expects a plain object, stringify and parse it back does the trick */
     return jwt.sign(JSON.parse(JSON.stringify(user)), "secretKey", {

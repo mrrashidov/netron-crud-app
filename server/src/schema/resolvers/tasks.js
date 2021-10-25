@@ -128,8 +128,18 @@ module.exports = {
       if (!(await user.compare(isUser.password, password))) {
         throw new Error("Invalid credentials");
       }
-      console.log(user.generateToken(isUser));
-      return user.generateToken(isUser);
+
+      return {
+        email: email,
+        password: password,
+        token: user.generateToken(isUser)
+      }
+
+     
+
+      // const token = 
+      // console.log(token)
+      // return token
     },
   },
 };

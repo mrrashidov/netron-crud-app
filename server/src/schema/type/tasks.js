@@ -36,6 +36,12 @@ module.exports = gql`
         email: String
         password: String
     }
+
+    type Token {
+        email: String
+        password: String
+        token: String
+    }
     
     type Tag {
         user_id: Int
@@ -89,7 +95,7 @@ module.exports = gql`
     type Mutation {
         addTask(input: StoreTask): TaskItem
         addUser(input: UserInput): User
-        loginUser(input: LoginInput): User
+        loginUser(input: LoginInput): Token
         addTag(input: TagInput): Tag
     }
 `;

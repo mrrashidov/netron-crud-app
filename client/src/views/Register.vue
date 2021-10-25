@@ -185,6 +185,8 @@ export default {
             password: password.value,
             status: "active",
           },
+        }).then(res => {
+          console.log("res", res)
         });
       }
       console.log(first_name.value);

@@ -113,6 +113,8 @@ export default {
     mutation loginUser($input: LoginInput!){
       loginUser(input:$input){
       email
+      password
+      token
       }
     }
   `;
@@ -122,13 +124,22 @@ export default {
     function onSubmit() {
       console.log(email.value);
       console.log(password.value);
+      console.log(data);
       execute({
         input: {
           email: email.value,
           password: password.value,
         },
-      });
+      })
+        .then((res) => {
+          console.log("res", res.data.loginUser.token);
+          localStorage.setItem("token", res.data.loginUser.token);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
     }
+
     return {
       email,
       password,
