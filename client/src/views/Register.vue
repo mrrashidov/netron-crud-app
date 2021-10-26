@@ -198,7 +198,7 @@ export default {
       console.log(cpassword.value);
     }
 
-    const isAuth = computed(() => store.state.auth.profile)
+    const isAuth = computed(() => store.state.auth.profile);
 
     if (isAuth.id) {
       router.push("/");

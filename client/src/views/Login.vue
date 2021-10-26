@@ -158,12 +158,10 @@ export default {
         });
     }
 
-    const isAuth = computed(() => store.state.auth.profile)
+    const isAuth = computed(() => store.state.auth.profile);
     if (isAuth) {
       router.push("/");
-    }
-    else{
-      
+    } else {
     }
 
     return {

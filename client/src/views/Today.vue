@@ -15,9 +15,9 @@
             {{ t("todayPage.sort") }}
           </button>
         </div>
-        <!-- <div v-if="data">
-          <hr class="mt-2" />
-          <div v-for="todo in data.tasks" >
+        <div v-if="data">
+          <div v-for="todo in data.tasks" :key="todo.id">
+            <hr class="mt-2" />
             <div class="flex">
               <div
                 @click="onTick"
@@ -35,12 +35,12 @@
                 <input v-model="isTick" type="checkbox" class="outline-none" />
               </div>
               <div class="mt-2 ml-2 leading-5">
-                <p>{{ todo.header }}</p>
-                <p>{{ todo.description }}</p>
+                <p>{{ todo.title }}</p>
+                <p class="text-gray-500 text-xs">{{ todo.description }}</p>
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
         <hr class="mt-3" />
         <div v-if="this.isActive == false">
           <div>
@@ -82,7 +82,7 @@
         </div>
         <div v-else>
           <div>
-            <form @submit="onSubmit">
+            <form @submit="onSubmit" autocomplete="off">
               <div
                 class="
                   border border-gray-300
@@ -118,16 +118,35 @@
                 </div>
                 <div>
                   <input
+                    name="date"
+                    v-model="date"
+                    :format="dd - MM - YYYY"
                     type="date"
                     class="
-                      w-full
                       h-auto
                       outline-none
+                      ml-2
                       mt-2
+                      mb-2
                       pl-3
-                      border border-red-500
+                      border border-gray-300
+                      rounded
                     "
                   />
+                  <select
+                    class="
+                      h-auto
+                      outline-none
+                      ml-2
+                      mt-2
+                      mb-2
+                      pl-3
+                      border border-gray-300
+                      rounded
+                    "
+                  >
+                    <option>Select</option>
+                  </select>
                 </div>
               </div>
               <div class="flex justify-between items-center mt-2">
@@ -188,9 +207,32 @@
             {{ t("todayPage.sort") }}
           </button>
         </div>
-        <!-- <div v-if="data">
-          <hr class="mt-2" />
-        </div> -->
+        <div v-if="data">
+          <div v-for="todo in data.tasks" :key="todo.id">
+            <hr class="mt-2" />
+            <div class="flex">
+              <div
+                @click="onTick"
+                class="
+                  mt-2
+                  border border-gray-500
+                  rounded-full
+                  h-7
+                  w-7
+                  flex
+                  items-center
+                  justify-center
+                "
+              >
+                <input v-model="isTick" type="checkbox" class="outline-none" />
+              </div>
+              <div class="mt-2 ml-2 leading-5">
+                <p>{{ todo.title }}</p>
+                <p class="text-gray-500 text-xs">{{ todo.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <hr class="mt-3" />
         <div v-if="this.isActive == false">
           <div>
@@ -232,7 +274,7 @@
         </div>
         <div v-else>
           <div>
-            <form @submit="onSubmit">
+            <form @submit="onSubmit" autocomplete="off">
               <div
                 class="
                   border border-gray-300
@@ -357,7 +399,7 @@ import TickSvg from "@icons/TickSvg.vue";
 import LeftBar from "@/components/Leftbar.vue";
 import { useI18n } from "vue-i18n";
 import { useForm, useField } from "vee-validate";
-import { useMutation } from "villus";
+import { useQuery, useMutation } from "villus";
 import * as yup from "yup";
 
 export default {
@@ -365,7 +407,6 @@ export default {
   data() {
     return {
       isActive: false,
-      isTick: false,
     };
   },
   components: {
@@ -414,7 +455,23 @@ export default {
       }
       `;
 
-    const { data, execute } = useMutation(addTask);
+    const allTask = `
+    query {
+      tasks{
+        id
+        title
+        description
+        date
+        created_at
+      }
+    }
+    `;
+
+    const { data } = useQuery({
+      query: allTask,
+    });
+
+    const { execute } = useMutation(addTask);
 
     function onSubmit(event) {
       event.preventDefault();

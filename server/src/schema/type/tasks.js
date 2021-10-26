@@ -71,6 +71,7 @@ module.exports = gql`
         title: String
         description: String
         status: StatusType
+        date: String
         created_at: String!
     }
 
@@ -88,7 +89,7 @@ module.exports = gql`
         user(id: ID!): User
         users: [User]
         task(id: ID! lang: String!): Task
-        tasks(lang:String!): [Task]
+        tasks: [Task]
         tag(id: ID): Tag
         tags: [Tag]
     }

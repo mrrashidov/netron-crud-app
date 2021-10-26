@@ -19,16 +19,6 @@
         </router-link>
         <hr class="mt-3 mb-3" />
         <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
-          <router-link to="/">{{ t("pages.home") }}</router-link>
-        </li>
-        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
-          <router-link to="/todos">{{ t("pages.todos") }}</router-link>
-        </li>
-        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
-          <router-link to="/about">{{ t("pages.about") }}</router-link>
-        </li>
-        <hr class="mt-3 mb-3" />
-        <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
           <div
             @click="onClick"
             class="flex items-center"
