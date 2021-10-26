@@ -126,10 +126,11 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import { useRouter } from "vue-router";
 import { useMutation } from "villus";
 
 export default {
@@ -149,6 +150,7 @@ export default {
     };
   },
   setup() {
+    const router = useRouter();
     const first_name = ref();
     const last_name = ref();
     const email = ref();
@@ -185,8 +187,8 @@ export default {
             password: password.value,
             status: "active",
           },
-        }).then(res => {
-          console.log("res", res)
+        }).then((res) => {
+          console.log("res", res);
         });
       }
       console.log(first_name.value);
@@ -194,6 +196,12 @@ export default {
       console.log(email.value);
       console.log(password.value);
       console.log(cpassword.value);
+    }
+
+    const isAuth = computed(() => store.state.auth.profile)
+
+    if (isAuth.id) {
+      router.push("/");
     }
 
     return {

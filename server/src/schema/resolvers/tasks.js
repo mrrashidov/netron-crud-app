@@ -15,6 +15,7 @@ module.exports = {
           user_id: input.user_id,
           title: input.title,
           description: input.description,
+          date: input.date,
           status: status[input.status].id,
         })
         .then((res) => {
@@ -27,6 +28,7 @@ module.exports = {
           "todos.user_id",
           "todos.title",
           "todos.description",
+          "todos.date",
           "todos.status",
           "todos.created_at",
         ])
@@ -39,6 +41,7 @@ module.exports = {
             user_id: item.user_id,
             title: item.title,
             description: item.description,
+            date: item.date,
             status: "active",
             created_at: item.created_at,
           };

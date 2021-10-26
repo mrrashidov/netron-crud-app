@@ -13,6 +13,7 @@ module.exports = gql`
         user_id: ID!
         title: String!
         description: String
+        date: String
         status: StatusType!
     }
 
@@ -73,17 +74,12 @@ module.exports = gql`
         created_at: String!
     }
 
-    type TaskTranslation {
-        id: ID
-        title:String
-        description:String
-    }
-
     type TaskItem {
         id: ID,
         user_id: ID,
         title: String
         description: String
+        date: String
         status: StatusType
         created_at: String
     }

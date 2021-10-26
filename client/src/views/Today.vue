@@ -94,8 +94,8 @@
                 <div>
                   <input
                     type="text"
-                    name="title"
-                    v-model="title"
+                    name="form"
+                    v-model="form"
                     class="w-full outline-none pl-3"
                     placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
                   />
@@ -116,10 +116,26 @@
                     placeholder="Açıklama"
                   ></textarea>
                 </div>
+                <div>
+                  <input
+                    type="date"
+                    class="
+                      w-full
+                      h-auto
+                      outline-none
+                      mt-2
+                      pl-3
+                      border border-red-500
+                    "
+                  />
+                </div>
               </div>
               <div class="flex justify-between items-center mt-2">
                 <div>
-                  <button class="p-1 bg-red-500 text-white rounded">
+                  <button
+                    type="submit"
+                    class="p-1 bg-red-500 text-white rounded"
+                  >
                     {{ t("todayPage.addTask") }}
                   </button>
                   <button
@@ -139,17 +155,17 @@
                   </button>
                 </div>
                 <div>
-                  <template v-if="this.description">
+                  <!-- <template v-if="this.description">
                     <p>{{ this.description.length }}</p>
                   </template>
                   <template v-else>
                     <p>0</p>
-                  </template>
+                  </template> -->
                 </div>
               </div>
               <div class="mt-2">
-                <p class="text-red-500">{{ titleError }}</p>
-                <p class="text-red-500">{{ descriptionError }}</p>
+                <!-- <p class="text-red-500">{{ titleError }}</p>
+                <p class="text-red-500">{{ descriptionError }}</p> -->
               </div>
             </form>
           </div>
@@ -228,8 +244,8 @@
                 <div>
                   <input
                     type="text"
-                    name="title"
-                    v-model="title"
+                    name="form"
+                    v-model="form"
                     class="w-full outline-none pl-3 overflow-y-auto"
                     placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
                   />
@@ -242,14 +258,47 @@
                     placeholder="Açıklama"
                   ></textarea>
                   <div class="m-2">
-                    <p class="text-red-500">{{ titleError }}</p>
-                    <p class="text-red-500">{{ descriptionError }}</p>
+                    <!-- <p class="text-red-500">{{ titleError }}</p>
+                    <p class="text-red-500">{{ descriptionError }}</p> -->
                   </div>
+                </div>
+                <div>
+                  <input
+                    name="date"
+                    v-model="date"
+                    type="date"
+                    class="
+                      h-auto
+                      outline-none
+                      ml-2
+                      mt-2
+                      mb-2
+                      pl-3
+                      border border-gray-300
+                      rounded
+                    "
+                  />
+                  <select
+                    type="date"
+                    class="
+                      h-auto
+                      outline-none
+                      ml-2
+                      mt-2
+                      mb-2
+                      pl-3
+                      border border-gray-300
+                      rounded
+                    "
+                  >
+                    <option>Select</option>
+                  </select>
                 </div>
               </div>
               <div class="flex justify-between items-center mt-2">
                 <div>
                   <button
+                    type="submit"
                     class="
                       p-1
                       pl-2
@@ -282,12 +331,12 @@
                   </button>
                 </div>
                 <div>
-                  <template v-if="this.description">
+                  <!-- <template v-if="this.description">
                     <p>{{ this.description.length }}</p>
                   </template>
                   <template v-else>
                     <p>0</p>
-                  </template>
+                  </template> -->
                 </div>
               </div>
             </form>
@@ -300,7 +349,7 @@
 
 <script>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import SortSvg from "@icons/SortSvg.vue";
 import AddTodoSvg from "@icons/AddTodoSvg.vue";
 import AddTaskSvg from "@icons/AddTaskSvg.vue";
@@ -308,15 +357,15 @@ import TickSvg from "@icons/TickSvg.vue";
 import LeftBar from "@/components/Leftbar.vue";
 import { useI18n } from "vue-i18n";
 import { useForm, useField } from "vee-validate";
+import { useMutation } from "villus";
 import * as yup from "yup";
+
 export default {
   name: "Today",
   data() {
     return {
       isActive: false,
       isTick: false,
-      description: "",
-      title: "",
     };
   },
   components: {
@@ -343,31 +392,54 @@ export default {
     },
   },
   setup() {
+    const form = ref();
+    const description = ref();
+    const date = ref();
     const { t } = useI18n();
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
     const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
 
-    const schema = yup.object({
-      title: yup.string().required().min(1).max(500),
-      description: yup.string().required().max(1000),
-    });
+    const addTask = `
+      mutation addTask($input: StoreTask!){
+        addTask(input:$input){
+        id
+        user_id
+        title
+        description
+        date
+        status
+        created_at
+        }
+      }
+      `;
 
-    useForm({
-      validationSchema: schema,
-    });
+    const { data, execute } = useMutation(addTask);
 
-    const { value: title, errorMessage: titleError } = useField("title");
-    const { value: description, errorMessage: descriptionError } =
-      useField("description");
+    function onSubmit(event) {
+      event.preventDefault();
+      console.log(form.value);
+      console.log(description.value);
+      console.log("gönderildi");
+      execute({
+        input: {
+          user_id: 1,
+          title: form.value,
+          description: description.value,
+          date: date.value,
+          status: "active",
+        },
+      });
+    }
 
     return {
-      t,
-      title,
-      titleError,
+      form,
       description,
-      descriptionError,
+      date,
+      data,
       isLeftBarToggle,
+      onSubmit,
+      t,
     };
   },
 };

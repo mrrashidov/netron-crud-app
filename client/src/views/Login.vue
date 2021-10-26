@@ -91,6 +91,7 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import { useMutation } from "villus";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Login",
@@ -110,6 +111,7 @@ export default {
     const email = ref();
     const password = ref();
     const store = useStore();
+    const router = useRouter();
 
     const loginUser = `
     mutation loginUser($input: LoginInput!){
@@ -156,9 +158,12 @@ export default {
         });
     }
 
-    const isAuth = computed(() => store.state.auth.profile);
+    const isAuth = computed(() => store.state.auth.profile)
     if (isAuth) {
-      window.location = "/";
+      router.push("/");
+    }
+    else{
+      
     }
 
     return {

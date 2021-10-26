@@ -183,6 +183,9 @@
             <SortSvg />
             {{ t("inboxPage.sort") }}
           </button>
+          <div v-if="isAuth">
+                <p>{{this.isAuth.id}}</p>
+              </div>
         </div>
         <div v-if="data">
           <hr class="mt-2" />
@@ -246,6 +249,7 @@
               >
                 {{ t("inboxPage.addTask") }}
               </button>
+              
             </div>
           </div>
         </div>
@@ -439,6 +443,8 @@ mutation addTask($input:StoreTask!){
       execute(variables);
     }
 
+    const isAuth = computed(() =>store.state.auth.profile)
+
     return {
       data,
       variables,
@@ -449,6 +455,7 @@ mutation addTask($input:StoreTask!){
       description,
       descriptionError,
       isLeftBarToggle,
+      isAuth,
       t,
     };
   },
