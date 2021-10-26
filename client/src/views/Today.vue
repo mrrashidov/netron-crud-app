@@ -266,6 +266,7 @@
                   <input
                     name="date"
                     v-model="date"
+                    :format="dd - MM - YYYY"
                     type="date"
                     class="
                       h-auto
@@ -279,7 +280,6 @@
                     "
                   />
                   <select
-                    type="date"
                     class="
                       h-auto
                       outline-none
@@ -394,7 +394,7 @@ export default {
   setup() {
     const form = ref();
     const description = ref();
-    const date = ref();
+    const date = ref(new Date().toISOString().slice(0,10).);
     const { t } = useI18n();
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
@@ -419,8 +419,8 @@ export default {
     function onSubmit(event) {
       event.preventDefault();
       console.log(form.value);
-      console.log(description.value);
-      console.log("gönderildi");
+      console.log(date.value);
+      // store.dispatch("GET_TASKS", form.value);
       execute({
         input: {
           user_id: 1,
@@ -429,6 +429,10 @@ export default {
           date: date.value,
           status: "active",
         },
+      }).then(res => {
+        console.log(res.data);
+      }).catch(err => {
+        console.log(err)
       });
     }
 
