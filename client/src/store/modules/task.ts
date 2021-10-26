@@ -24,12 +24,12 @@ const task: Module<any, any> = {
   state: initState,
   getters: {},
   actions: {
-      GET_TASKS: ({commit}, payload) => {
-          commit("SET_GET_TASKS", payload)
-      }
+    GET_TASKS: ({ commit }, payload) => {
+      commit("SET_GET_TASKS", payload);
+    },
   },
   mutations: {
-      SET_GET_TASKS: (state, data) => (state.tasks = data)
+    SET_GET_TASKS: (state, data) => (state.tasks = data),
   },
 };
 

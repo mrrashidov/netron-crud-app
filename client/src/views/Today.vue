@@ -394,7 +394,7 @@ export default {
   setup() {
     const form = ref();
     const description = ref();
-    const date = ref(new Date().toISOString().slice(0,10).);
+    const date = ref(new Date().toISOString().slice(0, 10));
     const { t } = useI18n();
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
@@ -420,7 +420,6 @@ export default {
       event.preventDefault();
       console.log(form.value);
       console.log(date.value);
-      // store.dispatch("GET_TASKS", form.value);
       execute({
         input: {
           user_id: 1,
@@ -429,11 +428,13 @@ export default {
           date: date.value,
           status: "active",
         },
-      }).then(res => {
-        console.log(res.data);
-      }).catch(err => {
-        console.log(err)
-      });
+      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
     return {
