@@ -85,11 +85,12 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import { useMutation } from "villus";
+import { useStore } from "vuex";
 
 export default {
   name: "Login",
@@ -108,11 +109,18 @@ export default {
     const { t } = useI18n();
     const email = ref();
     const password = ref();
+    const store = useStore();
 
     const loginUser = `
     mutation loginUser($input: LoginInput!){
       loginUser(input:$input){
+      id
+      first_name
+      last_name
+      avatar
+      status
       email
+      created_at
       token
       }
     }
@@ -132,6 +140,15 @@ export default {
       })
         .then((res) => {
           console.log("res", res.data.loginUser.token);
+          console.log(res.data.loginUser);
+          store.dispatch("LOGIN", {
+            id: res.data.loginUser.id,
+            first_name: res.data.loginUser.first_name,
+            last_name: res.data.loginUser.last_name,
+            avatar: res.data.loginUser.avatar,
+            status: res.data.loginUser.status,
+            email: res.data.loginUser.email,
+          });
           localStorage.setItem("token", res.data.loginUser.token);
         })
         .catch((err) => {
@@ -139,10 +156,16 @@ export default {
         });
     }
 
+    const isAuth = computed(() => store.state.auth.profile);
+    if (isAuth) {
+      window.location = "/";
+    }
+
     return {
       email,
       password,
       onSubmit,
+      isAuth,
       t,
     };
   },

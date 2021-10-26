@@ -38,6 +38,12 @@ module.exports = gql`
     }
 
     type Token {
+        id: ID
+        first_name: String
+        last_name: String
+        avatar: String
+        status: StatusType
+        created_at: String
         email: String
         token: String
     }

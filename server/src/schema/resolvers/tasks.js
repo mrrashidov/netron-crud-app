@@ -129,17 +129,32 @@ module.exports = {
         throw new Error("Invalid credentials");
       }
 
-      return {
-        email: email,
-        password: password,
-        token: user.generateToken(isUser)
-      }
-
-     
-
-      // const token = 
-      // console.log(token)
-      // return token
+      return await user
+        .all(null, [
+          "users.id",
+          "users.first_name",
+          "users.last_name",
+          "users.avatar",
+          "users.email",
+          "users.status",
+          "users.created_at",
+        ])
+        .where("users.email", email)
+        .then((res) => {
+          const item = res[0];
+          console.log(item);
+          return {
+            id: item.id,
+            first_name: item.first_name,
+            last_name: item.last_name,
+            avatar: item.avatar,
+            status: "active",
+            created_at: item.created_at,
+            email: email,
+            password: password,
+            token: user.generateToken(isUser),
+          };
+        });
     },
   },
 };
