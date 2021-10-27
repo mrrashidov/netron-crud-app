@@ -71,7 +71,7 @@ const messages = {
     leftBar: {
       labels: "Labels",
     },
-    homePage: {
+    toggleTag: {
       header: "Add label",
       label: "Label name",
       color: "Label color",
@@ -154,7 +154,7 @@ const messages = {
     leftBar: {
       labels: "Etiketler",
     },
-    homePage: {
+    toggleTag: {
       header: "Etiket ekle",
       label: "Etiket adı",
       color: "Etiket rengi",

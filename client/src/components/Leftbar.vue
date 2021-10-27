@@ -55,6 +55,8 @@ import UpComingSvg from "@icons/UpComingSvg.vue";
 import RightArrow from "@icons/RightArrow.vue";
 import AddLabelSvg from "@icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
+import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
   name: "Leftbar",
   components: {
@@ -77,15 +79,16 @@ export default {
     onCancel() {
       this.isArrow = false;
     },
-    onLabelToggle() {
-      this.isLabelToggle = true;
-      console.log("isToggle", this.isLabelToggle);
-      this.$emit("label-toggle", this.isLabelToggle);
-    },
   },
   setup() {
     const { t } = useI18n();
+    const store = useStore();
+    function onLabelToggle() {
+      store.dispatch("GET_TAG_TOGGLE", true);
+    }
+
     return {
+      onLabelToggle,
       t,
     };
   },
