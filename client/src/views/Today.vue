@@ -1,16 +1,6 @@
 <template>
   <div v-if="isToggleModal">
-    <div
-      class="
-        absolute
-        top-0
-        left-0
-        border border-blue-500
-        w-full
-        h-full
-        bg-gray-900 bg-opacity-80
-      "
-    >
+    <div class="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-80">
       <div
         class="card w-1/4 bg-white transform translate-y-52 mx-auto rounded-xl"
       >
@@ -21,30 +11,48 @@
             <h1 class="font-bold">{{ t("toggleTag.header") }}</h1>
           </div>
           <div>
-            <button>
+            <button type="button" :title="t('toggleTag.title')">
               <QuestionSvg />
             </button>
           </div>
         </div>
         <hr class="border-gray-300" />
         <div class="p-4">
-          <form>
+          <Form>
             <div class="mb-3">
-              <label class="font-bold">{{ t("toggleTag.label") }}</label>
-              <input
+              <div class="flex justify-between">
+                <label class="font-bold">{{ t("toggleTag.label") }}</label>
+                <label class="text-red-500"
+                  ><ErrorMessage name="labelName"
+                /></label>
+              </div>
+              <Field
+                name="labelName"
+                v-model="labelName"
                 class="h-7 pl-2 block border border-gray-300 w-full rounded"
                 type="text"
+                :rules="labelNameRules"
               />
             </div>
             <div>
-              <label class="font-bold">{{ t("toggleTag.color") }}</label>
-              <select
+              <div class="flex justify-between">
+                <label class="font-bold">{{ t("toggleTag.color") }}</label>
+                <label class="text-red-500"
+                  ><ErrorMessage name="labelColor"
+                /></label>
+              </div>
+              <Field
+                name="labelColor"
+                v-model="labelColor"
+                :rules="labelColorRules"
+                as="select"
                 class="h-7 pl-2 block border border-gray-300 w-full rounded"
               >
-                <option value="">Red</option>
-                <option value="">Blue</option>
-                <option value="">Yellow</option>
-              </select>
+                <option value="" selected disabled>Select</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="yellow">Yellow</option>
+              </Field>
             </div>
             <hr class="border-gray-300 mb-4 mt-4" />
             <div class="flex justify-end">
@@ -62,13 +70,11 @@
               >
                 {{ t("toggleTag.cancel") }}
               </button>
-              <button
-                class="add-task-button-general text-white p-1 ml-2 mr-2 w-12"
-              >
+              <button class="add-task-button-general text-white p-1 ml-2 w-12">
                 {{ t("toggleTag.add") }}
               </button>
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
@@ -753,7 +759,7 @@
           </div>
           <div v-else>
             <div>
-              <form @submit="onSubmit" autocomplete="off">
+              <Form @submit="onSubmit" autocomplete="off">
                 <div
                   class="
                     border border-gray-300
@@ -767,26 +773,34 @@
                       type="text"
                       name="form"
                       v-model="form"
+                      :rules="formRules"
                       class="w-full outline-none pl-3 overflow-y-auto"
                       placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
                     />
                   </div>
-                  <div>
-                    <textarea
+                  <div class="border border-red">
+                    <Field
+                      as="textarea"
                       name="description"
                       v-model="description"
+                      :rules="descriptionRules"
                       class="w-full outline-none mt-2 pl-3 resize-none h-24"
                       placeholder="Açıklama"
-                    ></textarea>
+                    ></Field>
                     <div class="m-2">
-                      <!-- <p class="text-red-500">{{ titleError }}</p>
-                    <p class="text-red-500">{{ descriptionError }}</p> -->
+                      <label class="text-red-500">
+                        <ErrorMessage name="description" />
+                      </label>
+                      <label class="text-red-500">
+                        <ErrorMessage name="form" />
+                      </label>
                     </div>
                   </div>
                   <div>
-                    <input
+                    <Field
                       name="date"
                       v-model="date"
+                      :rules="dateRules"
                       :format="dd - MM - YYYY"
                       type="date"
                       class="
@@ -800,7 +814,10 @@
                         rounded
                       "
                     />
-                    <select
+                    <Field
+                      name="group"
+                      v-model="group"
+                      as="select"
                       class="
                         h-auto
                         outline-none
@@ -812,8 +829,8 @@
                         rounded
                       "
                     >
-                      <option>Select</option>
-                    </select>
+                      <option value="" selected disabled>Select</option>
+                    </Field>
                   </div>
                 </div>
                 <div class="flex justify-between items-center mt-2">
@@ -852,15 +869,15 @@
                     </button>
                   </div>
                   <div>
-                    <!-- <template v-if="this.description">
-                    <p>{{ this.description.length }}</p>
-                  </template>
-                  <template v-else>
-                    <p>0</p>
-                  </template> -->
+                    <template v-if="this.description">
+                      <p>{{ this.description.length }}</p>
+                    </template>
+                    <template v-else>
+                      <p>0</p>
+                    </template>
                   </div>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
@@ -879,7 +896,7 @@ import AddTaskSvg from "@icons/AddTaskSvg.vue";
 import TickSvg from "@icons/TickSvg.vue";
 import LeftBar from "@/components/Leftbar.vue";
 import { useI18n } from "vue-i18n";
-import { useForm, useField } from "vee-validate";
+import { Form, Field, ErrorMessage } from "vee-validate";
 import { useQuery, useMutation } from "villus";
 import * as yup from "yup";
 
@@ -888,9 +905,17 @@ export default {
   data() {
     return {
       isActive: false,
+      labelNameRules: yup.string().required().max(60),
+      labelColorRules: yup.string().required(),
+      descriptionRules: yup.string().max(1000),
+      formRules: yup.string().required().max(500),
+      dateRules: yup.string().required(),
     };
   },
   components: {
+    Form,
+    Field,
+    ErrorMessage,
     SortSvg,
     AddTaskSvg,
     AddTodoSvg,
