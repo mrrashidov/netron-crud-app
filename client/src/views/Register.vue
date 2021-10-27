@@ -1,7 +1,11 @@
 <template>
   <div class="w-full mt-5">
     <div class="card w-2/4 mx-auto">
-      <Form @submit="onSubmit" class="block ml-5 mt-5 mb-5 mr-5">
+      <Form
+        @submit="onSubmit"
+        class="block ml-5 mt-5 mb-5 mr-5"
+        autocomplete="off"
+      >
         <div
           class="w-4/5 p-12 mt-5 mb-5 mx-auto border border-gray-300 rounded-lg"
         >
@@ -132,6 +136,7 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import { useRouter } from "vue-router";
 import { useMutation } from "villus";
+import { useStore } from "vuex";
 
 export default {
   name: "Register",
@@ -150,6 +155,7 @@ export default {
     };
   },
   setup() {
+    const store = useStore();
     const router = useRouter();
     const first_name = ref();
     const last_name = ref();
@@ -200,8 +206,9 @@ export default {
 
     const isAuth = computed(() => store.state.auth.profile);
 
-    if (isAuth.id) {
+    if (isAuth.value !== null) {
       router.push("/");
+    } else {
     }
 
     return {

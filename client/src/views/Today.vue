@@ -1,83 +1,6 @@
 <template>
   <div v-if="isToggleModal">
-    <div class="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-80">
-      <div
-        class="card w-1/4 bg-white transform translate-y-52 mx-auto rounded-xl"
-      >
-        <div
-          class="flex bg-gray-100 rounded-t-xl p-4 justify-between items-center"
-        >
-          <div>
-            <h1 class="font-bold">{{ t("toggleTag.header") }}</h1>
-          </div>
-          <div>
-            <button type="button" :title="t('toggleTag.title')">
-              <QuestionSvg />
-            </button>
-          </div>
-        </div>
-        <hr class="border-gray-300" />
-        <div class="p-4">
-          <Form autocomplete="off">
-            <div class="mb-3">
-              <div class="flex justify-between">
-                <label class="font-bold">{{ t("toggleTag.label") }}</label>
-                <label class="text-red-500"
-                  ><ErrorMessage name="labelName"
-                /></label>
-              </div>
-              <Field
-                name="labelName"
-                v-model="labelName"
-                class="h-7 pl-2 block border border-gray-300 w-full rounded"
-                type="text"
-                :rules="labelNameRules"
-              />
-            </div>
-            <div>
-              <div class="flex justify-between">
-                <label class="font-bold">{{ t("toggleTag.color") }}</label>
-                <label class="text-red-500"
-                  ><ErrorMessage name="labelColor"
-                /></label>
-              </div>
-              <Field
-                name="labelColor"
-                v-model="labelColor"
-                :rules="labelColorRules"
-                as="select"
-                class="h-7 pl-2 block border border-gray-300 w-full rounded"
-              >
-                <option value="" selected disabled>Select</option>
-                <option value="red">Red</option>
-                <option value="blue">Blue</option>
-                <option value="yellow">Yellow</option>
-              </Field>
-            </div>
-            <hr class="border-gray-300 mb-4 mt-4" />
-            <div class="flex justify-end">
-              <button
-                @click="onCloseTagToggle"
-                type="button"
-                class="
-                  border border-gray-300
-                  ml-2
-                  mr-2
-                  p-1
-                  w-12
-                  hover:bg-gray-200
-                "
-              >
-                {{ t("toggleTag.cancel") }}
-              </button>
-              <button class="add-task-button-general text-white p-1 ml-2 w-12">
-                {{ t("toggleTag.add") }}
-              </button>
-            </div>
-          </Form>
-        </div>
-      </div>
-    </div>
+    <TagModal />
     <div class="flex" v-if="this.isLeftBarToggle == true">
       <LeftBar />
       <div class="w-full mt-5 p-4">
@@ -941,7 +864,7 @@
 </template>
 
 <script>
-import QuestionSvg from "../components/icons/QuestionSvg.vue";
+import TagModal from "../components/TagModal.vue";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 import SortSvg from "@icons/SortSvg.vue";
@@ -959,8 +882,6 @@ export default {
   data() {
     return {
       isActive: false,
-      labelNameRules: yup.string().required().max(60),
-      labelColorRules: yup.string().required(),
       descriptionRules: yup.string().max(1000),
       formRules: yup.string().required().max(500),
       dateRules: yup.string().required(),
@@ -975,7 +896,7 @@ export default {
     AddTodoSvg,
     LeftBar,
     TickSvg,
-    QuestionSvg,
+    TagModal,
   },
 
   methods: {
@@ -1054,20 +975,48 @@ export default {
         });
     }
 
-    function onCloseTagToggle() {
-      store.dispatch("GET_TAG_TOGGLE", false);
-    }
-
     const isToggleModal = computed(() => store.state.setting.tagToggle);
 
+    // const addTag = `
+    // mutation addTag($input: TagInput){
+    //   addTag(input:$input){
+    //     name
+    //     color
+    //     status
+    //   }
+    // }
+    // `;
+
+    // const { execute } = useMutation(addTag);
+
+    // function tagSubmit() {
+    //   execute({
+    //     input: {
+    //       user_id: 1,
+    //       labelName: labelName.value,
+    //       labelColor: labelColor.value,
+    //       status: "active",
+    //     },
+    //   })
+    //     .then((res) => {
+    //       console.log(res);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    //   console.log(labelName.value);
+    //   console.log(labelColor.value);
+    // }
+
     return {
+      // labelName,
+      // labelColor,
       form,
       description,
       date,
       data,
       isLeftBarToggle,
       isToggleModal,
-      onCloseTagToggle,
       onSubmit,
       t,
     };

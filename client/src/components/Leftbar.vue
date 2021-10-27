@@ -56,7 +56,6 @@ import RightArrow from "@icons/RightArrow.vue";
 import AddLabelSvg from "@icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "vuex";
-import { computed } from "vue";
 export default {
   name: "Leftbar",
   components: {

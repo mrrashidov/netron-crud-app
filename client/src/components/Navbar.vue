@@ -81,6 +81,7 @@
                     p-1
                     outline-none
                     border border-gray-700
+                    rounded
                   "
                   v-model="lang"
                 >
@@ -88,6 +89,10 @@
                   <option value="en">English</option>
                   <option value="tr" selected>Türkçe</option>
                 </select>
+                <div class="m-3">
+                  <label class="font-bold block">Çıkış Yap</label>
+                  <button type="button" @click="onLogout">Çıkış yap</button>
+                </div>
                 <template v-if="this.lang !== this.local">
                   <div>
                     <hr class="mt-3" />
@@ -193,7 +198,11 @@ export default {
     const store = useStore();
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
     const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
+    function onLogout() {
+      localStorage.removeItem("user");
+    }
     return {
+      onLogout,
       isLeftBarToggle,
     };
   },
