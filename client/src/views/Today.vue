@@ -1022,6 +1022,7 @@ export default {
   font-size: 13px;
   background-color: #db4c3f;
 }
+
 textarea {
   font-size: 13px;
 }
