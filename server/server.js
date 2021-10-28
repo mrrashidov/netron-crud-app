@@ -15,9 +15,11 @@ const getUser = async (req, connection) => {
   if (req && req.headers.authorization) {
     const token = req.headers.authorization.replace("Bearer ", "");
     user = await models.user.getUserByToken(token);
+    console.log(user);
   } else if (connection && connection.context.Authorization) {
     const token = connection.context.Authorization.replace("Bearer ", "");
     user = await models.user.getUserByToken(token);
+    console.log(user);
   }
   return user;
 };

@@ -4,17 +4,17 @@
 
 <script>
 import Navbar from "./components/Navbar.vue";
-import { useClient } from 'villus';
+import { useClient } from "villus";
 export default {
   name: "App",
   components: {
     Navbar,
   },
-  setup(){
+  setup() {
     useClient({
-      url: 'http://localhost:4200/'
-    })
-  }
+      url: "http://localhost:4200/",
+    });
+  },
 };
 </script>
 

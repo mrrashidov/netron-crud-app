@@ -1,6 +1,9 @@
-const { user, todo, tag } = require("../../model");
+const { user, todo, tag, userRole } = require("../../model");
 const { status } = require("../../helpers/constants");
 module.exports = {
+  Subscription: {
+    newTask: {},
+  },
   Query: {
     user: (_, { id }) => user.findOne({ id }),
     users: () => user.all(),
@@ -96,30 +99,42 @@ module.exports = {
         status: status[input.status].id,
         password: hash,
       });
+
+      const roleId = await userRole.insert({
+        user_id: resultId,
+        role_id: 3,
+      });
+
       return await user
-        .all(null, [
-          "users.id",
-          "users.first_name",
-          "users.last_name",
-          "users.avatar",
-          "users.email",
-          "users.status",
-          "users.created_at",
-        ])
-        .where("users.id", resultId)
-        .then((res) => {
-          const item = res[0];
-          console.log(item);
-          return {
-            id: item.id,
-            first_name: item.first_name,
-            last_name: item.last_name,
-            avatar: item.avatar,
-            email: item.email,
-            status: "active",
-            created_at: item.created_at,
-          };
-        });
+        .find(
+          { "users.id": resultId },
+          (qb) => {
+            qb.innerJoin(
+              "users_role",
+              "users_role.user_id",
+              "users.id"
+            ).innerJoin("roles", "users_role.role_id", "roles.id");
+            return qb;
+          },
+          [
+            "users.*",
+            "roles.id as role_id",
+            "roles.name as role_name",
+            "roles.description as role_desc",
+          ]
+        )
+        .first()
+        .then((res) => ({
+          ...res,
+          status: Object.values(status).find(
+            (val) => val.id === parseInt(res.status)
+          ).name,
+          role: {
+            id: res.role_id,
+            name: res.role_name,
+            description: res.role_desc,
+          },
+        }));
     },
     loginUser: async (_, { input }) => {
       const { email, password } = input;
