@@ -1,9 +1,4 @@
 <template>
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/todos">Todos</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
   <Navbar />
 </template>
 
@@ -17,7 +12,7 @@ export default {
   },
   setup() {
     useClient({
-      url: "http://localhost:4000/",
+      url: "http://localhost:4200/",
     });
   },
 };

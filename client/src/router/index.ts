@@ -1,16 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Todos from "@/views/Todos.vue";
-import Upcoming from "@/views/Upcoming.vue";
-import Today from "@/views/Today.vue";
+import Login from "@/views/Login.vue";
+import Register from "@/views/Register.vue";
 import Inbox from "@/views/Inbox.vue";
+import Today from "@/views/Today.vue";
+import Upcoming from "@/views/Upcoming.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Inbox",
+    component: Inbox,
   },
   {
     path: "/todos",
@@ -23,6 +24,16 @@ const routes = [
     component: About,
   },
   {
+    path: "/register",
+    name: "Register",
+    component: Register,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
     path: "/today",
     name: "Today",
     component: Today,
@@ -31,11 +42,6 @@ const routes = [
     path: "/upcoming",
     name: "Upcoming",
     component: Upcoming,
-  },
-  {
-    path: "/inbox",
-    name: "Inbox",
-    component: Inbox,
   },
 ];
 

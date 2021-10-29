@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
-import villus from 'villus'
 
 // @ts-ignore
 import path from "path";
