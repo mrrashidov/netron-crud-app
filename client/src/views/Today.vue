@@ -606,7 +606,16 @@
                 t("todayPage.dt")
               }}</span>
             </div>
-            <button>
+            <button
+              class="
+                mr-5
+                text-gray-500 text-xs
+                p-1
+                hover:bg-gray-200 hover:text-gray-900
+                rounded
+                border-red-500
+              "
+            >
               <SortSvg />
               {{ t("todayPage.sort") }}
             </button>
