@@ -143,6 +143,14 @@ export default {
         .then((res) => {
           console.log("res", res.data.loginUser.token);
           console.log(res.data.loginUser);
+          store.dispatch("GET_USER", {
+            id: res.data.loginUser.id,
+            first_name: res.data.loginUser.first_name,
+            last_name: res.data.loginUser.last_name,
+            avatar: res.data.loginUser.avatar,
+            email: res.data.loginUser.email,
+            status: res.data.loginUser.status,
+          });
           store.dispatch("LOGIN", res.data.loginUser.token);
         })
         .catch((err) => {

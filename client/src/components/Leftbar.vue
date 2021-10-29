@@ -31,8 +31,25 @@
             </div>
             <div v-if="data">
               <div class="flex" v-for="(tag, index) in data.tags" :key="index">
-                <ul class="flex items-center justify-between ml-2 mr-2">
-                  <li class="mr-2">{{ tag.color }}</li>
+                <ul
+                  class="flex items-center justify-between ml-2 mr-2"
+                  v-if="tag.color === 'blue'"
+                >
+                  <li class="mr-2"><TagColorSvg class="text-blue-500" /></li>
+                  <li>{{ tag.name }}</li>
+                </ul>
+                <ul
+                  class="flex items-center justify-between ml-2 mr-2"
+                  v-if="tag.color === 'red'"
+                >
+                  <li class="mr-2"><TagColorSvg class="text-red-500" /></li>
+                  <li>{{ tag.name }}</li>
+                </ul>
+                <ul
+                  class="flex items-center justify-between ml-2 mr-2"
+                  v-if="tag.color === 'yellow'"
+                >
+                  <li class="mr-2"><TagColorSvg class="text-yellow-500" /></li>
                   <li>{{ tag.name }}</li>
                 </ul>
               </div>
@@ -82,6 +99,7 @@
 </template>
 
 <script>
+import TagColorSvg from "./icons/TagColorSvg.vue";
 import InboxSvg from "@icons/InboxSvg.vue";
 import TodaySvg from "@icons/TodaySvg.vue";
 import UpComingSvg from "@icons/UpComingSvg.vue";
@@ -98,6 +116,7 @@ export default {
     UpComingSvg,
     RightArrow,
     AddLabelSvg,
+    TagColorSvg,
   },
   data() {
     return {

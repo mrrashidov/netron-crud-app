@@ -35,10 +35,11 @@
         </form>
       </div>
     </div>
-    <div>
+    <div class="flex items-center justify-items-end pr-3">
       <button @click="onSettingModal" class="block mr-8 hover:bg-red-400 p-1">
         <SettingsSvg />
       </button>
+      <button>Profile</button>
     </div>
     <template v-if="this.settingModal == true">
       <div
