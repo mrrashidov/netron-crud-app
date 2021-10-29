@@ -70,26 +70,33 @@
             <div>
               <h1 class="font-bold ml-3 mt-3">{{ $t("message.language") }}</h1>
               <form @submit="onChangeGeneralSettings">
-                <select
-                  name="lang"
-                  id="lang"
-                  value="tr"
-                  class="
-                    w-2/4
-                    ml-3
-                    mt-2
-                    mb-2
-                    p-1
-                    outline-none
-                    border border-gray-700
-                    rounded
-                  "
-                  v-model="lang"
-                >
-                  <option value="">--Please choose an option--</option>
-                  <option value="en">English</option>
-                  <option value="tr" selected>Türkçe</option>
-                </select>
+                <div v-if="data">
+                  <select
+                    name="lang"
+                    id="lang"
+                    value="tr"
+                    class="
+                      w-2/4
+                      ml-3
+                      mt-2
+                      mb-2
+                      p-1
+                      outline-none
+                      border border-gray-700
+                      rounded
+                    "
+                    v-model="lang"
+                  >
+                    <option
+                      v-for="language in data.languages"
+                      :key="language.id"
+                      :value="language.slug"
+                      selected="selected"
+                    >
+                      {{ language.name }}
+                    </option>
+                  </select>
+                </div>
                 <div class="m-3">
                   <label class="font-bold block">Çıkış Yap</label>
                   <button type="button" @click="onLogout">Çıkış yap</button>
@@ -155,6 +162,7 @@ import CloseSvg from "@icons/CloseSvg.vue";
 import SearchSvg from "@icons/SearchSvg.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { useQuery } from "villus";
 
 export default {
   name: "Navbar",
@@ -202,9 +210,28 @@ export default {
     function onLogout() {
       localStorage.removeItem("user");
     }
+
+    const getLanguages = `
+      query {
+        languages {
+          id
+          name
+          slug
+          default
+        }
+      }
+    `;
+
+    const { data } = useQuery({
+      query: getLanguages,
+    });
+
+    console.log(data);
+
     return {
       onLogout,
       isLeftBarToggle,
+      data,
     };
   },
 };
