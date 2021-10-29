@@ -14,7 +14,6 @@ interface IState {
   toggle: boolean;
   loading: boolean;
   leftBarToggle: boolean;
-  token: string
 }
 const initState: IState = {
   todos: [],
@@ -22,7 +21,6 @@ const initState: IState = {
   toggle: false,
   loading: true,
   leftBarToggle: false,
-  token: ""
 };
 const todo: Module<any, any> = {
   state: initState,

@@ -977,40 +977,7 @@ export default {
 
     const isToggleModal = computed(() => store.state.setting.tagToggle);
 
-    // const addTag = `
-    // mutation addTag($input: TagInput){
-    //   addTag(input:$input){
-    //     name
-    //     color
-    //     status
-    //   }
-    // }
-    // `;
-
-    // const { execute } = useMutation(addTag);
-
-    // function tagSubmit() {
-    //   execute({
-    //     input: {
-    //       user_id: 1,
-    //       labelName: labelName.value,
-    //       labelColor: labelColor.value,
-    //       status: "active",
-    //     },
-    //   })
-    //     .then((res) => {
-    //       console.log(res);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    //   console.log(labelName.value);
-    //   console.log(labelColor.value);
-    // }
-
     return {
-      // labelName,
-      // labelColor,
       form,
       description,
       date,

@@ -1,20 +1,11 @@
 import { Module } from "vuex";
 
-interface IProfile {
-  id: Number;
-  first_name: String;
-  last_name: String;
-  avatar: String;
-  status: String;
-  email: String;
-}
-
 interface IState {
-  profile: IProfile | {};
+  token: String | null;
 }
 
 const initState: IState = {
-  profile: JSON.parse(localStorage.getItem("user")),
+  token: localStorage.getItem("token"),
 };
 
 const auth: Module<any, any> = {
@@ -22,17 +13,18 @@ const auth: Module<any, any> = {
   getters: {},
   actions: {
     LOGIN: ({ commit }, payload) => {
-
-      const localData = localStorage.getItem("user");
       commit("SET_LOGIN", payload);
-     
-      
     },
+    LOGOUT: ({ commit }) => commit("SET_LOGOUT"),
   },
   mutations: {
     SET_LOGIN: (state, data) => {
-      localStorage.setItem("user", JSON.stringify(data))
-      state.profile = data
+      localStorage.setItem("token", data);
+      state.token = data;
+    },
+    SET_LOGOUT: (state, data) => {
+      localStorage.removeItem("token");
+      state.token = data;
     },
   },
 };
