@@ -21,25 +21,9 @@
             <div v-for="todo in data.tasks" :key="todo.id">
               <hr class="mt-2" />
               <div class="flex">
-                <div
-                  @click="onTick"
-                  class="
-                    mt-2
-                    border border-gray-500
-                    rounded-full
-                    h-7
-                    w-7
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <input
-                    v-model="isTick"
-                    type="checkbox"
-                    class="outline-none"
-                  />
-                </div>
+                <button class="tick-button mt-3 mr-1">
+                  <TaskCheckBoxSvg class="tick" />
+                </button>
                 <div class="mt-2 ml-2 leading-5">
                   <p>{{ todo.title }}</p>
                   <p class="text-gray-500 text-xs">{{ todo.description }}</p>
@@ -238,25 +222,9 @@
             <div v-for="todo in data.tasks" :key="todo.id">
               <hr class="mt-2" />
               <div class="flex">
-                <div
-                  @click="onTick"
-                  class="
-                    mt-2
-                    border border-gray-500
-                    rounded-full
-                    h-7
-                    w-7
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <input
-                    v-model="isTick"
-                    type="checkbox"
-                    class="outline-none"
-                  />
-                </div>
+                <button class="tick-button mt-3 mr-1">
+                  <TaskCheckBoxSvg class="tick" />
+                </button>
                 <div class="mt-2 ml-2 leading-5">
                   <p>{{ todo.title }}</p>
                   <p class="text-gray-500 text-xs">{{ todo.description }}</p>
@@ -453,25 +421,9 @@
             <div v-for="todo in data.tasks" :key="todo.id">
               <hr class="mt-2" />
               <div class="flex">
-                <div
-                  @click="onTick"
-                  class="
-                    mt-2
-                    border border-gray-500
-                    rounded-full
-                    h-7
-                    w-7
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <input
-                    v-model="isTick"
-                    type="checkbox"
-                    class="outline-none"
-                  />
-                </div>
+                <button class="tick-button mt-3 mr-1">
+                  <TaskCheckBoxSvg class="tick" />
+                </button>
                 <div class="mt-2 ml-2 leading-5">
                   <p>{{ todo.title }}</p>
                   <p class="text-gray-500 text-xs">{{ todo.description }}</p>
@@ -663,25 +615,9 @@
             <div v-for="todo in data.tasks" :key="todo.id">
               <hr class="mt-2" />
               <div class="flex">
-                <div
-                  @click="onTick"
-                  class="
-                    mt-2
-                    border border-gray-500
-                    rounded-full
-                    h-7
-                    w-7
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <input
-                    v-model="isTick"
-                    type="checkbox"
-                    class="outline-none"
-                  />
-                </div>
+                <button class="tick-button mt-3 mr-1">
+                  <TaskCheckBoxSvg class="tick" />
+                </button>
                 <div class="mt-2 ml-2 leading-5">
                   <p>{{ todo.title }}</p>
                   <p class="text-gray-500 text-xs">{{ todo.description }}</p>
@@ -864,6 +800,7 @@
 </template>
 
 <script>
+import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
 import TagModal from "../components/TagModal.vue";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
@@ -897,6 +834,7 @@ export default {
     LeftBar,
     TickSvg,
     TagModal,
+    TaskCheckBoxSvg,
   },
 
   methods: {
@@ -1024,5 +962,21 @@ textarea {
 .add-task {
   background-color: #db4c3f;
   font-size: 16px;
+}
+
+.tick-button {
+  height: 25px;
+  width: 25px;
+  border-radius: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.tick {
+  display: none;
+}
+
+.tick-button:hover .tick {
+  display: table-cell;
+  vertical-align: middle;
 }
 </style>

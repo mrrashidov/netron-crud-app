@@ -55,25 +55,9 @@
             <div v-for="todo in data.tasks" :key="todo.id">
               <hr class="mt-2" />
               <div class="flex">
-                <div
-                  @click="onTick"
-                  class="
-                    mt-2
-                    border border-gray-500
-                    rounded-full
-                    h-7
-                    w-7
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <input
-                    v-model="isTick"
-                    type="checkbox"
-                    class="outline-none"
-                  />
-                </div>
+                <button class="tick-button mt-3 mr-1">
+                  <TaskCheckBoxSvg class="tick" />
+                </button>
                 <div class="mt-2 ml-2 leading-5">
                   <p>{{ todo.title }}</p>
                   <p class="text-gray-500 text-xs">{{ todo.description }}</p>
@@ -306,25 +290,9 @@
             <div v-for="todo in data.tasks" :key="todo.id">
               <hr class="mt-2" />
               <div class="flex">
-                <div
-                  @click="onTick"
-                  class="
-                    mt-2
-                    border border-gray-500
-                    rounded-full
-                    h-7
-                    w-7
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <input
-                    v-model="isTick"
-                    type="checkbox"
-                    class="outline-none"
-                  />
-                </div>
+                <button class="tick-button mt-3 mr-1">
+                  <TaskCheckBoxSvg class="tick" />
+                </button>
                 <div class="mt-2 ml-2 leading-5">
                   <p>{{ todo.title }}</p>
                   <p class="text-gray-500 text-xs">{{ todo.description }}</p>
@@ -555,25 +523,9 @@
             <div v-for="todo in data.tasks" :key="todo.id">
               <hr class="mt-2" />
               <div class="flex">
-                <div
-                  @click="onTick"
-                  class="
-                    mt-2
-                    border border-gray-500
-                    rounded-full
-                    h-7
-                    w-7
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <input
-                    v-model="isTick"
-                    type="checkbox"
-                    class="outline-none"
-                  />
-                </div>
+                <button class="tick-button mt-3 mr-1">
+                  <TaskCheckBoxSvg class="tick" />
+                </button>
                 <div class="mt-2 ml-2 leading-5">
                   <p>{{ todo.title }}</p>
                   <p class="text-gray-500 text-xs">{{ todo.description }}</p>
