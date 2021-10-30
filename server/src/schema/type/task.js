@@ -21,6 +21,12 @@ module.exports = gql`
     id: ID!
   }
 
+  input UpdateInput {
+    id: ID!
+    title: String!
+    description: String
+  }
+
   type Task {
     id: ID!
     title: String
@@ -48,6 +54,7 @@ module.exports = gql`
   type Mutation {
     addTask(input: StoreTask): TaskItem
     deleteTask(input: DeleteInput): TaskItem
+    updateTask(input: UpdateInput): TaskItem
   }
 
   type Subscription {

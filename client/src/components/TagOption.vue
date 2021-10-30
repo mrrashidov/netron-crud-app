@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.ss == true">
+  <div v-if="this.isTag == true">
     <div class="w-2/12 -mt-4 -ml-12 absolute bg-white shadow rounded">
       <div @click="onCancel">
         <ul>
@@ -43,25 +43,95 @@
     </div>
   </div>
   <div v-else>
-    <button
-      @click="onTagMore"
-      class="
-        tag-more-button
-        h-5
-        w-6
-        text-center
-        mr-3
-        flex
-        justify-center
-        items-center
-      "
-    >
-      <TagMoreSvg class="text-center" />
-    </button>
+    <div>
+      <div v-if="tag.color == 'blue'">
+        <div class="mt-2">
+          <div class="w-full flex justify-between">
+            <div>
+              <TagColorSvg class="text-blue-500 inline" />
+              <p class="inline">{{ tag.name }}</p>
+            </div>
+            <div>
+              <button
+                @click="onTagMore"
+                class="
+                  tag-more-button
+                  h-5
+                  w-6
+                  text-center
+                  mr-3
+                  flex
+                  justify-center
+                  items-center
+                "
+              >
+                <TagMoreSvg class="text-center" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="tag.color == 'red'">
+        <div class="mt-2">
+          <div class="w-full flex justify-between">
+            <div>
+              <TagColorSvg class="text-red-500 inline" />
+              <p class="inline">{{ tag.name }}</p>
+            </div>
+            <div>
+              <button
+                @click="onTagMore"
+                class="
+                  tag-more-button
+                  h-5
+                  w-6
+                  text-center
+                  mr-3
+                  flex
+                  justify-center
+                  items-center
+                "
+              >
+                <TagMoreSvg class="text-center" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="tag.color == 'yellow'">
+        <div class="mt-2">
+          <div class="w-full flex justify-between">
+            <div>
+              <TagColorSvg class="text-yellow-500 inline" />
+              <p class="inline">{{ tag.name }}</p>
+            </div>
+            <div>
+              <button
+                @click="onTagMore"
+                class="
+                  tag-more-button
+                  h-5
+                  w-6
+                  text-center
+                  mr-3
+                  flex
+                  justify-center
+                  items-center
+                "
+              >
+                <TagMoreSvg class="text-center" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import TagColorSvg from "./icons/TagColorSvg.vue";
+import TagModal from "./TagModal.vue";
 import TagMoreSvg from "./icons/TagMoreSvg.vue";
 import TrashSvg from "./icons/TrashSvg.vue";
 import { useMutation } from "villus";
@@ -70,21 +140,23 @@ export default {
   components: {
     TagMoreSvg,
     TrashSvg,
+    TagModal,
+    TagColorSvg,
   },
   props: {
     tag: Object,
   },
   data() {
     return {
-      ss: false,
+      isTag: false,
     };
   },
   methods: {
     onTagMore() {
-      this.ss = true;
+      this.isTag = true;
     },
     onCancel() {
-      this.ss = false;
+      this.isTag = false;
     },
   },
   setup() {

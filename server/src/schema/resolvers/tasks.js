@@ -59,5 +59,16 @@ module.exports = {
         });
       console.log(input);
     },
+    updateTask: async (_, { input }) => {
+      await todo.update(
+        {
+          title: input.title,
+          description: input.description,
+        },
+        input.id
+      );
+
+      console.log(input);
+    },
   },
 };

@@ -39,6 +39,10 @@ module.exports = class Model {
     return this.database(this.table).del(id).where({ id });
   }
 
+  update(values, id) {
+    return this.database(this.table).update(values).where({ id });
+  }
+
   store(table = null) {
     return this.database(table ? table : this.table);
   }

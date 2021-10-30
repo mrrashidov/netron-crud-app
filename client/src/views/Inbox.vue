@@ -766,7 +766,7 @@
                 </p>
               </button>
             </div>
-            <div class="">
+            <div>
               <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
               <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
                 {{ t("inboxPage.header") }}

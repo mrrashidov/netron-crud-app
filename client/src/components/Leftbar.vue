@@ -42,112 +42,8 @@
                     </button>
                   </div>
                 </div>
-                <div
-                  class="flex items-center"
-                  v-for="(tag, index) in data.tags"
-                  :key="index"
-                >
-                  <ul
-                    class="
-                      mt-2
-                      mb-1
-                      hover:bg-gray-300
-                      rounded
-                      w-full
-                      flex
-                      items-center
-                      justify-between
-                      pt-1
-                      list-menu
-                    "
-                    v-if="tag.color === 'blue'"
-                  >
-                    <div class="flex items-center">
-                      <li class="mr-2">
-                        <TagColorSvg class="text-blue-500" />
-                      </li>
-                      <li>{{ tag.name }}</li>
-                    </div>
-                    <div>
-                      <button
-                        class="
-                          tag-more-button
-                          h-5
-                          w-6
-                          text-center
-                          mr-3
-                          flex
-                          justify-center
-                          items-center
-                        "
-                      >
-                        <TagMoreSvg class="text-center" />
-                      </button>
-                    </div>
-                  </ul>
-                  <ul
-                    class="
-                      mt-2
-                      mb-1
-                      hover:bg-gray-300
-                      rounded
-                      w-full
-                      flex
-                      items-center
-                      justify-between
-                      pt-1
-                      list-menu
-                    "
-                    v-if="tag.color === 'red'"
-                  >
-                    <div class="flex items-center">
-                      <li class="mr-2">
-                        <TagColorSvg class="text-red-500" />
-                      </li>
-                      <li>{{ tag.name }}</li>
-                    </div>
-                    <div>
-                      <TagOption :tag="tag" />
-                    </div>
-                  </ul>
-                  <ul
-                    class="
-                      mt-2
-                      mb-1
-                      hover:bg-gray-300
-                      rounded
-                      w-full
-                      flex
-                      items-center
-                      justify-between
-                      pt-1
-                      list-menu
-                    "
-                    v-if="tag.color === 'yellow'"
-                  >
-                    <div class="flex items-center">
-                      <li class="mr-2">
-                        <TagColorSvg class="text-yellow-500" />
-                      </li>
-                      <li>{{ tag.name }}</li>
-                    </div>
-                    <div>
-                      <button
-                        class="
-                          tag-more-button
-                          h-5
-                          w-6
-                          text-center
-                          mr-3
-                          flex
-                          justify-center
-                          items-center
-                        "
-                      >
-                        <TagMoreSvg class="text-center" />
-                      </button>
-                    </div>
-                  </ul>
+                <div v-for="(tag, index) in data.tags" :key="index">
+                  <TagOption :tag="tag" />
                 </div>
               </div>
             </div>
@@ -187,7 +83,6 @@
 <script>
 import TagOption from "./TagOption.vue";
 import TagMoreSvg from "./icons/TagMoreSvg.vue";
-import TagColorSvg from "./icons/TagColorSvg.vue";
 import InboxSvg from "@icons/InboxSvg.vue";
 import TodaySvg from "@icons/TodaySvg.vue";
 import UpComingSvg from "@icons/UpComingSvg.vue";
@@ -204,7 +99,6 @@ export default {
     UpComingSvg,
     RightArrow,
     AddLabelSvg,
-    TagColorSvg,
     TagMoreSvg,
     TagOption,
   },
