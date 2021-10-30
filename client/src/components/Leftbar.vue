@@ -107,20 +107,7 @@
                       <li>{{ tag.name }}</li>
                     </div>
                     <div>
-                      <button
-                        class="
-                          tag-more-button
-                          h-5
-                          w-6
-                          text-center
-                          mr-3
-                          flex
-                          justify-center
-                          items-center
-                        "
-                      >
-                        <TagMoreSvg class="text-center" />
-                      </button>
+                      <TagOption :tag="tag" />
                     </div>
                   </ul>
                   <ul
@@ -198,6 +185,7 @@
 </template>
 
 <script>
+import TagOption from "./TagOption.vue";
 import TagMoreSvg from "./icons/TagMoreSvg.vue";
 import TagColorSvg from "./icons/TagColorSvg.vue";
 import InboxSvg from "@icons/InboxSvg.vue";
@@ -218,12 +206,14 @@ export default {
     AddLabelSvg,
     TagColorSvg,
     TagMoreSvg,
+    TagOption,
   },
   data() {
     return {
       isArrow: false,
       isLabelToggle: false,
       isGroupArrow: false,
+      tagMore: false,
     };
   },
   methods: {
@@ -239,6 +229,10 @@ export default {
     onCancelGroup() {
       this.isGroupArrow = false;
     },
+    onTagMore() {
+      this.tagMore = true;
+      console.log(this.tagMore);
+    },
   },
   setup() {
     const { t } = useI18n();
@@ -250,6 +244,7 @@ export default {
     const getTags = `
       query{
         tags{
+        id
         user_id
         name
         color

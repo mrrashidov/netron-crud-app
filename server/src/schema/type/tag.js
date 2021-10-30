@@ -11,6 +11,7 @@ module.exports = gql`
   }
 
   type Tag {
+    id: ID!
     user_id: Int
     name: String!
     color: String
