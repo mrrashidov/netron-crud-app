@@ -43,7 +43,7 @@
                   </div>
                 </div>
                 <div
-                  class="flex"
+                  class="flex items-center"
                   v-for="(tag, index) in data.tags"
                   :key="index"
                 >
@@ -56,14 +56,34 @@
                       w-full
                       flex
                       items-center
-                      justify-start
-                      ml-2
-                      mr-2
+                      justify-between
+                      pt-1
+                      list-menu
                     "
                     v-if="tag.color === 'blue'"
                   >
-                    <li class="mr-2"><TagColorSvg class="text-blue-500" /></li>
-                    <li>{{ tag.name }}</li>
+                    <div class="flex items-center">
+                      <li class="mr-2">
+                        <TagColorSvg class="text-blue-500" />
+                      </li>
+                      <li>{{ tag.name }}</li>
+                    </div>
+                    <div>
+                      <button
+                        class="
+                          tag-more-button
+                          h-5
+                          w-6
+                          text-center
+                          mr-3
+                          flex
+                          justify-center
+                          items-center
+                        "
+                      >
+                        <TagMoreSvg class="text-center" />
+                      </button>
+                    </div>
                   </ul>
                   <ul
                     class="
@@ -74,14 +94,34 @@
                       w-full
                       flex
                       items-center
-                      justify-start
-                      ml-2
-                      mr-2
+                      justify-between
+                      pt-1
+                      list-menu
                     "
                     v-if="tag.color === 'red'"
                   >
-                    <li class="mr-2"><TagColorSvg class="text-red-500" /></li>
-                    <li>{{ tag.name }}</li>
+                    <div class="flex items-center">
+                      <li class="mr-2">
+                        <TagColorSvg class="text-red-500" />
+                      </li>
+                      <li>{{ tag.name }}</li>
+                    </div>
+                    <div>
+                      <button
+                        class="
+                          tag-more-button
+                          h-5
+                          w-6
+                          text-center
+                          mr-3
+                          flex
+                          justify-center
+                          items-center
+                        "
+                      >
+                        <TagMoreSvg class="text-center" />
+                      </button>
+                    </div>
                   </ul>
                   <ul
                     class="
@@ -92,16 +132,34 @@
                       w-full
                       flex
                       items-center
-                      justify-start
-                      ml-2
-                      mr-2
+                      justify-between
+                      pt-1
+                      list-menu
                     "
                     v-if="tag.color === 'yellow'"
                   >
-                    <li class="mr-2">
-                      <TagColorSvg class="text-yellow-500" />
-                    </li>
-                    <li>{{ tag.name }}</li>
+                    <div class="flex items-center">
+                      <li class="mr-2">
+                        <TagColorSvg class="text-yellow-500" />
+                      </li>
+                      <li>{{ tag.name }}</li>
+                    </div>
+                    <div>
+                      <button
+                        class="
+                          tag-more-button
+                          h-5
+                          w-6
+                          text-center
+                          mr-3
+                          flex
+                          justify-center
+                          items-center
+                        "
+                      >
+                        <TagMoreSvg class="text-center" />
+                      </button>
+                    </div>
                   </ul>
                 </div>
               </div>
@@ -140,6 +198,7 @@
 </template>
 
 <script>
+import TagMoreSvg from "./icons/TagMoreSvg.vue";
 import TagColorSvg from "./icons/TagColorSvg.vue";
 import InboxSvg from "@icons/InboxSvg.vue";
 import TodaySvg from "@icons/TodaySvg.vue";
@@ -158,6 +217,7 @@ export default {
     RightArrow,
     AddLabelSvg,
     TagColorSvg,
+    TagMoreSvg,
   },
   data() {
     return {
@@ -215,5 +275,18 @@ export default {
 <style scoped>
 .tag:hover button {
   display: block;
+}
+
+.tag-more-button {
+  display: none;
+}
+
+.list-menu:hover .tag-more-button {
+  display: flex;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.tag-more-button:hover {
+  color: rgba(0, 0, 0, 0.9) !important;
 }
 </style>

@@ -1,5 +1,8 @@
 const { gql } = require("apollo-server-core");
 module.exports = gql`
+  input DeleteTag {
+    id: ID!
+  }
   input TagInput {
     user_id: Int
     name: String!
@@ -21,5 +24,6 @@ module.exports = gql`
 
   type Mutation {
     addTag(input: TagInput): Tag
+    deleteTag(input: DeleteTag): Tag
   }
 `;
