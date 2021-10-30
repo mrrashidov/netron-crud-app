@@ -18,24 +18,115 @@
           </li>
         </router-link>
         <hr class="mt-3 mb-3" />
+        <li class="mt-3 cursor-pointer">
+          <div v-if="this.isArrow == false">
+            <div @click="onClick" class="flex items-center">
+              <RightArrow class="ml-3 -mb-5 origin-left transform -rotate-90" />
+              <div class="tag w-full flex justify-between">
+                <p class="font-medium">{{ t("leftBar.labels") }}</p>
+                <button class="hidden" @click="onLabelToggle">
+                  <AddLabelSvg />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <div>
+              <div v-if="data">
+                <div @click="onCancel" class="flex items-center">
+                  <RightArrow class="ml-3 mt-1 mr-2 origin-left transform" />
+                  <div class="tag w-full flex justify-between">
+                    <p class="font-medium">{{ t("leftBar.labels") }}</p>
+                    <button class="hidden" @click="onLabelToggle">
+                      <AddLabelSvg />
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="flex"
+                  v-for="(tag, index) in data.tags"
+                  :key="index"
+                >
+                  <ul
+                    class="
+                      mt-2
+                      mb-1
+                      hover:bg-gray-300
+                      rounded
+                      w-full
+                      flex
+                      items-center
+                      justify-start
+                      ml-2
+                      mr-2
+                    "
+                    v-if="tag.color === 'blue'"
+                  >
+                    <li class="mr-2"><TagColorSvg class="text-blue-500" /></li>
+                    <li>{{ tag.name }}</li>
+                  </ul>
+                  <ul
+                    class="
+                      mt-2
+                      mb-1
+                      hover:bg-gray-300
+                      rounded
+                      w-full
+                      flex
+                      items-center
+                      justify-start
+                      ml-2
+                      mr-2
+                    "
+                    v-if="tag.color === 'red'"
+                  >
+                    <li class="mr-2"><TagColorSvg class="text-red-500" /></li>
+                    <li>{{ tag.name }}</li>
+                  </ul>
+                  <ul
+                    class="
+                      mt-2
+                      mb-1
+                      hover:bg-gray-300
+                      rounded
+                      w-full
+                      flex
+                      items-center
+                      justify-start
+                      ml-2
+                      mr-2
+                    "
+                    v-if="tag.color === 'yellow'"
+                  >
+                    <li class="mr-2">
+                      <TagColorSvg class="text-yellow-500" />
+                    </li>
+                    <li>{{ tag.name }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
         <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
           <div
-            @click="onClick"
+            @click="onGroup"
             class="flex items-center"
-            v-if="this.isArrow == false"
+            v-if="this.isGroupArrow == false"
           >
             <RightArrow class="ml-3 -mb-5 origin-left transform -rotate-90" />
             <div class="tag w-full flex justify-between">
-              <p class="font-medium">{{ t("leftBar.labels") }}</p>
+              <p class="font-medium">{{ t("leftBar.groups") }}</p>
               <button class="hidden" @click="onLabelToggle">
                 <AddLabelSvg />
               </button>
             </div>
           </div>
-          <div @click="onCancel" class="flex items-center" v-else>
+          <div @click="onCancelGroup" class="flex items-center" v-else>
             <RightArrow class="ml-3 mt-1 mr-2 origin-left transform" />
             <div class="tag w-full flex justify-between">
-              <p class="font-medium">{{ t("leftBar.labels") }}</p>
+              <p class="font-medium">{{ t("leftBar.groups") }}</p>
               <button class="hidden" @click="onLabelToggle">
                 <AddLabelSvg />
               </button>
@@ -49,6 +140,7 @@
 </template>
 
 <script>
+import TagColorSvg from "./icons/TagColorSvg.vue";
 import InboxSvg from "@icons/InboxSvg.vue";
 import TodaySvg from "@icons/TodaySvg.vue";
 import UpComingSvg from "@icons/UpComingSvg.vue";
@@ -56,6 +148,7 @@ import RightArrow from "@icons/RightArrow.vue";
 import AddLabelSvg from "@icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "vuex";
+import { useQuery } from "villus";
 export default {
   name: "Leftbar",
   components: {
@@ -64,11 +157,13 @@ export default {
     UpComingSvg,
     RightArrow,
     AddLabelSvg,
+    TagColorSvg,
   },
   data() {
     return {
       isArrow: false,
       isLabelToggle: false,
+      isGroupArrow: false,
     };
   },
   methods: {
@@ -78,6 +173,12 @@ export default {
     onCancel() {
       this.isArrow = false;
     },
+    onGroup() {
+      this.isGroupArrow = true;
+    },
+    onCancelGroup() {
+      this.isGroupArrow = false;
+    },
   },
   setup() {
     const { t } = useI18n();
@@ -86,8 +187,25 @@ export default {
       store.dispatch("GET_TAG_TOGGLE", true);
     }
 
+    const getTags = `
+      query{
+        tags{
+        user_id
+        name
+        color
+        }
+    }
+    `;
+
+    const { data } = useQuery({
+      query: getTags,
+    });
+
+    console.log(data);
+
     return {
       onLabelToggle,
+      data,
       t,
     };
   },

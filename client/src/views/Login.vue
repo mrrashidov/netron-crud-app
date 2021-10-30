@@ -143,25 +143,25 @@ export default {
         .then((res) => {
           console.log("res", res.data.loginUser.token);
           console.log(res.data.loginUser);
-          store.dispatch("LOGIN", {
+          store.dispatch("GET_USER", {
             id: res.data.loginUser.id,
             first_name: res.data.loginUser.first_name,
             last_name: res.data.loginUser.last_name,
             avatar: res.data.loginUser.avatar,
-            status: res.data.loginUser.status,
             email: res.data.loginUser.email,
+            status: res.data.loginUser.status,
           });
-          localStorage.setItem("token", res.data.loginUser.token);
+          store.dispatch("LOGIN", res.data.loginUser.token);
         })
         .catch((err) => {
           console.log("err", err);
         });
     }
 
-    const isAuth = computed(() => store.state.auth.profile);
+    const token = computed(() => store.state.auth.token);
 
-    console.log(isAuth.value);
-    if (isAuth.value !== null) {
+    console.log(token);
+    if (token.value) {
       router.push("/");
     } else {
     }
@@ -170,7 +170,7 @@ export default {
       email,
       password,
       onSubmit,
-      isAuth,
+      token,
       t,
     };
   },

@@ -61,7 +61,6 @@ const messages = {
     },
     inboxPage: {
       headerTop: "Inbox",
-      dt: "Tue 19 Oct",
       addTask: "Add a task",
       sort: "Sort",
       cancel: "Cancel",
@@ -70,6 +69,7 @@ const messages = {
     },
     leftBar: {
       labels: "Labels",
+      groups: "Groups",
     },
     toggleTag: {
       header: "Add label",
@@ -153,6 +153,7 @@ const messages = {
     },
     leftBar: {
       labels: "Etiketler",
+      groups: "Gruplar",
     },
     toggleTag: {
       header: "Etiket ekle",
