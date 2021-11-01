@@ -2,21 +2,26 @@
   <div class="w-2/6">
     <div class="w-5/6 bg-gray-100 h-screen">
       <ul class="pl-12 pr-12 p-7">
-        <router-link to="/">
+        <routerLink to="/">
           <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
             <InboxSvg />{{ t("message.inbox") }}
           </li>
-        </router-link>
-        <router-link to="/today">
+        </routerLink>
+        <routerLink to="/today">
           <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
             <TodaySvg />{{ t("message.today") }}
+            <!-- <div v-if="tagItems">
+              <div v-for="(item, index) in tagItems.tags" :key="index">
+                <p>{{ item.id }}</p>
+              </div>
+            </div> -->
           </li>
-        </router-link>
-        <router-link to="/upcoming">
+        </routerLink>
+        <routerLink to="/upcoming">
           <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
             <UpComingSvg />{{ t("message.upComing") }}
           </li>
-        </router-link>
+        </routerLink>
         <hr class="mt-3 mb-3" />
         <li class="mt-3 cursor-pointer">
           <div v-if="this.isArrow == false">
@@ -76,7 +81,7 @@
         </li>
       </ul>
     </div>
-    <router-view />
+    <routerView />
   </div>
 </template>
 
@@ -90,7 +95,7 @@ import RightArrow from "@icons/RightArrow.vue";
 import AddLabelSvg from "@icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "vuex";
-import { useQuery } from "villus";
+import { computed, onMounted, watchEffect } from "vue";
 export default {
   name: "Leftbar",
   components: {
@@ -129,32 +134,46 @@ export default {
     },
   },
   setup() {
-    const { t } = useI18n();
     const store = useStore();
+    // const getTags = `
+    //   query{
+    //     tags{
+    //     id
+    //     user_id
+    //     name
+    //     color
+    //     }
+    // }
+    // `;
+
+    // const { data } = useQuery({
+    //   query: getTags,
+    // });
+
+    watchEffect(() => {
+      store.dispatch("GET_TAGS");
+    });
+    onMounted(() => {
+      console.log("component created");
+      // store.dispatch("GET_TAGS");
+    });
+
+    const { t } = useI18n();
+    // const store = useStore();
     function onLabelToggle() {
       store.dispatch("GET_TAG_TOGGLE", true);
     }
 
-    const getTags = `
-      query{
-        tags{
-        id
-        user_id
-        name
-        color
-        }
-    }
-    `;
+    // console.log(data);
 
-    const { data } = useQuery({
-      query: getTags,
-    });
+    const tagItems = computed(() => store.state.tag.tags);
 
-    console.log(data);
+    console.log("tagItems", tagItems);
 
     return {
       onLabelToggle,
-      data,
+      // data,
+      tagItems,
       t,
     };
   },

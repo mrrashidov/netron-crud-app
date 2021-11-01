@@ -1,7 +1,16 @@
 const { user, userRole } = require("../../model/index");
 const { status } = require("../../helpers/constants");
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
 
 module.exports = {
+  Subscription: {
+    newUser: {
+      subscriptions: () => {
+        return pubsub.asyncIterator("newTask");
+      },
+    },
+  },
   Query: {
     user: (_, { id }) => user.findOne({ id }),
     users: () => user.all(),
@@ -27,6 +36,8 @@ module.exports = {
         user_id: resultId,
         role_id: 3,
       });
+
+      pubsub.publish("newTask", { newTask: user.get(resultId) });
 
       return await user.get(resultId);
     },

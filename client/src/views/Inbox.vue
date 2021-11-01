@@ -934,7 +934,7 @@ import ViewSvg from "../components/icons/ViewSvg.vue";
 import CommentSvg from "../components/icons/CommentSvg.vue";
 import TagModal from "../components/TagModal.vue";
 import { useStore } from "vuex";
-import { computed, ref } from "vue";
+import { watch, computed, ref } from "vue";
 import SortSvg from "@icons/SortSvg.vue";
 import AddTodoSvg from "@icons/AddTodoSvg.vue";
 import AddTaskSvg from "@icons/AddTaskSvg.vue";

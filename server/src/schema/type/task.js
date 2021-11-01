@@ -58,6 +58,6 @@ module.exports = gql`
   }
 
   type Subscription {
-    newTask: Task
+    newTask: Task!
   }
 `;

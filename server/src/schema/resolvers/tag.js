@@ -1,7 +1,16 @@
 const { tag } = require("../../model/index");
 const { status } = require("../../helpers/constants");
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
 
 module.exports = {
+  Subscription: {
+    newTag: {
+      subscribe: () => {
+        return pubsub.asyncIterator("newTag");
+      },
+    },
+  },
   Query: {
     tags: () => tag.all(),
   },
@@ -29,7 +38,7 @@ module.exports = {
         .where("tags.id", tagsId)
         .then((response) => {
           const item = response[0];
-          console.log(item);
+          pubsub.publish("newTag", { newTag: item });
           return {
             id: item.id,
             name: item.name,
