@@ -750,15 +750,7 @@
           <div v-if="data">
             <div v-for="todo in data.tasks" :key="todo.id">
               <hr class="mt-2" />
-              <div class="flex">
-                <button class="tick-button mt-3 mr-1">
-                  <TaskCheckBoxSvg class="tick" />
-                </button>
-                <div class="mt-2 ml-2 leading-5">
-                  <p>{{ todo.title }}</p>
-                  <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-                </div>
-              </div>
+              <Tasks :todo="todo" />
             </div>
           </div>
           <hr class="mt-3" />
@@ -774,7 +766,7 @@
                 </p>
               </button>
             </div>
-            <div class="">
+            <div>
               <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
               <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
                 {{ t("inboxPage.header") }}
@@ -936,6 +928,7 @@
 </template>
 
 <script>
+import Tasks from "../components/Tasks.vue";
 import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
 import ViewSvg from "../components/icons/ViewSvg.vue";
 import CommentSvg from "../components/icons/CommentSvg.vue";
@@ -975,6 +968,7 @@ export default {
     CommentSvg,
     ViewSvg,
     TaskCheckBoxSvg,
+    Tasks,
   },
 
   methods: {

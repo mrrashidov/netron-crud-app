@@ -1,4 +1,4 @@
-const { todo, tag, userRole } = require("../../model");
+const { todo, userRole } = require("../../model");
 const { status } = require("../../helpers/constants");
 module.exports = {
   Subscription: {
@@ -47,6 +47,28 @@ module.exports = {
             created_at: item.created_at,
           };
         });
+    },
+    deleteTask: async (_, { input }) => {
+      todo
+        .delete(input.id)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log(input);
+    },
+    updateTask: async (_, { input }) => {
+      await todo.update(
+        {
+          title: input.title,
+          description: input.description,
+        },
+        input.id
+      );
+
+      console.log(input);
     },
   },
 };

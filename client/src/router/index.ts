@@ -6,6 +6,7 @@ import Register from "@/views/Register.vue";
 import Inbox from "@/views/Inbox.vue";
 import Today from "@/views/Today.vue";
 import Upcoming from "@/views/Upcoming.vue";
+import NotFound from "@/views/NotFound.vue";
 
 const routes = [
   {
@@ -42,6 +43,10 @@ const routes = [
     path: "/upcoming",
     name: "Upcoming",
     component: Upcoming,
+  },
+  {
+    path: "/:catchAll(.*)",
+    component: NotFound,
   },
 ];
 

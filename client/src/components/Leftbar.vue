@@ -42,67 +42,8 @@
                     </button>
                   </div>
                 </div>
-                <div
-                  class="flex"
-                  v-for="(tag, index) in data.tags"
-                  :key="index"
-                >
-                  <ul
-                    class="
-                      mt-2
-                      mb-1
-                      hover:bg-gray-300
-                      rounded
-                      w-full
-                      flex
-                      items-center
-                      justify-start
-                      ml-2
-                      mr-2
-                    "
-                    v-if="tag.color === 'blue'"
-                  >
-                    <li class="mr-2"><TagColorSvg class="text-blue-500" /></li>
-                    <li>{{ tag.name }}</li>
-                  </ul>
-                  <ul
-                    class="
-                      mt-2
-                      mb-1
-                      hover:bg-gray-300
-                      rounded
-                      w-full
-                      flex
-                      items-center
-                      justify-start
-                      ml-2
-                      mr-2
-                    "
-                    v-if="tag.color === 'red'"
-                  >
-                    <li class="mr-2"><TagColorSvg class="text-red-500" /></li>
-                    <li>{{ tag.name }}</li>
-                  </ul>
-                  <ul
-                    class="
-                      mt-2
-                      mb-1
-                      hover:bg-gray-300
-                      rounded
-                      w-full
-                      flex
-                      items-center
-                      justify-start
-                      ml-2
-                      mr-2
-                    "
-                    v-if="tag.color === 'yellow'"
-                  >
-                    <li class="mr-2">
-                      <TagColorSvg class="text-yellow-500" />
-                    </li>
-                    <li>{{ tag.name }}</li>
-                  </ul>
+                <div v-for="(tag, index) in data.tags" :key="index">
+                  <TagOption :tag="tag" />
                 </div>
               </div>
             </div>
@@ -140,7 +81,8 @@
 </template>
 
 <script>
-import TagColorSvg from "./icons/TagColorSvg.vue";
+import TagOption from "./TagOption.vue";
+import TagMoreSvg from "./icons/TagMoreSvg.vue";
 import InboxSvg from "@icons/InboxSvg.vue";
 import TodaySvg from "@icons/TodaySvg.vue";
 import UpComingSvg from "@icons/UpComingSvg.vue";
@@ -157,13 +99,15 @@ export default {
     UpComingSvg,
     RightArrow,
     AddLabelSvg,
-    TagColorSvg,
+    TagMoreSvg,
+    TagOption,
   },
   data() {
     return {
       isArrow: false,
       isLabelToggle: false,
       isGroupArrow: false,
+      tagMore: false,
     };
   },
   methods: {
@@ -179,6 +123,10 @@ export default {
     onCancelGroup() {
       this.isGroupArrow = false;
     },
+    onTagMore() {
+      this.tagMore = true;
+      console.log(this.tagMore);
+    },
   },
   setup() {
     const { t } = useI18n();
@@ -190,6 +138,7 @@ export default {
     const getTags = `
       query{
         tags{
+        id
         user_id
         name
         color
@@ -215,5 +164,18 @@ export default {
 <style scoped>
 .tag:hover button {
   display: block;
+}
+
+.tag-more-button {
+  display: none;
+}
+
+.list-menu:hover .tag-more-button {
+  display: flex;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.tag-more-button:hover {
+  color: rgba(0, 0, 0, 0.9) !important;
 }
 </style>

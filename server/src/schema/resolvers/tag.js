@@ -39,5 +39,8 @@ module.exports = {
           };
         });
     },
+    deleteTag: async (_, { input }) => {
+      await tag.delete(input.id);
+    },
   },
 };
