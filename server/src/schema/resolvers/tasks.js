@@ -1,8 +1,14 @@
 const { todo, userRole } = require("../../model");
 const { status } = require("../../helpers/constants");
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
 module.exports = {
   Subscription: {
-    newTask: {},
+    newTask: {
+      subscribe: () => {
+        return pubsub.asyncIterator("newTask");
+      },
+    },
   },
   Query: {
     task: (_, { id }) => todo.findOne({ id }),
@@ -36,7 +42,8 @@ module.exports = {
         .where("todos.id", taskId)
         .then((response) => {
           const item = response[0];
-          console.log(item);
+          pubsub.publish("newTask", { newTask: item });
+          // return pubsub.asyncIterator("newTask");
           return {
             id: taskId,
             user_id: item.user_id,
