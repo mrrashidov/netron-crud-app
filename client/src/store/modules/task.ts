@@ -1,5 +1,5 @@
 import { Module } from "vuex";
-import { useQuery } from "villus";
+import { useQuery, useMutation } from "villus";
 
 interface ITask {
   id: Number;
@@ -25,27 +25,37 @@ const task: Module<any, any> = {
   state: initState,
   getters: {},
   actions: {
-    GET_TASKS: ({ commit }) => {
-      const allTask = `
-      query {
-        tasks{
-        id
-        title
-        description
-        date
-        created_at
-        }
-      }
-    `;
-
-      const { data } = useQuery({
-        query: allTask,
-      });
-      commit("SET_GET_TASKS", data);
+    GET_TASKS: ({ commit }, payload) => {
+      commit("SET_GET_TASKS", payload);
+    },
+    ADD_TASK: ({ commit }, payload) => {
+      commit("SET_ADD_TASK", payload);
+    },
+    DELETE_TASK: ({ commit }, payload) => {
+      commit("SET_DELETE_TASK", payload);
     },
   },
   mutations: {
-    SET_GET_TASKS: (state, data) => (state.tasks = data),
+    SET_GET_TASKS: (state, data) => {
+      state.tasks = data;
+    },
+    SET_ADD_TASK: async (state, data) => {
+      state.task = {
+        user_id: data.user_id,
+        title: data.title,
+        description: data.description,
+        date: data.date,
+        status: data.status,
+      };
+      state.tasks.push(state.task);
+    },
+    SET_DELETE_TASK: (state, data) => {
+      console.log("datasadsa", data.id);
+
+      const lastItem = state.tasks.filter((item) => item.id !== data.id);
+
+      state.tasks = lastItem;
+    },
   },
 };
 

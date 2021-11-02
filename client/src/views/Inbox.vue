@@ -685,7 +685,7 @@
             </div>
           </div>
           <div v-if="taskItem">
-            <div v-for="todo in taskItem.tasks" :key="todo.id">
+            <div v-for="todo in taskItem" :key="todo.id">
               <hr class="mt-2" />
               <Tasks :todo="todo" />
             </div>
@@ -881,12 +881,29 @@ export default {
   setup() {
     const store = useStore();
     watchEffect(() => {
-      store.dispatch("GET_TASKS");
+      const allTask = `
+      query {
+        tasks{
+        id
+        title
+        description
+        date
+        created_at
+        }
+      }
+    `;
+      const { data } = useQuery({
+        query: allTask,
+      })
+        .then((res) => {
+          store.dispatch("GET_TASKS", res.data.value.tasks);
+          console.log("resss", res.data.value.tasks);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
 
-    onMounted(() => {
-      console.log("component did update");
-    });
     const form = ref();
     const description = ref();
     const date = ref(new Date().toISOString().slice(0, 10));
@@ -895,41 +912,27 @@ export default {
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
     const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
 
+    const taskItem = computed(() => store.state.task.tasks);
+
+    const isToggleModal = computed(() => store.state.setting.tagToggle);
+
     const addTask = `
-      mutation addTask($input: StoreTask!){
-        addTask(input:$input){
-        id
-        user_id
-        title
-        description
-        date
-        status
-        created_at
-        }
-      }
-      `;
-
-    // const allTask = `
-    // query {
-    //   tasks{
-    //     id
-    //     title
-    //     description
-    //     date
-    //     created_at
-    //   }
-    // }
-    // `;
-
-    // const { data } = useQuery({
-    //   query: allTask,
-    // });
+       mutation addTask($input: StoreTask!){
+         addTask(input:$input){
+         id
+         user_id
+         title
+         description
+         date
+         status
+         created_at
+         }
+       }
+       `;
 
     const { execute } = useMutation(addTask);
 
-    function onSubmit() {
-      console.log(form.value);
-      console.log(date.value);
+    const onSubmit = async () => {
       execute({
         input: {
           user_id: 1,
@@ -940,22 +943,17 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          store.dispatch("ADD_TASK", res.data.addTask);
         })
         .catch((err) => {
-          console.log(err);
+          console.log("err", err);
         });
-    }
-
-    const isToggleModal = computed(() => store.state.setting.tagToggle);
-
-    const taskItem = computed(() => store.state.task.tasks);
+    };
 
     return {
       form,
       description,
       date,
-      // data,
       taskItem,
       isLeftBarToggle,
       isToggleModal,

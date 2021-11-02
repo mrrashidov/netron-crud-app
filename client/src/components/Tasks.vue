@@ -72,6 +72,8 @@ import CloseSvg from "./icons/CloseSvg.vue";
 import EditTaskSvg from "./icons/EditTaskSvg.vue";
 import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
 import { useMutation } from "villus";
+import { watchEffect } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "Tasks",
   components: {
@@ -97,6 +99,10 @@ export default {
     },
   },
   setup() {
+    watchEffect(() => {});
+
+    const store = useStore();
+
     const deleteTask = `
       mutation deleteTask($input: DeleteInput){
   deleteTask(input: $input){
@@ -121,7 +127,8 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res);
+          store.dispatch("DELETE_TASK", { id: value });
+          console.log("id", value);
         })
         .catch((err) => {
           console.log(err);
