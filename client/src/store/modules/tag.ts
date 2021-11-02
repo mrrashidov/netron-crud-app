@@ -1,7 +1,7 @@
 import { Module } from "vuex";
 import { useQuery } from "villus";
 interface IState {
-  tags: [any];
+  tags: [] | null;
 }
 
 const initState: IState = {

@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply h-8
+    p-1
+    w-14
+    border border-gray-300
+    shadow
+    text-sm
+    transition-all
+    duration-200
+    delay-200
+    rounded;
+  }
+
+  .btn-cancel {
+    @apply bg-white
+    font-medium
+    text-black;
+  }
+
+  .btn-primary {
+    @apply font-medium
+    w-20
+    text-white;
+  }
+
+  .btn-sort {
+    @apply w-20 
+    text-gray-500 text-xs
+    p-1
+    hover:bg-gray-200 hover:text-gray-900
+    rounded;
+  }
+
+  .btn-view {
+    @apply w-24 
+    text-gray-500 text-xs
+    p-1
+    hover:bg-gray-200 hover:text-gray-900
+    rounded;
+  }
+
+  .btn-comment {
+    @apply w-24 
+    text-gray-500 text-xs
+    p-1
+    hover:bg-gray-200 hover:text-gray-900
+    rounded;
+  }
+
+  .btn-cancel:hover {
+    @apply hover:bg-gray-200 hover:border-gray-400 hover:shadow-xl;
+  }
+
+  .btn-primary:hover {
+    @apply hover:bg-red-700 hover:border-gray-400 hover:shadow-xl;
+  }
+
+  .form-control {
+    @apply outline-none
+    h-7
+    pl-2
+    w-24
+    border border-gray-300
+    transition-all
+    duration-200
+    delay-200
+    shadow
+    rounded;
+  }
+
+  .form-control:hover {
+    @apply hover:shadow-xl;
+  }
+}

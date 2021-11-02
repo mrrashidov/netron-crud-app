@@ -1,4 +1,5 @@
 import { Module } from "vuex";
+import { useQuery } from "villus";
 
 interface ITask {
   id: Number;
@@ -24,8 +25,23 @@ const task: Module<any, any> = {
   state: initState,
   getters: {},
   actions: {
-    GET_TASKS: ({ commit }, payload) => {
-      commit("SET_GET_TASKS", payload);
+    GET_TASKS: ({ commit }) => {
+      const allTask = `
+      query {
+        tasks{
+        id
+        title
+        description
+        date
+        created_at
+        }
+      }
+    `;
+
+      const { data } = useQuery({
+        query: allTask,
+      });
+      commit("SET_GET_TASKS", data);
     },
   },
   mutations: {

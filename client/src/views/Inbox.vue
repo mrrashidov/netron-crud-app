@@ -12,40 +12,9 @@
               </h1>
             </div>
             <div>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
-                <CommentSvg />Yorumlar
-              </button>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
-                <ViewSvg />Görüntüle
-              </button>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
+              <button class="btn btn-comment"><CommentSvg />Yorumlar</button>
+              <button class="btn btn-view"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
               </button>
@@ -152,9 +121,6 @@
                       <label class="text-red-500">
                         <ErrorMessage name="date" />
                       </label>
-                      <!-- <label class="text-red-500">
-                        <ErrorMessage name="date" />
-                      </label> -->
                     </div>
                   </div>
                   <div>
@@ -703,52 +669,23 @@
         <div class="w-1/2 mx-auto">
           <div class="w-full flex justify-between items-center">
             <div>
-              <h1 class="today-header font-bold">
+              <h1 class="font-bold text-xl">
                 {{ t("inboxPage.headerTop") }}
               </h1>
             </div>
             <div>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
+              <button class="btn btn-comment mr-2">
                 <CommentSvg />Yorumlar
               </button>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
-                <ViewSvg />Görüntüle
-              </button>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
+              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
               </button>
             </div>
           </div>
-          <div v-if="data">
-            <div v-for="todo in data.tasks" :key="todo.id">
+          <div v-if="taskItem">
+            <div v-for="todo in taskItem.tasks" :key="todo.id">
               <hr class="mt-2" />
               <Tasks :todo="todo" />
             </div>
@@ -777,15 +714,7 @@
               <div class="text-center">
                 <button
                   @click="onClick"
-                  class="
-                    add-task-button-general
-                    w-24
-                    h-9
-                    mt-2
-                    bg-red-500
-                    rounded
-                    text-white
-                  "
+                  class="btn btn-primary bg-primary w-24 h-10"
                 >
                   {{ t("inboxPage.addTask") }}
                 </button>
@@ -801,6 +730,7 @@
                     mt-2
                     focus:border-gray-700
                     rounded
+                    shadow
                   "
                 >
                   <div>
@@ -823,7 +753,7 @@
                       placeholder="Açıklama"
                     ></Field>
                     <div class="ml-3 mr-3">
-                      <label class="text-red-500 block">
+                      <label class="text-red-500 w-12 block">
                         <ErrorMessage name="description" />
                       </label>
                       <label class="text-red-500 block">
@@ -832,43 +762,22 @@
                       <label class="text-red-500 block">
                         <ErrorMessage name="date" />
                       </label>
-                      <!-- <label class="text-red-500">
-                        <ErrorMessage name="date" />
-                      </label> -->
                     </div>
                   </div>
-                  <div>
+                  <div class="m-2">
                     <Field
                       name="date"
                       v-model="date"
                       :rules="dateRules"
                       :format="dd - MM - YYYY"
                       type="date"
-                      class="
-                        h-auto
-                        outline-none
-                        ml-2
-                        mt-2
-                        mb-2
-                        pl-3
-                        border border-gray-300
-                        rounded
-                      "
+                      class="form-control w-40"
                     />
                     <Field
                       name="group"
                       v-model="group"
                       as="select"
-                      class="
-                        h-auto
-                        outline-none
-                        ml-2
-                        mt-2
-                        mb-2
-                        pl-3
-                        border border-gray-300
-                        rounded
-                      "
+                      class="form-control ml-2"
                     >
                       <option value="" selected disabled>Select</option>
                     </Field>
@@ -878,43 +787,26 @@
                   <div>
                     <button
                       type="submit"
-                      class="
-                        p-1
-                        pl-2
-                        pr-2
-                        add-task
-                        font-medium
-                        text-white
-                        rounded
-                      "
+                      class="btn btn-primary bg-primary mr-2"
                     >
                       {{ t("inboxPage.addTask") }}
                     </button>
                     <button
                       @click="onCancel"
                       type="button"
-                      class="
-                        ml-4
-                        p-1
-                        w-14
-                        font-medium
-                        border border-gray-300
-                        bg-white
-                        text-black
-                        border
-                        rounded
-                        hover:bg-gray-200 hover:border-gray-400
-                      "
+                      class="btn btn-cancel"
                     >
                       {{ t("inboxPage.cancel") }}
                     </button>
                   </div>
                   <div>
                     <template v-if="this.description">
-                      <p>{{ this.description.length }}</p>
+                      <p class="text-sm text-gray-600">
+                        {{ this.description.length }}
+                      </p>
                     </template>
                     <template v-else>
-                      <p>0</p>
+                      <p class="text-sm text-gray-600">0</p>
                     </template>
                   </div>
                 </div>
@@ -934,7 +826,7 @@ import ViewSvg from "../components/icons/ViewSvg.vue";
 import CommentSvg from "../components/icons/CommentSvg.vue";
 import TagModal from "../components/TagModal.vue";
 import { useStore } from "vuex";
-import { watch, computed, ref } from "vue";
+import { computed, ref, watchEffect, onMounted } from "vue";
 import SortSvg from "@icons/SortSvg.vue";
 import AddTodoSvg from "@icons/AddTodoSvg.vue";
 import AddTaskSvg from "@icons/AddTaskSvg.vue";
@@ -987,11 +879,19 @@ export default {
     },
   },
   setup() {
+    const store = useStore();
+    watchEffect(() => {
+      store.dispatch("GET_TASKS");
+    });
+
+    onMounted(() => {
+      console.log("component did update");
+    });
     const form = ref();
     const description = ref();
     const date = ref(new Date().toISOString().slice(0, 10));
     const { t } = useI18n();
-    const store = useStore();
+
     store.dispatch("GET_LEFTBAR_TOGGLE", false);
     const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
 
@@ -1009,21 +909,21 @@ export default {
       }
       `;
 
-    const allTask = `
-    query {
-      tasks{
-        id
-        title
-        description
-        date
-        created_at
-      }
-    }
-    `;
+    // const allTask = `
+    // query {
+    //   tasks{
+    //     id
+    //     title
+    //     description
+    //     date
+    //     created_at
+    //   }
+    // }
+    // `;
 
-    const { data } = useQuery({
-      query: allTask,
-    });
+    // const { data } = useQuery({
+    //   query: allTask,
+    // });
 
     const { execute } = useMutation(addTask);
 
@@ -1049,11 +949,14 @@ export default {
 
     const isToggleModal = computed(() => store.state.setting.tagToggle);
 
+    const taskItem = computed(() => store.state.task.tasks);
+
     return {
       form,
       description,
       date,
-      data,
+      // data,
+      taskItem,
       isLeftBarToggle,
       isToggleModal,
       onSubmit,
@@ -1070,32 +973,6 @@ export default {
 
 .today-span {
   font-size: 13px;
-}
-
-.add-task-button:hover {
-  color: red !important;
-}
-
-.add-task-header {
-  font-size: 16px;
-}
-
-.add-task-text {
-  font-size: 14px;
-}
-
-.add-task-button-general {
-  font-size: 13px;
-  background-color: #db4c3f;
-}
-
-textarea {
-  font-size: 13px;
-}
-
-.add-task {
-  background-color: #db4c3f;
-  font-size: 16px;
 }
 
 .tick-button {
