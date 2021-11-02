@@ -656,14 +656,28 @@
                   <div>
                     <button
                       type="submit"
-                      class="btn btn-primary bg-primary mr-2"
+                      class="
+                        btn btn-primary
+                        bg-primary
+                        mr-2
+                        transition
+                        ease-in-out
+                        transform
+                        hover:-translate-y-1 hover:scale-110
+                      "
                     >
                       {{ t("inboxPage.addTask") }}
                     </button>
                     <button
                       @click="onCancel"
                       type="button"
-                      class="btn btn-cancel"
+                      class="
+                        btn btn-cancel
+                        transition
+                        ease-in-out
+                        transform
+                        hover:-translate-y-1 hover:scale-110
+                      "
                     >
                       {{ t("inboxPage.cancel") }}
                     </button>

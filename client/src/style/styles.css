@@ -103,4 +103,10 @@
   .edit-task-button:hover .edit-task-svg {
     @apply text-gray-800;
   }
+  body {
+    @apply font-roboto;
+  }
+  /* input {
+    @apply font-input;
+  } */
 }
