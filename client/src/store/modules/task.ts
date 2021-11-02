@@ -1,5 +1,4 @@
 import { Module } from "vuex";
-import { useQuery, useMutation } from "villus";
 
 interface ITask {
   id: Number;
@@ -34,6 +33,9 @@ const task: Module<any, any> = {
     DELETE_TASK: ({ commit }, payload) => {
       commit("SET_DELETE_TASK", payload);
     },
+    UPDATE_TASK: ({ commit }, payload) => {
+      commit("SET_UPDATE_TASK", payload);
+    },
   },
   mutations: {
     SET_GET_TASKS: (state, data) => {
@@ -50,11 +52,19 @@ const task: Module<any, any> = {
       state.tasks.push(state.task);
     },
     SET_DELETE_TASK: (state, data) => {
-      console.log("datasadsa", data.id);
-
       const lastItem = state.tasks.filter((item) => item.id !== data.id);
-
       state.tasks = lastItem;
+    },
+    SET_UPDATE_TASK: (state, data) => {
+      console.log("updateData", data);
+      const existsAtIndex = state.tasks.findIndex(
+        (taskItem) => taskItem.id == data.id
+      );
+      if ((existsAtIndex) => existsAtIndex !== -1) {
+        state.tasks[existsAtIndex] = data;
+      } else {
+        state.tasks.push(data);
+      }
     },
   },
 };

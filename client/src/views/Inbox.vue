@@ -7,13 +7,15 @@
         <div class="w-1/2 mx-auto">
           <div class="w-full flex justify-between items-center">
             <div>
-              <h1 class="today-header font-bold">
+              <h1 class="text-xl font-bold">
                 {{ t("inboxPage.headerTop") }}
               </h1>
             </div>
             <div>
-              <button class="btn btn-comment"><CommentSvg />Yorumlar</button>
-              <button class="btn btn-view"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-comment mr-2">
+                <CommentSvg />Yorumlar
+              </button>
+              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
               <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
@@ -164,22 +166,14 @@
                   <div>
                     <button
                       type="submit"
-                      class="p-1 bg-red-500 text-white rounded"
+                      class="btn btn-primary bg-primary mr-2"
                     >
                       {{ t("todayPage.addTask") }}
                     </button>
                     <button
                       @click="onCancel"
                       type="button"
-                      class="
-                        ml-4
-                        p-1
-                        bg-white
-                        text-black
-                        border
-                        rounded
-                        border-gray-300
-                      "
+                      class="btn btn-cancel"
                     >
                       {{ t("inboxPage.cancel") }}
                     </button>
@@ -208,45 +202,16 @@
         <div class="w-1/2 mx-auto">
           <div class="w-full flex justify-between items-center">
             <div>
-              <h1 class="today-header font-bold">
+              <h1 class="text-xl font-bold">
                 {{ t("inboxPage.headerTop") }}
               </h1>
             </div>
             <div>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
+              <button class="btn btn-comment mr-2">
                 <CommentSvg />Yorumlar
               </button>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
-                <ViewSvg />Görüntüle
-              </button>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
+              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
               </button>
@@ -344,9 +309,6 @@
                       <label class="text-red-500 block">
                         <ErrorMessage name="date" />
                       </label>
-                      <!-- <label class="text-red-500">
-                        <ErrorMessage name="date" />
-                      </label> -->
                     </div>
                   </div>
                   <div>
@@ -385,35 +347,13 @@
                 </div>
                 <div class="flex justify-between items-center mt-2">
                   <div>
-                    <button
-                      type="submit"
-                      class="
-                        p-1
-                        pl-2
-                        pr-2
-                        add-task
-                        font-medium
-                        text-white
-                        rounded
-                      "
-                    >
+                    <button type="submit" class="btn btn-primary bg-primary">
                       {{ t("inboxPage.addTask") }}
                     </button>
                     <button
                       @click="onCancel"
                       type="button"
-                      class="
-                        ml-4
-                        p-1
-                        w-14
-                        font-medium
-                        border border-gray-300
-                        bg-white
-                        text-black
-                        border
-                        rounded
-                        hover:bg-gray-200 hover:border-gray-400
-                      "
+                      class="btn btn-cancel"
                     >
                       {{ t("inboxPage.cancel") }}
                     </button>
@@ -441,45 +381,16 @@
         <div class="w-1/2 mx-auto">
           <div class="w-full flex justify-between items-center">
             <div>
-              <h1 class="today-header font-bold">
+              <h1 class="text-xl font-bold">
                 {{ t("inboxPage.headerTop") }}
               </h1>
             </div>
             <div>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
+              <button class="btn btn-comment mr-2">
                 <CommentSvg />Yorumlar
               </button>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
-                <ViewSvg />Görüntüle
-              </button>
-              <button
-                class="
-                  mr-5
-                  text-gray-500 text-xs
-                  p-1
-                  hover:bg-gray-200 hover:text-gray-900
-                  rounded
-                  border-red-500
-                "
-              >
+              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
               </button>
@@ -521,18 +432,7 @@
                 {{ t("inboxPage.text") }}
               </p>
               <div class="text-center">
-                <button
-                  @click="onClick"
-                  class="
-                    add-task-button-general
-                    w-24
-                    h-9
-                    mt-2
-                    bg-red-500
-                    rounded
-                    text-white
-                  "
-                >
+                <button @click="onClick" class="btn btn-primary bg-primary">
                   {{ t("inboxPage.addTask") }}
                 </button>
               </div>
@@ -586,9 +486,6 @@
                       <label class="text-red-500 block">
                         <ErrorMessage name="date" />
                       </label>
-                      <!-- <label class="text-red-500">
-                        <ErrorMessage name="date" />
-                      </label> -->
                     </div>
                   </div>
                   <div>
@@ -598,29 +495,9 @@
                       :format="dd - MM - YYYY"
                       :rules="dateRules"
                       type="date"
-                      class="
-                        h-auto
-                        outline-none
-                        ml-2
-                        mt-2
-                        mb-2
-                        pl-3
-                        border border-gray-300
-                        rounded
-                      "
+                      class="form-control w-40 m-2"
                     />
-                    <select
-                      class="
-                        h-auto
-                        outline-none
-                        ml-2
-                        mt-2
-                        mb-2
-                        pl-3
-                        border border-gray-300
-                        rounded
-                      "
-                    >
+                    <select class="form-control ml-2">
                       <option>Select</option>
                     </select>
                   </div>
@@ -629,22 +506,14 @@
                   <div>
                     <button
                       type="submit"
-                      class="p-1 bg-red-500 text-white rounded"
+                      class="btn btn-primary bg-primary mr-2"
                     >
                       {{ t("inboxPage.addTask") }}
                     </button>
                     <button
                       @click="onCancel"
                       type="button"
-                      class="
-                        ml-4
-                        p-1
-                        bg-white
-                        text-black
-                        border
-                        rounded
-                        border-gray-300
-                      "
+                      class="btn btn-cancel"
                     >
                       {{ t("inboxPage.cancel") }}
                     </button>

@@ -76,4 +76,31 @@
   .form-control:hover {
     @apply hover:shadow-xl;
   }
+
+  .task-tick-svg {
+    @apply hidden;
+  }
+
+  .task-tick-checkbox:hover {
+    @apply bg-gray-300
+    transition-all
+    duration-100
+    delay-100;
+  }
+
+  .task-tick-checkbox:hover .task-tick-svg {
+    @apply block;
+  }
+
+  .edit-task-svg {
+    @apply hidden;
+  }
+
+  .edit-task:hover .edit-task-svg {
+    @apply text-gray-500 block;
+  }
+
+  .edit-task-button:hover .edit-task-svg {
+    @apply text-gray-800;
+  }
 }

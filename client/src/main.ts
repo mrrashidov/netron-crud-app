@@ -62,6 +62,7 @@ const messages = {
     inboxPage: {
       headerTop: "Inbox",
       addTask: "Add a task",
+      updateTask: "Update task",
       sort: "Sort",
       cancel: "Cancel",
       header: "Get a clear view of the day",
@@ -146,6 +147,7 @@ const messages = {
       headerTop: "Klasör",
       dt: "Sal 19 Oct",
       addTask: "Görev ekle",
+      updateTask: "Görev güncelle",
       sort: "Sırala",
       cancel: "İptal",
       header: "Günün net bir görünümünü edin",

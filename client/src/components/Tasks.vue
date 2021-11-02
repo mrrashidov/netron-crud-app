@@ -1,65 +1,47 @@
 <template>
-  <div v-if="this.isTagEdit">
-    <div
-      class="
-        absolute
-        top-0
-        left-0
-        w-full
-        h-full
-        overflow-hidden
-        bg-gray-900 bg-opacity-80
-      "
-    >
-      <div
-        class="bg-white rounded shadow w-1/2 mx-auto transform translate-y-24"
-      >
-        <div class="text-right">
-          <button
-            class="
-              hover:bg-gray-300
-              rounded
-              m-2
-              text-gray-600
-              hover:text-gray-800
-            "
-            @click="onCloseEditTask"
-          >
-            <CloseSvg />
-          </button>
+  <div>
+    <div>
+      <div>
+        <div
+          class="flex justify-between items-center edit-task"
+          v-if="isInput == true"
+        >
+          <div class="absolute w-1/2 mx-auto bg-white top-20 h-full">
+            <div>
+              <EditForm :todo="todo" :isTagEdit="this.isTagEdit" />
+            </div>
+          </div>
         </div>
-        <div>
-          <EditForm :todo="todo" :isTagEdit="this.isTagEdit" />
-        </div>
-      </div>
-    </div>
-    <div class="flex">
-      <button @click="onDeleteTask(todo.id)" class="tick-button mt-3 mr-1">
-        <TaskCheckBoxSvg class="tick" />
-      </button>
-      <div class="mt-2 ml-2 leading-5 w-full flex justify-between">
-        <div>
-          <p>{{ todo.title }}</p>
-          <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-        </div>
-        <div>
-          <button @click="onEditTask"><EditTaskSvg /></button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div v-else>
-    <div class="flex">
-      <button @click="onDeleteTask(todo.id)" class="tick-button mt-3 mr-1">
-        <TaskCheckBoxSvg class="tick" />
-      </button>
-      <div class="mt-2 ml-2 leading-5 w-full flex justify-between">
-        <div>
-          <p>{{ todo.title }}</p>
-          <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-        </div>
-        <div>
-          <button @click="onEditTask"><EditTaskSvg /></button>
+        <div v-else class="flex justify-between items-center edit-task">
+          <div class="flex justify-between items-center">
+            <div
+              class="
+                rounded-full
+                h-5
+                w-5
+                flex
+                items-center
+                justify-center
+                border border-gray-400
+                task-tick-checkbox
+              "
+            >
+              <div>
+                <button @click="onDeleteTask(todo.id)" class="task-tick-svg">
+                  <TaskCheckBoxSvg />
+                </button>
+              </div>
+            </div>
+            <div class="ml-2">
+              <p>{{ todo.title }}</p>
+              <p class="text-gray-600 text-sm">{{ todo.description }}</p>
+            </div>
+          </div>
+          <div>
+            <button @click="onEditTask" class="edit-task-button">
+              <EditTaskSvg class="edit-task-svg" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -72,8 +54,10 @@ import CloseSvg from "./icons/CloseSvg.vue";
 import EditTaskSvg from "./icons/EditTaskSvg.vue";
 import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
 import { useMutation } from "villus";
-import { watchEffect } from "vue";
 import { useStore } from "vuex";
+import { computed } from "vue";
+
+import { useI18n } from "vue-i18n";
 export default {
   name: "Tasks",
   components: {
@@ -91,36 +75,30 @@ export default {
     };
   },
   methods: {
-    onEditTask() {
-      this.isTagEdit = true;
-    },
     onCloseEditTask() {
       this.isTagEdit = false;
     },
   },
   setup() {
-    watchEffect(() => {});
-
+    const { t } = useI18n();
     const store = useStore();
 
     const deleteTask = `
       mutation deleteTask($input: DeleteInput){
-  deleteTask(input: $input){
-    id
-    user_id
-    title
-    description
-    date
-    status
-    created_at
-  }
-}
+        deleteTask(input: $input){
+        id
+        user_id
+        title
+        description
+        date
+        status
+        created_at
+        }
+      }
       `;
-
     const { execute } = useMutation(deleteTask);
 
     function onDeleteTask(value) {
-      console.log(value);
       execute({
         input: {
           id: value,
@@ -135,8 +113,17 @@ export default {
         });
     }
 
+    function onEditTask() {
+      store.dispatch("GET_INPUT_TOGGLE", true);
+    }
+
+    const isInput = computed(() => store.state.setting.inputCancel);
+
     return {
       onDeleteTask,
+      onEditTask,
+      isInput,
+      t,
     };
   },
 };

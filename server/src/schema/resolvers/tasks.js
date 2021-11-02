@@ -75,7 +75,35 @@ module.exports = {
         input.id
       );
 
-      console.log(input);
+      return await todo
+        .all(null, [
+          "todos.id",
+          "todos.user_id",
+          "todos.title",
+          "todos.description",
+          "todos.date",
+        ])
+        .where("todos.id", input.id)
+        .then((res) => {
+          return {
+            id: res[0].id,
+            user_id: res[0].user_id,
+            title: res[0].title,
+            description: res[0].description,
+            date: res[0].date,
+          };
+        });
+
+      // return await todo
+      //   .all(null, ["todo.id", "todos.user_id"])
+      //   .where("todos.id", input.id)
+      //   .then((res) => {
+      //     console.log(res[0]);
+      //     return res;
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
     },
   },
 };
