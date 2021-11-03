@@ -46,26 +46,14 @@
     <div>
       <div v-if="tag.color == 'blue'">
         <div class="mt-2">
-          <div class="w-full flex justify-between">
+          <div class="tag-more w-full flex justify-between">
             <div>
               <TagColorSvg class="text-blue-500 inline" />
               <p class="inline">{{ tag.name }}</p>
             </div>
             <div>
-              <button
-                @click="onTagMore"
-                class="
-                  tag-more-button
-                  h-5
-                  w-6
-                  text-center
-                  mr-3
-                  flex
-                  justify-center
-                  items-center
-                "
-              >
-                <TagMoreSvg class="text-center" />
+              <button @click="onTagMore" class="tag-more-button">
+                <TagMoreSvg class="tag-more-svg text-center" />
               </button>
             </div>
           </div>
@@ -73,26 +61,14 @@
       </div>
       <div v-if="tag.color == 'red'">
         <div class="mt-2">
-          <div class="w-full flex justify-between">
+          <div class="tag-more w-full flex justify-between">
             <div>
               <TagColorSvg class="text-red-500 inline" />
               <p class="inline">{{ tag.name }}</p>
             </div>
             <div>
-              <button
-                @click="onTagMore"
-                class="
-                  tag-more-button
-                  h-5
-                  w-6
-                  text-center
-                  mr-3
-                  flex
-                  justify-center
-                  items-center
-                "
-              >
-                <TagMoreSvg class="text-center" />
+              <button @click="onTagMore" class="tag-more-button">
+                <TagMoreSvg class="tag-more-svg text-center" />
               </button>
             </div>
           </div>
@@ -100,26 +76,14 @@
       </div>
       <div v-if="tag.color == 'yellow'">
         <div class="mt-2">
-          <div class="w-full flex justify-between">
+          <div class="tag-more w-full flex justify-between">
             <div>
               <TagColorSvg class="text-yellow-500 inline" />
               <p class="inline">{{ tag.name }}</p>
             </div>
             <div>
-              <button
-                @click="onTagMore"
-                class="
-                  tag-more-button
-                  h-5
-                  w-6
-                  text-center
-                  mr-3
-                  flex
-                  justify-center
-                  items-center
-                "
-              >
-                <TagMoreSvg class="text-center" />
+              <button @click="onTagMore" class="tag-more-button">
+                <TagMoreSvg class="tag-more-svg text-center" />
               </button>
             </div>
           </div>

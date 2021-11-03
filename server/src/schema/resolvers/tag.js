@@ -30,6 +30,7 @@ module.exports = {
       return await tag
         .all(null, [
           "tags.id",
+          "tags.user_id",
           "tags.name",
           "tags.color",
           "tags.status",
@@ -41,6 +42,7 @@ module.exports = {
           pubsub.publish("newTag", { newTag: item });
           return {
             id: item.id,
+            user_id: item.user_id,
             name: item.name,
             color: item.color,
             status: "active",

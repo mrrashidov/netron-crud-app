@@ -103,6 +103,29 @@
   .edit-task-button:hover .edit-task-svg {
     @apply text-gray-800;
   }
+
+  .tag-more-svg {
+    @apply hidden;
+  }
+
+  .tag-more:hover .tag-more-svg {
+    @apply block text-gray-600;
+  }
+
+  .tag-more-button {
+    @apply h-5
+    w-6
+    text-center
+    mr-3
+    flex
+    justify-center
+    items-center;
+  }
+
+  .tag-more-button:hover .tag-more-svg {
+    @apply text-gray-900;
+  }
+
   body {
     @apply font-roboto;
   }

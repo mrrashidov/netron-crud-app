@@ -1,6 +1,6 @@
 <template>
   <div class="w-2/6">
-    <div class="w-5/6 bg-gray-100 h-screen">
+    <div class="w-5/6 bg-gray-100 min-h-screen">
       <ul class="pl-12 pr-12 p-7">
         <routerLink to="/">
           <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
@@ -10,11 +10,6 @@
         <routerLink to="/today">
           <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
             <TodaySvg />{{ t("message.today") }}
-            <!-- <div v-if="tagItems">
-              <div v-for="(item, index) in tagItems.tags" :key="index">
-                <p>{{ item.id }}</p>
-              </div>
-            </div> -->
           </li>
         </routerLink>
         <routerLink to="/upcoming">
@@ -37,7 +32,7 @@
           </div>
           <div v-else>
             <div>
-              <div v-if="data">
+              <div v-if="tagItems">
                 <div @click="onCancel" class="flex items-center">
                   <RightArrow class="ml-3 mt-1 mr-2 origin-left transform" />
                   <div class="tag w-full flex justify-between">
@@ -47,7 +42,7 @@
                     </button>
                   </div>
                 </div>
-                <div v-for="(tag, index) in data.tags" :key="index">
+                <div v-for="(tag, index) in tagItems" :key="index">
                   <TagOption :tag="tag" />
                 </div>
               </div>
@@ -96,6 +91,7 @@ import AddLabelSvg from "@icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "vuex";
 import { computed, onMounted, watchEffect } from "vue";
+import { useQuery } from "villus";
 export default {
   name: "Leftbar",
   components: {
@@ -135,36 +131,39 @@ export default {
   },
   setup() {
     const store = useStore();
-    // const getTags = `
-    //   query{
-    //     tags{
-    //     id
-    //     user_id
-    //     name
-    //     color
-    //     }
-    // }
-    // `;
+    const { t } = useI18n();
+    const getTags = `
+       query{
+         tags{
+         id
+         user_id
+         name
+         color
+         }
+     }
+     `;
 
-    // const { data } = useQuery({
-    //   query: getTags,
-    // });
+    const { data } = useQuery({
+      query: getTags,
+    })
+      .then((res) => {
+        console.log(res.data.value.tags);
+        store.dispatch("GET_TAGS", res.data.value.tags);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     watchEffect(() => {
       store.dispatch("GET_TAGS");
     });
     onMounted(() => {
       console.log("component created");
-      // store.dispatch("GET_TAGS");
     });
 
-    const { t } = useI18n();
-    // const store = useStore();
     function onLabelToggle() {
       store.dispatch("GET_TAG_TOGGLE", true);
     }
-
-    // console.log(data);
 
     const tagItems = computed(() => store.state.tag.tags);
 
@@ -172,7 +171,7 @@ export default {
 
     return {
       onLabelToggle,
-      // data,
+      data,
       tagItems,
       t,
     };
