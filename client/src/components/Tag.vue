@@ -77,7 +77,6 @@ export default {
     const { data } = useSubscription({ query: newTag });
 
     watch(data, (incoming) => {
-      // do stuff with incoming data
       messages.value.push(incoming);
     });
 

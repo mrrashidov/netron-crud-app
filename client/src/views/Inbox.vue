@@ -560,7 +560,6 @@
             </div>
           </div>
           <div>
-            <hr class="mt-2" />
             <Task />
           </div>
           <hr class="mt-3" />
@@ -830,38 +829,8 @@ export default {
           date: date.value,
           status: "active",
         },
-      })
-        .then((res) => {
-          store.dispatch("ADD_TASK", res.data.addTask);
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
+      });
     };
-
-    // const messages = ref([]);
-
-    // const newTask = `
-    //   subscription {
-    //   newTask{
-    //     id
-    //     title
-    //     description
-    //     date
-    //     created_at
-    //     }
-    //   }
-    //   `;
-
-    // const { pub } = useSubscription({ query: newTask });
-
-    // watch(pub, (incoming) => {
-    //   console.log("sub", sub);
-    //   console.log("incomin", incoming);
-    //   messages.value.push(incoming);
-    // });
-
-    // console.log("messages", messages);
 
     return {
       form,
