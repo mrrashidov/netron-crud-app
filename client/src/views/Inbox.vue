@@ -559,6 +559,10 @@
               <Tasks :todo="todo" />
             </div>
           </div>
+          <div>
+            <hr class="mt-2" />
+            <Task />
+          </div>
           <hr class="mt-3" />
           <div v-if="this.isActive == false">
             <div>
@@ -703,13 +707,14 @@
 </template>
 
 <script>
+import Task from "../components/Task.vue";
 import Tasks from "../components/Tasks.vue";
 import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
 import ViewSvg from "../components/icons/ViewSvg.vue";
 import CommentSvg from "../components/icons/CommentSvg.vue";
 import TagModal from "../components/TagModal.vue";
 import { useStore } from "vuex";
-import { computed, ref, watchEffect, onMounted } from "vue";
+import { computed, ref, watchEffect, watch } from "vue";
 import SortSvg from "@icons/SortSvg.vue";
 import AddTodoSvg from "@icons/AddTodoSvg.vue";
 import AddTaskSvg from "@icons/AddTaskSvg.vue";
@@ -717,7 +722,7 @@ import TickSvg from "@icons/TickSvg.vue";
 import LeftBar from "@/components/Leftbar.vue";
 import { useI18n } from "vue-i18n";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { useQuery, useMutation } from "villus";
+import { useQuery, useMutation, useSubscription } from "villus";
 import * as yup from "yup";
 
 export default {
@@ -744,6 +749,7 @@ export default {
     ViewSvg,
     TaskCheckBoxSvg,
     Tasks,
+    Task,
   },
 
   methods: {
@@ -833,6 +839,30 @@ export default {
         });
     };
 
+    // const messages = ref([]);
+
+    // const newTask = `
+    //   subscription {
+    //   newTask{
+    //     id
+    //     title
+    //     description
+    //     date
+    //     created_at
+    //     }
+    //   }
+    //   `;
+
+    // const { pub } = useSubscription({ query: newTask });
+
+    // watch(pub, (incoming) => {
+    //   console.log("sub", sub);
+    //   console.log("incomin", incoming);
+    //   messages.value.push(incoming);
+    // });
+
+    // console.log("messages", messages);
+
     return {
       form,
       description,
@@ -841,6 +871,7 @@ export default {
       isLeftBarToggle,
       isToggleModal,
       onSubmit,
+      // messages,
       t,
     };
   },

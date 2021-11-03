@@ -44,6 +44,7 @@ module.exports = {
           const item = response[0];
           pubsub.publish("newTask", { newTask: item });
           // return pubsub.asyncIterator("newTask");
+          console.log(item);
           return {
             id: taskId,
             user_id: item.user_id,
@@ -56,7 +57,7 @@ module.exports = {
         });
     },
     deleteTask: async (_, { input }) => {
-      todo
+      await todo
         .delete(input.id)
         .then((res) => {
           console.log(res);
@@ -93,17 +94,6 @@ module.exports = {
             date: res[0].date,
           };
         });
-
-      // return await todo
-      //   .all(null, ["todo.id", "todos.user_id"])
-      //   .where("todos.id", input.id)
-      //   .then((res) => {
-      //     console.log(res[0]);
-      //     return res;
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
     },
   },
 };

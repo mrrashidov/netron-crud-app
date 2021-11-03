@@ -45,6 +45,9 @@
                 <div v-for="(tag, index) in tagItems" :key="index">
                   <TagOption :tag="tag" />
                 </div>
+                <div>
+                  <Tag />
+                </div>
               </div>
             </div>
           </div>
@@ -81,6 +84,7 @@
 </template>
 
 <script>
+import Tag from "./Tag.vue";
 import TagOption from "./TagOption.vue";
 import TagMoreSvg from "./icons/TagMoreSvg.vue";
 import InboxSvg from "@icons/InboxSvg.vue";
@@ -90,7 +94,7 @@ import RightArrow from "@icons/RightArrow.vue";
 import AddLabelSvg from "@icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "vuex";
-import { computed, onMounted, watchEffect } from "vue";
+import { computed } from "vue";
 import { useQuery } from "villus";
 export default {
   name: "Leftbar",
@@ -102,6 +106,7 @@ export default {
     AddLabelSvg,
     TagMoreSvg,
     TagOption,
+    Tag,
   },
   data() {
     return {
@@ -154,12 +159,7 @@ export default {
         console.log(err);
       });
 
-    watchEffect(() => {
-      store.dispatch("GET_TAGS");
-    });
-    onMounted(() => {
-      console.log("component created");
-    });
+    store.dispatch("GET_TAGS");
 
     function onLabelToggle() {
       store.dispatch("GET_TAG_TOGGLE", true);

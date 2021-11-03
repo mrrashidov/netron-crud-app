@@ -49,13 +49,14 @@
 </template>
 
 <script>
+// import Task from "./Task.vue";
 import EditForm from "./EditForm.vue";
 import CloseSvg from "./icons/CloseSvg.vue";
 import EditTaskSvg from "./icons/EditTaskSvg.vue";
 import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
-import { useMutation } from "villus";
+import { useMutation, useSubscription } from "villus";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 
 import { useI18n } from "vue-i18n";
 export default {
@@ -65,6 +66,7 @@ export default {
     EditTaskSvg,
     CloseSvg,
     EditForm,
+    // Task,
   },
   props: {
     todo: Object,
@@ -98,6 +100,24 @@ export default {
       `;
     const { execute } = useMutation(deleteTask);
 
+    // const newTask = `
+    //   subscription {
+    //     newTask{
+    //         id
+    //         title
+    //         description
+    //         date
+    //         created_at
+    //     }
+    //     }
+    //   `;
+
+    // const { data } = useSubscription({ query: newTask });
+
+    // watch(data, (incoming) => {
+    //   messages.value.push(incoming);
+    // });
+
     function onDeleteTask(value) {
       execute({
         input: {
@@ -123,6 +143,7 @@ export default {
       onDeleteTask,
       onEditTask,
       isInput,
+      // messages,
       t,
     };
   },
