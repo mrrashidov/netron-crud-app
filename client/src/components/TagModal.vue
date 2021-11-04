@@ -117,6 +117,8 @@ export default {
     const addTag = `
     mutation addTag($input:TagInput){
         addTag(input:$input){
+        id
+        user_id
         name
         color
         status
@@ -137,6 +139,7 @@ export default {
       })
         .then((res) => {
           console.log(res.data.addTag);
+          store.dispatch("ADD_TAG", res.data.addTag);
         })
         .catch((err) => {
           console.log(err);

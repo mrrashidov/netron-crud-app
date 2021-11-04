@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "graphql": "^15.6.1",
+    "subscriptions-transport-ws": "^0.9.19",
     "vee-validate": "^4.5.3",
     "villus": "^1.0.0-rc.21",
     "vue": "^3.2.16",

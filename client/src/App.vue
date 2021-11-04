@@ -4,7 +4,14 @@
 
 <script>
 import Navbar from "./components/Navbar.vue";
-import { useClient } from "villus";
+import { useClient, handleSubscriptions, defaultPlugins } from "villus";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+const subscriptionClient = new SubscriptionClient(
+  "ws://192.168.0.32:4200/",
+  {}
+);
+const subscriptionForwarder = (operation) =>
+  subscriptionClient.request(operation);
 export default {
   name: "App",
   components: {
@@ -12,7 +19,8 @@ export default {
   },
   setup() {
     useClient({
-      url: "http://localhost:4200/",
+      url: "http://192.168.0.32:4200/",
+      use: [handleSubscriptions(subscriptionForwarder), ...defaultPlugins()],
     });
   },
 };

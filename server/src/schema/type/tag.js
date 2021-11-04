@@ -27,4 +27,8 @@ module.exports = gql`
     addTag(input: TagInput): Tag
     deleteTag(input: DeleteTag): Tag
   }
+
+  type Subscription {
+    newTag: Tag
+  }
 `;

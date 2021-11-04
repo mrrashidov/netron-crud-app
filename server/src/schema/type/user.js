@@ -28,4 +28,8 @@ module.exports = gql`
   type Mutation {
     addUser(input: UserInput): User
   }
+
+  type Subscription {
+    newUser: User!
+  }
 `;

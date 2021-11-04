@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-red-500 flex justify-between items-center">
+  <div class="h-xl bg-primary flex justify-between items-center">
     <div class="flex items-center">
       <div class="pl-2">
         <template v-if="this.isLeftBarToggle == true">
@@ -226,8 +226,6 @@ export default {
       query: getLanguages,
     });
 
-    console.log(data);
-
     return {
       onLogout,
       isLeftBarToggle,
@@ -238,11 +236,6 @@ export default {
 </script>
 
 <style scoped>
-.navbar {
-  height: 44px;
-  background-color: #db4c3f;
-}
-
 button {
   padding: 3px;
 }

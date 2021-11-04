@@ -1,8 +1,19 @@
 const { todo, userRole } = require("../../model");
 const { status } = require("../../helpers/constants");
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
 module.exports = {
   Subscription: {
-    newTask: {},
+    newTask: {
+      subscribe: () => {
+        return pubsub.asyncIterator("newTask");
+      },
+    },
+    delTask: {
+      subscribe: () => {
+        return pubsub.asyncIterator("delTask");
+      },
+    },
   },
   Query: {
     task: (_, { id }) => todo.findOne({ id }),
@@ -36,6 +47,7 @@ module.exports = {
         .where("todos.id", taskId)
         .then((response) => {
           const item = response[0];
+          pubsub.publish("newTask", { newTask: item });
           console.log(item);
           return {
             id: taskId,
@@ -48,16 +60,13 @@ module.exports = {
           };
         });
     },
-    deleteTask: async (_, { input }) => {
-      todo
-        .delete(input.id)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      console.log(input);
+    deleteTask: async (_, { id }) => {
+      await pubsub.publish("delTask", { delTask: id });
+      return todo.delete(id).then((res) => {
+        if (res === 1) {
+          return id;
+        }
+      });
     },
     updateTask: async (_, { input }) => {
       await todo.update(
@@ -68,7 +77,24 @@ module.exports = {
         input.id
       );
 
-      console.log(input);
+      return await todo
+        .all(null, [
+          "todos.id",
+          "todos.user_id",
+          "todos.title",
+          "todos.description",
+          "todos.date",
+        ])
+        .where("todos.id", input.id)
+        .then((res) => {
+          return {
+            id: res[0].id,
+            user_id: res[0].user_id,
+            title: res[0].title,
+            description: res[0].description,
+            date: res[0].date,
+          };
+        });
     },
   },
 };
