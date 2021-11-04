@@ -23,21 +23,15 @@ module.exports = gql`
 
   input UpdateInput {
     id: ID!
-    title: String!
+    user_id: ID
+    title: String
     description: String
+    date: String
+    status: StatusType
   }
 
   type Task {
     id: ID!
-    title: String
-    description: String
-    status: StatusType
-    date: String
-    created_at: String!
-  }
-
-  type TaskItem {
-    id: ID
     user_id: ID
     title: String
     description: String
@@ -46,19 +40,22 @@ module.exports = gql`
     created_at: String
   }
 
+  type TaskSubscriber {
+    mutation: String!
+    data: Task
+  }
   type Query {
     task(id: ID!, lang: String!): Task
     tasks: [Task]
   }
 
   type Mutation {
-    addTask(input: StoreTask): TaskItem
-    deleteTask(id: ID!): ID!
-    updateTask(input: UpdateInput): TaskItem
+    addTask(input: StoreTask!): Task
+    deleteTask(id: ID!): ID
+    updateTask(input: UpdateInput!): Task
   }
 
   type Subscription {
-    newTask: Task!
-    delTask: Int!
+    tasks: TaskSubscriber
   }
 `;

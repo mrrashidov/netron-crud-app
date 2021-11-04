@@ -2,13 +2,10 @@
   <div>
     <div>
       <div>
-        <div
-          class="flex justify-between items-center edit-task"
-          v-if="this.isInput === true"
-        >
+        <div class="flex justify-between items-center edit-task" v-if="isInput">
           <div class="absolute w-1/2 mx-auto bg-white top-20 h-full">
             <div>
-              <EditForm :todo="todo" :isTagEdit="this.isTagEdit" />
+              <EditForm :todo="todo" :isTagEdit="isTagEdit" />
             </div>
           </div>
         </div>
@@ -49,89 +46,81 @@
 </template>
 
 <script>
-import EditForm from "./EditForm.vue";
-import CloseSvg from "./icons/CloseSvg.vue";
-import EditTaskSvg from "./icons/EditTaskSvg.vue";
-import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
-import { useMutation } from "villus";
-import { useStore } from "vuex";
-import { computed } from "vue";
+  import EditForm from "./EditForm.vue";
+  import CloseSvg from "./icons/CloseSvg.vue";
+  import EditTaskSvg from "./icons/EditTaskSvg.vue";
+  import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
+  import { useMutation } from "villus";
+  import { useStore } from "vuex";
+  import { computed, ref } from "vue";
 
-import { useI18n } from "vue-i18n";
-export default {
-  name: "Tasks",
-  components: {
-    TaskCheckBoxSvg,
-    EditTaskSvg,
-    CloseSvg,
-    EditForm,
-  },
-  props: {
-    todo: Object,
-  },
-  data() {
-    return {
-      isTagEdit: false,
-    };
-  },
-  methods: {
-    onCloseEditTask() {
-      this.isTagEdit = false;
+  import { useI18n } from "vue-i18n";
+  export default {
+    name: "Tasks",
+    components: {
+      TaskCheckBoxSvg,
+      EditTaskSvg,
+      CloseSvg,
+      EditForm,
     },
-  },
-  setup() {
-    const { t } = useI18n();
-    const store = useStore();
+    props: {
+      todo: Object,
+    },
+    setup() {
+      const { t } = useI18n();
+      const store = useStore();
+      const isTagEdit = ref(false);
 
-    const deleteTask = `
+      const deleteTask = `
       mutation deleteTask($id: ID!){
         deleteTask(id: $id)
       }
       `;
-    const { execute } = useMutation(deleteTask);
+      const { execute } = useMutation(deleteTask);
 
-    function onDeleteTask(value) {
-      execute({
-        id: value,
-      })
-        .then((res) => {
-          store.dispatch("DELETE_TASK", { id: value });
+      function onDeleteTask(value) {
+        execute({
+          id: value,
         })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+          .then((res) => {
+            store.dispatch("task/DELETE_TASK", { id: value });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
 
-    function onEditTask() {
-      store.dispatch("GET_INPUT_TOGGLE", true);
-    }
+      function onEditTask() {
+        store.dispatch("GET_INPUT_TOGGLE", true);
+      }
 
-    const isInput = computed(() => store.state.setting.inputCancel);
+      const isInput = computed(() => store.state.setting.inputCancel);
 
-    return {
-      onDeleteTask,
-      onEditTask,
-      isInput,
-      t,
-    };
-  },
-};
+      return {
+        onDeleteTask,
+        onEditTask,
+        isInput,
+        isTagEdit,
+        t,
+      };
+    },
+  };
 </script>
 
 <style scoped>
-.tick-button {
-  height: 25px;
-  width: 25px;
-  border-radius: 25px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
+  .tick-button {
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
 
-.tick {
-  display: none;
-}
+  .tick {
+    display: none;
+  }
 
-.tick-button:hover .tick {
-  display: table-cell;
-  vertical-align: middle;
-}
+  .tick-button:hover .tick {
+    display: table-cell;
+    vertical-align: middle;
+  }
 </style>

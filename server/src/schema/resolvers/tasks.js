@@ -1,23 +1,23 @@
 const { todo, userRole } = require("../../model");
 const { status } = require("../../helpers/constants");
 const { PubSub } = require("graphql-subscriptions");
+const { ApolloError } = require("apollo-server-errors");
 const pubsub = new PubSub();
 module.exports = {
   Subscription: {
-    newTask: {
+    tasks: {
       subscribe: () => {
-        return pubsub.asyncIterator("newTask");
-      },
-    },
-    delTask: {
-      subscribe: () => {
-        return pubsub.asyncIterator("delTask");
+        return pubsub.asyncIterator("tasks");
       },
     },
   },
   Query: {
     task: (_, { id }) => todo.findOne({ id }),
     tasks: () => todo.all(),
+  },
+  Task: {
+    status: (parent) => "active",
+    user_id: (parent) => parent.user_id,
   },
   Mutation: {
     addTask: async (_, { input }) => {
@@ -45,56 +45,51 @@ module.exports = {
           "todos.created_at",
         ])
         .where("todos.id", taskId)
-        .then((response) => {
-          const item = response[0];
-          pubsub.publish("newTask", { newTask: item });
-          console.log(item);
-          return {
-            id: taskId,
-            user_id: item.user_id,
-            title: item.title,
-            description: item.description,
-            date: item.date,
-            status: "active",
-            created_at: item.created_at,
+        .then(async (response) => {
+          const item = {
+            mutation: "ADD_TASK",
+            data: {
+              id: taskId,
+              user_id: response[0].user_id,
+              title: response[0].title,
+              description: response[0].description,
+              date: response[0].date,
+              status: "active",
+              created_at: response[0].created_at,
+            },
           };
+          await pubsub.publish("tasks", { tasks: item });
+          return item;
         });
     },
-    deleteTask: async (_, { id }) => {
-      await pubsub.publish("delTask", { delTask: id });
-      return todo.delete(id).then((res) => {
+    updateTask: async (_, { input }) => {
+      return todo.update(input, input.id).then(async (res) => {
         if (res === 1) {
+          const task = await todo.findById(input.id);
+          task.status = "active";
+          await pubsub.publish("tasks", {
+            tasks: {
+              mutation: "UPDATE_TASK",
+              data: task,
+            },
+          });
+          return task;
+        }
+        throw new ApolloError("Item not found");
+      });
+    },
+    deleteTask: async (_, { id }) => {
+      return todo.delete(id).then(async (res) => {
+        if (res === 1) {
+          await pubsub.publish("tasks", {
+            tasks: {
+              mutation: "DELETE_TASK",
+              data: { id },
+            },
+          });
           return id;
         }
       });
-    },
-    updateTask: async (_, { input }) => {
-      await todo.update(
-        {
-          title: input.title,
-          description: input.description,
-        },
-        input.id
-      );
-
-      return await todo
-        .all(null, [
-          "todos.id",
-          "todos.user_id",
-          "todos.title",
-          "todos.description",
-          "todos.date",
-        ])
-        .where("todos.id", input.id)
-        .then((res) => {
-          return {
-            id: res[0].id,
-            user_id: res[0].user_id,
-            title: res[0].title,
-            description: res[0].description,
-            date: res[0].date,
-          };
-        });
     },
   },
 };
