@@ -626,7 +626,7 @@
                         <ErrorMessage name="description" />
                       </label>
                       <label class="text-red-500 block">
-                        <ErrorMessage name="form" />
+                        <ErrorMessage name="title" />
                       </label>
                       <label class="text-red-500 block">
                         <ErrorMessage name="date" />
@@ -682,9 +682,9 @@
                     </button>
                   </div>
                   <div>
-                    <template v-if="this.description">
+                    <template v-if="form.description">
                       <p class="text-sm text-gray-600">
-                        {{ this.description.length }}
+                        {{ form.description.length }}
                       </p>
                     </template>
                     <template v-else>
@@ -702,67 +702,67 @@
 </template>
 
 <script>
-  import Tasks from "../components/Tasks.vue";
-  import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
-  import ViewSvg from "../components/icons/ViewSvg.vue";
-  import CommentSvg from "../components/icons/CommentSvg.vue";
-  import TagModal from "../components/TagModal.vue";
-  import { useStore } from "vuex";
-  import { computed, reactive, onMounted, watch } from "vue";
-  import SortSvg from "@icons/SortSvg.vue";
-  import AddTodoSvg from "@icons/AddTodoSvg.vue";
-  import AddTaskSvg from "@icons/AddTaskSvg.vue";
-  import TickSvg from "@icons/TickSvg.vue";
-  import LeftBar from "@/components/Leftbar.vue";
-  import { useI18n } from "vue-i18n";
-  import { Form, Field, ErrorMessage } from "vee-validate";
-  import { useQuery, useMutation, useSubscription } from "villus";
-  import * as yup from "yup";
+import Tasks from "../components/Tasks.vue";
+import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
+import ViewSvg from "../components/icons/ViewSvg.vue";
+import CommentSvg from "../components/icons/CommentSvg.vue";
+import TagModal from "../components/TagModal.vue";
+import { useStore } from "vuex";
+import { computed, reactive, onMounted, watch } from "vue";
+import SortSvg from "@icons/SortSvg.vue";
+import AddTodoSvg from "@icons/AddTodoSvg.vue";
+import AddTaskSvg from "@icons/AddTaskSvg.vue";
+import TickSvg from "@icons/TickSvg.vue";
+import LeftBar from "@/components/Leftbar.vue";
+import { useI18n } from "vue-i18n";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import { useQuery, useMutation, useSubscription } from "villus";
+import * as yup from "yup";
 
-  export default {
-    name: "Today",
-    data() {
-      return {
-        isActive: false,
-        descriptionRules: yup.string().max(1000),
-        formRules: yup.string().required().max(500),
-        dateRules: yup.string().required(),
-      };
-    },
-    components: {
-      Form,
-      Field,
-      ErrorMessage,
-      SortSvg,
-      AddTaskSvg,
-      AddTodoSvg,
-      LeftBar,
-      TickSvg,
-      TagModal,
-      CommentSvg,
-      ViewSvg,
-      TaskCheckBoxSvg,
-      Tasks,
-    },
+export default {
+  name: "Today",
+  data() {
+    return {
+      isActive: false,
+      descriptionRules: yup.string().max(1000),
+      formRules: yup.string().required().max(500),
+      dateRules: yup.string().required(),
+    };
+  },
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+    SortSvg,
+    AddTaskSvg,
+    AddTodoSvg,
+    LeftBar,
+    TickSvg,
+    TagModal,
+    CommentSvg,
+    ViewSvg,
+    TaskCheckBoxSvg,
+    Tasks,
+  },
 
-    methods: {
-      onClick() {
-        this.isActive = true;
-        console.log("is active", true);
-      },
-      onCancel() {
-        this.isActive = false;
-        console.log("is active", false);
-      },
-      onTick() {
-        this.isTick = true;
-        console.log("is tick", true);
-        console.log(this.isTick);
-      },
+  methods: {
+    onClick() {
+      this.isActive = true;
+      console.log("is active", true);
     },
-    setup() {
-      const store = useStore();
-      const allTask = `
+    onCancel() {
+      this.isActive = false;
+      console.log("is active", false);
+    },
+    onTick() {
+      this.isTick = true;
+      console.log("is tick", true);
+      console.log(this.isTick);
+    },
+  },
+  setup() {
+    const store = useStore();
+    const allTask = `
       query {
         tasks{
         id
@@ -773,7 +773,7 @@
         }
       }
     `;
-      const tasks = `
+    const tasks = `
       subscription {
         tasks {
           mutation
@@ -788,44 +788,42 @@
 }
 `;
 
-      onMounted(() => {
-        useQuery({
-          query: allTask,
-        }).then(({ data }) =>
-          store.dispatch("task/GET_TASKS", data.value.tasks)
-        );
-      });
+    onMounted(() => {
+      useQuery({
+        query: allTask,
+      }).then(({ data }) => store.dispatch("task/GET_TASKS", data.value.tasks));
+    });
 
-      const { data: tasks_subscriber_data } = useSubscription({ query: tasks });
+    const { data: tasks_subscriber_data } = useSubscription({ query: tasks });
 
-      watch(tasks_subscriber_data, ({ tasks }) => {
-        if (tasks.mutation === "ADD_TASK") {
-          store.dispatch("task/ADD_TASK", tasks.data);
-        }
-        if (tasks.mutation === "UPDATE_TASK") {
-          store.dispatch("task/UPDATE_TASK", tasks.data);
-        }
-        if (tasks.mutation === "DELETE_TASK") {
-          store.dispatch("task/DELETE_TASK", tasks.data);
-        }
-      });
+    watch(tasks_subscriber_data, ({ tasks }) => {
+      if (tasks.mutation === "ADD_TASK") {
+        store.dispatch("task/ADD_TASK", tasks.data);
+      }
+      if (tasks.mutation === "UPDATE_TASK") {
+        store.dispatch("task/UPDATE_TASK", tasks.data);
+      }
+      if (tasks.mutation === "DELETE_TASK") {
+        store.dispatch("task/DELETE_TASK", tasks.data);
+      }
+    });
 
-      const form = reactive({
-        title: "",
-        description: "",
-        date: new Date().toISOString().slice(0, 10),
-      });
+    const form = reactive({
+      title: "",
+      description: "",
+      date: new Date().toISOString().slice(0, 10),
+    });
 
-      const { t } = useI18n();
+    const { t } = useI18n();
 
-      store.dispatch("GET_LEFTBAR_TOGGLE", false);
-      const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
+    store.dispatch("GET_LEFTBAR_TOGGLE", false);
+    const isLeftBarToggle = computed(() => store.state.todo.leftBarToggle);
 
-      const taskItem = computed(() => store.state.task.tasks);
+    const taskItem = computed(() => store.state.task.tasks);
 
-      const isToggleModal = computed(() => store.state.setting.tagToggle);
+    const isToggleModal = computed(() => store.state.setting.tagToggle);
 
-      const addTask = `
+    const addTask = `
        mutation addTask($input: StoreTask!){
          addTask(input:$input){
          id
@@ -839,52 +837,52 @@
        }
        `;
 
-      const { execute } = useMutation(addTask);
+    const { execute } = useMutation(addTask);
 
-      const onSubmit = async (values, { resetForm }) => {
-        const form = {
-          ...values,
-          user_id: 1,
-          status: "active",
-        };
-        execute({ input: form });
-        resetForm();
+    const onSubmit = async (values, { resetForm }) => {
+      const form = {
+        ...values,
+        user_id: 1,
+        status: "active",
       };
+      execute({ input: form });
+      resetForm();
+    };
 
-      return {
-        form,
-        taskItem,
-        isLeftBarToggle,
-        isToggleModal,
-        onSubmit,
-        t,
-      };
-    },
-  };
+    return {
+      form,
+      taskItem,
+      isLeftBarToggle,
+      isToggleModal,
+      onSubmit,
+      t,
+    };
+  },
+};
 </script>
 
 <style scoped>
-  .today-header {
-    font-size: 20px;
-  }
+.today-header {
+  font-size: 20px;
+}
 
-  .today-span {
-    font-size: 13px;
-  }
+.today-span {
+  font-size: 13px;
+}
 
-  .tick-button {
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-  }
+.tick-button {
+  height: 25px;
+  width: 25px;
+  border-radius: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
 
-  .tick {
-    display: none;
-  }
+.tick {
+  display: none;
+}
 
-  .tick-button:hover .tick {
-    display: table-cell;
-    vertical-align: middle;
-  }
+.tick-button:hover .tick {
+  display: table-cell;
+  vertical-align: middle;
+}
 </style>

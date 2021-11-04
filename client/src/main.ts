@@ -177,7 +177,9 @@ const messages = {
   },
 };
 
-const local = localStorage.getItem("local");
+const local = localStorage.getItem("local")
+  ? localStorage.getItem("local")
+  : "en";
 
 const i18n = createI18n({
   // something vue-i18n options here ...
