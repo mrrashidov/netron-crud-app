@@ -9,6 +9,11 @@ module.exports = {
         return pubsub.asyncIterator("newTask");
       },
     },
+    delTask: {
+      subscribe: () => {
+        return pubsub.asyncIterator("delTask");
+      },
+    },
   },
   Query: {
     task: (_, { id }) => todo.findOne({ id }),
@@ -43,7 +48,6 @@ module.exports = {
         .then((response) => {
           const item = response[0];
           pubsub.publish("newTask", { newTask: item });
-          // return pubsub.asyncIterator("newTask");
           console.log(item);
           return {
             id: taskId,
@@ -56,16 +60,13 @@ module.exports = {
           };
         });
     },
-    deleteTask: async (_, { input }) => {
-      await todo
-        .delete(input.id)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      console.log(input);
+    deleteTask: async (_, { id }) => {
+      await pubsub.publish("delTask", { delTask: id });
+      return todo.delete(id).then((res) => {
+        if (res === 1) {
+          return id;
+        }
+      });
     },
     updateTask: async (_, { input }) => {
       await todo.update(

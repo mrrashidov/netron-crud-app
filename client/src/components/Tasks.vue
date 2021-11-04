@@ -4,7 +4,7 @@
       <div>
         <div
           class="flex justify-between items-center edit-task"
-          v-if="isInput == true"
+          v-if="this.isInput === true"
         >
           <div class="absolute w-1/2 mx-auto bg-white top-20 h-full">
             <div>
@@ -49,14 +49,13 @@
 </template>
 
 <script>
-// import Task from "./Task.vue";
 import EditForm from "./EditForm.vue";
 import CloseSvg from "./icons/CloseSvg.vue";
 import EditTaskSvg from "./icons/EditTaskSvg.vue";
 import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
-import { useMutation, useSubscription } from "villus";
+import { useMutation } from "villus";
 import { useStore } from "vuex";
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 
 import { useI18n } from "vue-i18n";
 export default {
@@ -66,7 +65,6 @@ export default {
     EditTaskSvg,
     CloseSvg,
     EditForm,
-    // Task,
   },
   props: {
     todo: Object,
@@ -86,47 +84,18 @@ export default {
     const store = useStore();
 
     const deleteTask = `
-      mutation deleteTask($input: DeleteInput){
-        deleteTask(input: $input){
-        id
-        user_id
-        title
-        description
-        date
-        status
-        created_at
-        }
+      mutation deleteTask($id: ID!){
+        deleteTask(id: $id)
       }
       `;
     const { execute } = useMutation(deleteTask);
 
-    // const newTask = `
-    //   subscription {
-    //     newTask{
-    //         id
-    //         title
-    //         description
-    //         date
-    //         created_at
-    //     }
-    //     }
-    //   `;
-
-    // const { data } = useSubscription({ query: newTask });
-
-    // watch(data, (incoming) => {
-    //   messages.value.push(incoming);
-    // });
-
     function onDeleteTask(value) {
       execute({
-        input: {
-          id: value,
-        },
+        id: value,
       })
         .then((res) => {
           store.dispatch("DELETE_TASK", { id: value });
-          console.log("id", value);
         })
         .catch((err) => {
           console.log(err);
@@ -143,7 +112,6 @@ export default {
       onDeleteTask,
       onEditTask,
       isInput,
-      // messages,
       t,
     };
   },

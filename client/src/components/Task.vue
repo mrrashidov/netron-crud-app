@@ -29,7 +29,10 @@
                 "
               >
                 <div>
-                  <button @click="onDeleteTask(todo.id)" class="task-tick-svg">
+                  <button
+                    @click="onDeleteTask(task.newTask.id)"
+                    class="task-tick-svg"
+                  >
                     <TaskCheckBoxSvg />
                   </button>
                 </div>
@@ -57,8 +60,9 @@
 import EditForm from "./EditForm.vue";
 import TaskCheckBoxSvg from "./icons/TaskCheckBoxSvg.vue";
 import EditTaskSvg from "./icons/EditTaskSvg.vue";
-import { watch, ref } from "vue";
+import { watch, ref, computed } from "vue";
 import { useSubscription } from "villus";
+import { useStore } from "vuex";
 export default {
   name: "Task",
   components: {
@@ -67,7 +71,7 @@ export default {
     EditForm,
   },
   setup() {
-    const messages = ref([]);
+    const store = useStore();
     const newTask = `
        subscription {
          newTask{
@@ -79,12 +83,43 @@ export default {
          }
        }
       `;
-    const { data } = useSubscription({ query: newTask });
 
-    watch(data, (incoming) => {
-      messages.value.push(incoming);
+    const delTask = `
+       subscription {
+         delTask
+       }
+      `;
+
+    const messages = ref([]);
+    const { data: addTaskData } = useSubscription({ query: newTask });
+    const { data: delTaskData } = useSubscription({ query: delTask });
+
+    watch([addTaskData, delTaskData], (incoming) => {
+      const newTask = incoming[0];
+      const delTask = incoming[1];
+
+      if (newTask) {
+        messages.value.push(newTask);
+      }
+      if (delTask) {
+        const delMessage = messages.value.filter(
+          (message) => message.id !== delTask.delTask
+        );
+        console.log("delMessage", delMessage);
+        // messages.value.push(delMessage);
+        console.log("m", messages.value);
+        console.log("asgdjasdjads", delTask.delTask);
+      }
     });
-    return { messages };
+
+    // function onDeleteTask() {}
+
+    const isInput = computed(() => store.state.setting.inputCancel);
+
+    return {
+      messages,
+      isInput,
+    };
   },
 };
 </script>

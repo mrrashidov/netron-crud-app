@@ -638,21 +638,20 @@
                   </div>
                   <div class="m-2">
                     <Field
+                      as="input"
                       name="date"
                       v-model="date"
-                      :rules="dateRules"
-                      :format="dd - MM - YYYY"
                       type="date"
                       class="form-control w-40"
                     />
-                    <Field
+                    <!-- <Field
                       name="group"
                       v-model="group"
                       as="select"
                       class="form-control ml-2"
                     >
                       <option value="" selected disabled>Select</option>
-                    </Field>
+                    </Field> -->
                   </div>
                 </div>
                 <div class="flex justify-between items-center mt-2">
@@ -721,7 +720,7 @@ import TickSvg from "@icons/TickSvg.vue";
 import LeftBar from "@/components/Leftbar.vue";
 import { useI18n } from "vue-i18n";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { useQuery, useMutation, useSubscription } from "villus";
+import { useQuery, useMutation } from "villus";
 import * as yup from "yup";
 
 export default {
@@ -785,7 +784,6 @@ export default {
       })
         .then((res) => {
           store.dispatch("GET_TASKS", res.data.value.tasks);
-          console.log("resss", res.data.value.tasks);
         })
         .catch((err) => {
           console.log(err);

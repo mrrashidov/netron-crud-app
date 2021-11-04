@@ -53,11 +53,12 @@ module.exports = gql`
 
   type Mutation {
     addTask(input: StoreTask): TaskItem
-    deleteTask(input: DeleteInput): TaskItem
+    deleteTask(id: ID!): ID!
     updateTask(input: UpdateInput): TaskItem
   }
 
   type Subscription {
     newTask: Task!
+    delTask: Int!
   }
 `;

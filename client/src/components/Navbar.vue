@@ -226,8 +226,6 @@ export default {
       query: getLanguages,
     });
 
-    console.log(data);
-
     return {
       onLogout,
       isLeftBarToggle,
