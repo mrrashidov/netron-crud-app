@@ -1,21 +1,13 @@
 <template>
-  <Form
-    @submit="
-      onSubmit({
-        id: todo.id,
-        title: todo.title,
-        description: todo.description,
-      })
-    "
-  >
+  <Form @submit="onSubmit" :initial-values="todo">
     <div
       class="border border-gray-300 mt-2 focus:border-gray-700 rounded shadow"
     >
       <div>
         <Field
           type="text"
-          name="form"
-          v-model="form"
+          name="title"
+          v-model="form.title"
           :value="todo.title"
           :rules="formRules"
           class="w-full outline-none pl-3 overflow-y-auto"
@@ -26,7 +18,7 @@
         <Field
           as="textarea"
           name="description"
-          v-model="description"
+          v-model="form.description"
           :value="todo.description"
           :rules="descriptionRules"
           class="w-full outline-none mt-2 pl-3 resize-none h-24"
@@ -37,17 +29,17 @@
             <ErrorMessage name="description" />
           </label>
           <label class="text-red-500 block">
-            <ErrorMessage name="form" />
+            <ErrorMessage name="title" />
           </label>
           <label class="text-red-500 block">
             <ErrorMessage name="date" />
           </label>
         </div>
       </div>
-      <div class="m-2">
+      <!-- <div class="m-2">
         <Field
           name="date"
-          v-model="date"
+          v-model="form.date"
           :value="todo.date"
           :rules="dateRules"
           :format="dd - MM - YYYY"
@@ -62,7 +54,7 @@
         >
           <option value="" selected disabled>Select</option>
         </Field>
-      </div>
+      </div> -->
     </div>
     <div class="flex justify-between items-center mt-2">
       <div>
@@ -78,9 +70,9 @@
         </button>
       </div>
       <div>
-        <template v-if="this.description">
+        <template v-if="form.description">
           <p class="text-sm text-gray-600">
-            {{ this.description.length }}
+            {{ form.description.length }}
           </p>
         </template>
         <template v-else>
@@ -92,71 +84,67 @@
 </template>
 
 <script>
-import { useI18n } from "vue-i18n";
-import { ref } from "vue";
-import { useMutation } from "villus";
-import { Form, Field, ErrorMessage } from "vee-validate";
-import * as yup from "yup";
-import { useStore } from "vuex";
-export default {
-  name: "EditForm",
-  components: {
-    Form,
-    Field,
-    ErrorMessage,
-  },
-  props: {
-    todo: Object,
-    isTagEdit: Boolean,
-  },
-  data() {
-    return {
-      formRules: yup.string(),
-      descriptionRules: yup.string(),
-      dateRules: yup.string(),
-    };
-  },
-  setup() {
-    const store = useStore();
-    const { t } = useI18n();
-    const form = ref();
-    const description = ref();
-    const date = ref(new Date().toISOString().slice(0, 10));
-    const updateTask = `
-    mutation updateTask($input: UpdateInput){
-      updateTask(input: $input){
-        id
-        user_id
-        title
-        description
-        date
+  import { useI18n } from "vue-i18n";
+  import { useMutation } from "villus";
+  import { Form, Field, ErrorMessage } from "vee-validate";
+  import * as yup from "yup";
+  import { useStore } from "vuex";
+  import { reactive } from "vue";
+  export default {
+    name: "EditForm",
+    components: {
+      Form,
+      Field,
+      ErrorMessage,
+    },
+    props: {
+      todo: Object,
+      isTagEdit: Boolean,
+    },
+    data() {
+      return {
+        formRules: yup.string(),
+        descriptionRules: yup.string(),
+        dateRules: yup.string(),
+      };
+    },
+    setup() {
+      const store = useStore();
+      const { t } = useI18n();
+      const form = reactive({
+        title: "",
+        description: "",
+        date: "",
+      });
+
+      const updateTask = `
+      mutation updateTask($input: UpdateInput!){
+        updateTask(input: $input){
+          id
+          user_id
+          title
+          description
+          date
+        }
       }
-    }
-`;
+  `;
 
-    const { execute } = useMutation(updateTask);
+      const { execute } = useMutation(updateTask);
 
-    function onSubmit(value) {
-      execute({
-        input: {
-          id: value.id,
-          title: form.value,
-          description: description.value,
-        },
-      })
-        .then((res) => {
-          store.dispatch("UPDATE_TASK", res.data.updateTask);
-        })
-        .catch((err) => {
-          console.log(err);
+      function onSubmit(values, { resetForm }) {
+        delete values.created_at;
+        execute({
+          input: values,
         });
-    }
+        resetForm();
+        store.dispatch("GET_INPUT_TOGGLE", false);
+      }
 
-    function onCloseEditTask() {
-      store.dispatch("GET_INPUT_TOGGLE", false);
-    }
+      function onCloseEditTask() {
+        store.dispatch("GET_INPUT_TOGGLE", false);
+      }
 
-    return { form, description, date, onSubmit, onCloseEditTask, t };
-  },
-};
+      return { form, onSubmit, onCloseEditTask, t };
+    },
+  };
 </script>
