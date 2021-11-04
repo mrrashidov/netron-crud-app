@@ -785,8 +785,8 @@ export default {
             created_at
           }
         }
-}
-`;
+      }
+    `;
 
     onMounted(() => {
       useQuery({

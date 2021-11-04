@@ -12,11 +12,11 @@
             <TodaySvg />{{ t("message.today") }}
           </li>
         </routerLink>
-        <routerLink to="/upcoming">
+        <!-- <routerLink to="/upcoming">
           <li class="mt-3 hover:bg-gray-300 rounded cursor-pointer">
             <UpComingSvg />{{ t("message.upComing") }}
           </li>
-        </routerLink>
+        </routerLink> -->
         <hr class="mt-3 mb-3" />
         <li class="mt-3 cursor-pointer">
           <div v-if="this.isArrow == false">
