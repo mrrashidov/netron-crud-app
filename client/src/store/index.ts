@@ -7,11 +7,11 @@ import tag from "./modules/tag";
 
 const store = createStore({
   modules: {
-    todo: todo,
-    auth: auth,
-    task: task,
-    setting: setting,
-    tag: tag,
+    todo,
+    auth,
+    task,
+    setting,
+    tag,
   },
 });
 

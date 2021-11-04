@@ -21,6 +21,7 @@ const initState: IState = {
 };
 
 const task: Module<any, any> = {
+  namespaced: true,
   state: initState,
   getters: {},
   actions: {
@@ -41,16 +42,7 @@ const task: Module<any, any> = {
     SET_GET_TASKS: (state, data) => {
       state.tasks = data;
     },
-    SET_ADD_TASK: async (state, data) => {
-      state.task = {
-        user_id: data.user_id,
-        title: data.title,
-        description: data.description,
-        date: data.date,
-        status: data.status,
-      };
-      state.tasks.push(state.task);
-    },
+    SET_ADD_TASK: async (state, data) => state.tasks.push(data),
     SET_DELETE_TASK: (state, data) => {
       const lastItem = state.tasks.filter((item) => item.id !== data.id);
       state.tasks = lastItem;

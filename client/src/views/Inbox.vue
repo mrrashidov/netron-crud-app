@@ -559,9 +559,6 @@
               <Tasks :todo="todo" />
             </div>
           </div>
-          <div>
-            <Task />
-          </div>
           <hr class="mt-3" />
           <div v-if="this.isActive == false">
             <div>
@@ -705,14 +702,13 @@
 </template>
 
 <script>
-  import Task from "../components/Task.vue";
   import Tasks from "../components/Tasks.vue";
   import TaskCheckBoxSvg from "../components/icons/TaskCheckBoxSvg.vue";
   import ViewSvg from "../components/icons/ViewSvg.vue";
   import CommentSvg from "../components/icons/CommentSvg.vue";
   import TagModal from "../components/TagModal.vue";
   import { useStore } from "vuex";
-  import { computed, reactive, onMounted } from "vue";
+  import { computed, reactive, onMounted, watch } from "vue";
   import SortSvg from "@icons/SortSvg.vue";
   import AddTodoSvg from "@icons/AddTodoSvg.vue";
   import AddTaskSvg from "@icons/AddTaskSvg.vue";
@@ -720,7 +716,7 @@
   import LeftBar from "@/components/Leftbar.vue";
   import { useI18n } from "vue-i18n";
   import { Form, Field, ErrorMessage } from "vee-validate";
-  import { useQuery, useMutation } from "villus";
+  import { useQuery, useMutation, useSubscription } from "villus";
   import * as yup from "yup";
 
   export default {
@@ -747,7 +743,6 @@
       ViewSvg,
       TaskCheckBoxSvg,
       Tasks,
-      Task,
     },
 
     methods: {
@@ -778,6 +773,21 @@
         }
       }
     `;
+      const tasks = `
+      subscription {
+        tasks {
+          mutation
+          data {
+            id
+            title
+            description
+            date
+            created_at
+          }
+        }
+}
+`;
+
       onMounted(() => {
         useQuery({
           query: allTask,
@@ -786,7 +796,19 @@
         );
       });
 
-      //
+      const { data: tasks_subscriber_data } = useSubscription({ query: tasks });
+
+      watch(tasks_subscriber_data, ({ tasks }) => {
+        if (tasks.mutation === "ADD_TASK") {
+          store.dispatch("task/ADD_TASK", tasks.data);
+        }
+        if (tasks.mutation === "UPDATE_TASK") {
+          store.dispatch("task/UPDATE_TASK", tasks.data);
+        }
+        if (tasks.mutation === "DELETE_TASK") {
+          store.dispatch("task/DELETE_TASK", tasks.data);
+        }
+      });
 
       const form = reactive({
         title: "",
