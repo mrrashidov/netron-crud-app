@@ -7,7 +7,7 @@
         <div class="w-1/2 mx-auto">
           <div class="w-full flex justify-between items-center">
             <div>
-              <h1 class="text-xl font-bold">
+              <h1 class="text-xl font-bold inline">
                 {{ t("todayPage.today") }}
               </h1>
               <span class="text-gray-500 text-sm ml-2">{{
@@ -16,27 +16,208 @@
             </div>
             <div>
               <button class="btn btn-comment mr-2">
-                <CommentSvg />Yorumlar
+                <CommentSvg />{{ t("todayPage.comments") }}
               </button>
-              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-view mr-2">
+                <ViewSvg />{{ t("todayPage.views") }}
+              </button>
               <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("todayPage.sort") }}
               </button>
             </div>
           </div>
-          <div v-if="data">
-            <div v-for="todo in data.tasks" :key="todo.id">
+          <div v-if="taskItem">
+            <div v-for="todo in taskItem" :key="todo.id">
               <hr class="mt-2" />
-              <div class="flex">
-                <button class="tick-button mt-3 mr-1">
-                  <TaskCheckBoxSvg class="tick" />
+              <Tasks :todo="todo" />
+            </div>
+          </div>
+          <hr class="mt-3" />
+          <div v-if="this.isActive == false">
+            <div>
+              <button
+                @click="onClick"
+                class="add-task-button flex items-center mt-2"
+              >
+                <AddTaskSvg class="add-task-svg mt-1 mr-1" />
+                <p class="add-task-text text-gray-500">
+                  {{ t("todayPage.addTask") }}
+                </p>
+              </button>
+            </div>
+            <div class="">
+              <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
+              <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
+                {{ t("todayPage.today") }}
+              </h1>
+              <p class="add-task-text text-center text-gray-500 mb-2">
+                {{ t("todayPage.text") }}
+              </p>
+              <div class="text-center">
+                <button
+                  @click="onClick"
+                  class="
+                    add-task-button-general
+                    w-24
+                    h-9
+                    mt-2
+                    bg-red-500
+                    rounded
+                    text-white
+                  "
+                >
+                  {{ t("todayPage.addTask") }}
                 </button>
-                <div class="mt-2 ml-2 leading-5">
-                  <p>{{ todo.title }}</p>
-                  <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-                </div>
               </div>
+            </div>
+          </div>
+          <div v-else>
+            <div>
+              <Form @submit="onSubmit" autocomplete="off">
+                <div
+                  class="
+                    border border-gray-300
+                    mt-2
+                    focus:border-gray-700
+                    rounded
+                  "
+                >
+                  <div>
+                    <Field
+                      type="text"
+                      name="title"
+                      v-model="form.title"
+                      :rules="formRules"
+                      class="w-full outline-none pl-3"
+                      :placeholder="t('todayPage.textPlaceholder')"
+                    />
+                  </div>
+                  <div>
+                    <Field
+                      as="textarea"
+                      name="description"
+                      v-model="form.description"
+                      :rules="descriptionRules"
+                      class="
+                        w-full
+                        h-auto
+                        outline-none
+                        mt-2
+                        pl-3
+                        resize-none
+                        overflow-y-hidden
+                      "
+                      :placeholder="t('todayPage.description')"
+                    ></Field>
+                    <div class="ml-3 mr-3">
+                      <label class="text-red-500">
+                        <ErrorMessage name="description" />
+                      </label>
+                      <label class="text-red-500">
+                        <ErrorMessage name="form" />
+                      </label>
+                      <label class="text-red-500">
+                        <ErrorMessage name="date" />
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <Field
+                      name="date"
+                      v-model="form.date"
+                      :rules="dateRules"
+                      type="date"
+                      class="
+                        h-auto
+                        outline-none
+                        ml-2
+                        mt-2
+                        mb-2
+                        pl-3
+                        border border-gray-300
+                        rounded
+                      "
+                    />
+                    <select
+                      as="select"
+                      name="group"
+                      v-model="group"
+                      class="
+                        h-auto
+                        outline-none
+                        ml-2
+                        mt-2
+                        mb-2
+                        pl-3
+                        border border-gray-300
+                        rounded
+                      "
+                    >
+                      <option>Select</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center mt-2">
+                  <div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary bg-primary mr-2"
+                    >
+                      {{ t("todayPage.addTask") }}
+                    </button>
+                    <button
+                      @click="onCancel"
+                      type="button"
+                      class="btn btn-cancel"
+                    >
+                      {{ t("todayPage.cancel") }}
+                    </button>
+                  </div>
+                  <div>
+                    <template v-if="form.description">
+                      <p>{{ form.description.length }}</p>
+                    </template>
+                    <template v-else>
+                      <p>0</p>
+                    </template>
+                  </div>
+                </div>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div class="mt-5 p-4">
+        <div class="w-1/2 mx-auto">
+          <div class="w-full flex justify-between items-center">
+            <div>
+              <h1 class="text-xl font-bold inline">
+                {{ t("todayPage.today") }}
+              </h1>
+              <span class="text-gray-500 text-sm ml-2">{{
+                t("todayPage.dt")
+              }}</span>
+            </div>
+            <div>
+              <button class="btn btn-comment mr-2">
+                <CommentSvg />{{ t("todayPage.comments") }}
+              </button>
+              <button class="btn btn-view mr-2">
+                <ViewSvg />{{ t("todayPage.views") }}
+              </button>
+              <button class="btn btn-sort">
+                <SortSvg />
+                {{ t("todayPage.sort") }}
+              </button>
+            </div>
+          </div>
+          <div v-if="taskItem">
+            <div v-for="todo in taskItem" :key="todo.id">
+              <hr class="mt-2" />
+              <Tasks :todo="todo" />
             </div>
           </div>
           <hr class="mt-3" />
@@ -95,207 +276,17 @@
                       name="title"
                       v-model="form.title"
                       :rules="formRules"
-                      class="w-full outline-none pl-3"
-                      placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      as="textarea"
-                      name="description"
-                      v-model="description"
-                      :rules="descriptionRules"
-                      class="
-                        w-full
-                        h-auto
-                        outline-none
-                        mt-2
-                        pl-3
-                        resize-none
-                        overflow-y-hidden
-                      "
-                      placeholder="Açıklama"
-                    ></Field>
-                    <div class="ml-3 mr-3">
-                      <label class="text-red-500">
-                        <ErrorMessage name="description" />
-                      </label>
-                      <label class="text-red-500">
-                        <ErrorMessage name="form" />
-                      </label>
-                      <label class="text-red-500">
-                        <ErrorMessage name="date" />
-                      </label>
-                    </div>
-                  </div>
-                  <div>
-                    <Field
-                      name="date"
-                      v-model="date"
-                      :rules="dateRules"
-                      type="date"
-                      class="
-                        h-auto
-                        outline-none
-                        ml-2
-                        mt-2
-                        mb-2
-                        pl-3
-                        border border-gray-300
-                        rounded
-                      "
-                    />
-                    <select
-                      as="select"
-                      name="group"
-                      v-model="group"
-                      class="
-                        h-auto
-                        outline-none
-                        ml-2
-                        mt-2
-                        mb-2
-                        pl-3
-                        border border-gray-300
-                        rounded
-                      "
-                    >
-                      <option>Select</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="flex justify-between items-center mt-2">
-                  <div>
-                    <button
-                      type="submit"
-                      class="btn btn-primary bg-primary mr-2"
-                    >
-                      {{ t("todayPage.addTask") }}
-                    </button>
-                    <button
-                      @click="onCancel"
-                      type="button"
-                      class="btn btn-cancel"
-                    >
-                      {{ t("todayPage.cancel") }}
-                    </button>
-                  </div>
-                  <div>
-                    <template v-if="this.description">
-                      <p>{{ this.description.length }}</p>
-                    </template>
-                    <template v-else>
-                      <p>0</p>
-                    </template>
-                  </div>
-                </div>
-              </Form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <div class="mt-5 p-4">
-        <div class="w-1/2 mx-auto">
-          <div class="w-full flex justify-between items-center">
-            <div>
-              <h1 class="text-xl font-bold">
-                {{ t("todayPage.today") }}
-              </h1>
-            </div>
-            <div>
-              <button class="btn btn-comment mr-2">
-                <CommentSvg />Yorumlar
-              </button>
-              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
-              <button class="btn btn-sort">
-                <SortSvg />
-                {{ t("todayPage.sort") }}
-              </button>
-            </div>
-          </div>
-          <div v-if="data">
-            <div v-for="todo in data.tasks" :key="todo.id">
-              <hr class="mt-2" />
-              <div class="flex">
-                <button class="tick-button mt-3 mr-1">
-                  <TaskCheckBoxSvg class="tick" />
-                </button>
-                <div class="mt-2 ml-2 leading-5">
-                  <p>{{ todo.title }}</p>
-                  <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr class="mt-3" />
-          <div v-if="this.isActive == false">
-            <div>
-              <button
-                @click="onClick"
-                class="add-task-button flex items-center mt-2"
-              >
-                <AddTaskSvg class="add-task-svg mt-1 mr-1" />
-                <p class="add-task-text text-gray-500">
-                  {{ t("todayPage.addTask") }}
-                </p>
-              </button>
-            </div>
-            <div class="">
-              <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
-              <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
-                {{ t("todayPage.today") }}
-              </h1>
-              <p class="add-task-text text-center text-gray-500 mb-2">
-                {{ t("todayPage.text") }}
-              </p>
-              <div class="text-center">
-                <button
-                  @click="onClick"
-                  class="
-                    add-task-button-general
-                    w-24
-                    h-9
-                    mt-2
-                    bg-red-500
-                    rounded
-                    text-white
-                  "
-                >
-                  {{ t("todayPage.addTask") }}
-                </button>
-              </div>
-            </div>
-          </div>
-          <div v-else>
-            <div>
-              <Form @submit="onSubmit" autocomplete="off">
-                <div
-                  class="
-                    border border-gray-300
-                    mt-2
-                    focus:border-gray-700
-                    rounded
-                  "
-                >
-                  <div>
-                    <Field
-                      type="text"
-                      name="title"
-                      v-model="form.title"
-                      :rules="formRules"
                       class="w-full outline-none pl-3 overflow-y-auto"
-                      placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
+                      :placeholder="t('todayPage.textPlaceholder')"
                     />
                   </div>
                   <div>
                     <Field
                       as="textarea"
                       name="description"
-                      v-model="description"
+                      v-model="form.description"
                       class="w-full outline-none mt-2 pl-3 resize-none h-24"
-                      placeholder="Açıklama"
+                      :placeholder="t('todayPage.description')"
                     ></Field>
                     <div class="ml-3 mr-3">
                       <label class="text-red-500 block">
@@ -312,7 +303,7 @@
                   <div>
                     <Field
                       name="date"
-                      v-model="date"
+                      v-model="form.date"
                       :rules="dateRules"
                       type="date"
                       class="
@@ -356,8 +347,8 @@
                     </button>
                   </div>
                   <div>
-                    <template v-if="this.description">
-                      <p>{{ this.description.length }}</p>
+                    <template v-if="form.description">
+                      <p>{{ form.description.length }}</p>
                     </template>
                     <template v-else>
                       <p>0</p>
@@ -387,27 +378,21 @@
             </div>
             <div>
               <button class="btn btn-comment mr-2">
-                <CommentSvg />Yorumlar
+                <CommentSvg />{{ t("todayPage.comments") }}
               </button>
-              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-view mr-2">
+                <ViewSvg />{{ t("todayPage.views") }}
+              </button>
               <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("todayPage.sort") }}
               </button>
             </div>
           </div>
-          <div v-if="data">
-            <div v-for="todo in data.tasks" :key="todo.id">
+          <div v-if="taskItem">
+            <div v-for="todo in taskItem" :key="todo.id">
               <hr class="mt-2" />
-              <div class="flex">
-                <button class="tick-button mt-3 mr-1">
-                  <TaskCheckBoxSvg class="tick" />
-                </button>
-                <div class="mt-2 ml-2 leading-5">
-                  <p>{{ todo.title }}</p>
-                  <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-                </div>
-              </div>
+              <Tasks :todo="todo" />
             </div>
           </div>
           <hr class="mt-3" />
@@ -423,7 +408,7 @@
                 </p>
               </button>
             </div>
-            <div>
+            <div class="">
               <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
               <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
                 {{ t("todayPage.today") }}
@@ -456,7 +441,7 @@
                       v-model="form.title"
                       :rules="formRules"
                       class="w-full outline-none pl-3"
-                      placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
+                      :placeholder="t('todayPage.textPlaceholder')"
                     />
                   </div>
                   <div>
@@ -474,7 +459,7 @@
                         resize-none
                         overflow-y-hidden
                       "
-                      placeholder="Açıklama"
+                      :placeholder="t('todayPage.description')"
                     ></Field>
                     <div class="ml-3 mr-3">
                       <label class="text-red-500 block">
@@ -491,7 +476,7 @@
                   <div>
                     <Field
                       name="date"
-                      v-model="date"
+                      v-model="form.date"
                       :rules="dateRules"
                       type="date"
                       class="form-control w-40 m-2"
@@ -518,8 +503,8 @@
                     </button>
                   </div>
                   <div>
-                    <template v-if="this.description">
-                      <p>{{ this.description.length }}</p>
+                    <template v-if="form.description">
+                      <p>{{ form.description.length }}</p>
                     </template>
                     <template v-else>
                       <p>0</p>
@@ -546,9 +531,11 @@
             </div>
             <div>
               <button class="btn btn-comment mr-2">
-                <CommentSvg />Yorumlar
+                <CommentSvg />{{ t("todayPage.comments") }}
               </button>
-              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-view mr-2">
+                <ViewSvg />{{ t("todayPage.views") }}
+              </button>
               <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("todayPage.sort") }}
@@ -611,7 +598,7 @@
                       v-model="form.title"
                       :rules="formRules"
                       class="w-full outline-none pl-3 overflow-y-auto"
-                      placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
+                      :placeholder="t('todayPage.textPlaceholder')"
                     />
                   </div>
                   <div>
@@ -621,7 +608,7 @@
                       v-model="form.description"
                       :rules="descriptionRules"
                       class="w-full outline-none mt-2 pl-3 resize-none h-24"
-                      placeholder="Açıklama"
+                      :placeholder="t('todayPage.description')"
                     ></Field>
                     <div class="ml-3 mr-3">
                       <label class="text-red-500 w-12 block">
@@ -636,13 +623,6 @@
                     </div>
                   </div>
                   <div class="m-2">
-                    <Field
-                      as="input"
-                      name="date"
-                      v-model="form.date"
-                      type="date"
-                      class="form-control w-40"
-                    />
                     <!-- <Field
                       name="group"
                       v-model="group"

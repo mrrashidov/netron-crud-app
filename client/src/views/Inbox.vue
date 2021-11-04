@@ -13,27 +13,21 @@
             </div>
             <div>
               <button class="btn btn-comment mr-2">
-                <CommentSvg />Yorumlar
+                <CommentSvg />{{ t("inboxPage.comments") }}
               </button>
-              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-view mr-2">
+                <ViewSvg />{{ t("inboxPage.views") }}
+              </button>
               <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
               </button>
             </div>
           </div>
-          <div v-if="data">
-            <div v-for="todo in data.tasks" :key="todo.id">
+          <div v-if="taskItem">
+            <div v-for="todo in taskItem" :key="todo.id">
               <hr class="mt-2" />
-              <div class="flex">
-                <button class="tick-button mt-3 mr-1">
-                  <TaskCheckBoxSvg class="tick" />
-                </button>
-                <div class="mt-2 ml-2 leading-5">
-                  <p>{{ todo.title }}</p>
-                  <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-                </div>
-              </div>
+              <Tasks :todo="todo" />
             </div>
           </div>
           <hr class="mt-3" />
@@ -89,8 +83,8 @@
                   <div>
                     <Field
                       type="text"
-                      name="form"
-                      v-model="form"
+                      name="title"
+                      v-model="form.title"
                       :rules="formRules"
                       class="w-full outline-none pl-3"
                       placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
@@ -100,7 +94,7 @@
                     <Field
                       as="textarea"
                       name="description"
-                      v-model="description"
+                      v-model="form.description"
                       :rules="descriptionRules"
                       class="
                         w-full
@@ -128,9 +122,8 @@
                   <div>
                     <Field
                       name="date"
-                      v-model="date"
+                      v-model="form.date"
                       :rules="dateRules"
-                      :format="dd - MM - YYYY"
                       type="date"
                       class="
                         h-auto
@@ -179,17 +172,13 @@
                     </button>
                   </div>
                   <div>
-                    <template v-if="this.description">
-                      <p>{{ this.description.length }}</p>
+                    <template v-if="form.description">
+                      <p>{{ form.description.length }}</p>
                     </template>
                     <template v-else>
                       <p>0</p>
                     </template>
                   </div>
-                </div>
-                <div class="mt-2">
-                  <!-- <p class="text-red-500">{{ titleError }}</p>
-                <p class="text-red-500">{{ descriptionError }}</p> -->
                 </div>
               </Form>
             </div>
@@ -208,27 +197,21 @@
             </div>
             <div>
               <button class="btn btn-comment mr-2">
-                <CommentSvg />Yorumlar
+                <CommentSvg />{{ t("inboxPage.comments") }}
               </button>
-              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-view mr-2">
+                <ViewSvg />{{ t("inboxPage.views") }}
+              </button>
               <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
               </button>
             </div>
           </div>
-          <div v-if="data">
-            <div v-for="todo in data.tasks" :key="todo.id">
+          <div v-if="taskItem">
+            <div v-for="todo in taskItem" :key="todo.id">
               <hr class="mt-2" />
-              <div class="flex">
-                <button class="tick-button mt-3 mr-1">
-                  <TaskCheckBoxSvg class="tick" />
-                </button>
-                <div class="mt-2 ml-2 leading-5">
-                  <p>{{ todo.title }}</p>
-                  <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-                </div>
-              </div>
+              <Tasks :todo="todo" />
             </div>
           </div>
           <hr class="mt-3" />
@@ -284,8 +267,8 @@
                   <div>
                     <Field
                       type="text"
-                      name="form"
-                      v-model="form"
+                      name="title"
+                      v-model="form.title"
                       :rules="formRules"
                       class="w-full outline-none pl-3 overflow-y-auto"
                       placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
@@ -295,7 +278,7 @@
                     <Field
                       as="textarea"
                       name="description"
-                      v-model="description"
+                      v-model="form.description"
                       class="w-full outline-none mt-2 pl-3 resize-none h-24"
                       placeholder="Açıklama"
                     ></Field>
@@ -314,8 +297,7 @@
                   <div>
                     <Field
                       name="date"
-                      v-model="date"
-                      :format="dd - MM - YYYY"
+                      v-model="form.date"
                       :rules="dateRules"
                       type="date"
                       class="
@@ -359,8 +341,8 @@
                     </button>
                   </div>
                   <div>
-                    <template v-if="this.description">
-                      <p>{{ this.description.length }}</p>
+                    <template v-if="form.description">
+                      <p>{{ form.description.length }}</p>
                     </template>
                     <template v-else>
                       <p>0</p>
@@ -387,27 +369,21 @@
             </div>
             <div>
               <button class="btn btn-comment mr-2">
-                <CommentSvg />Yorumlar
+                <CommentSvg />{{ t("inboxPage.comments") }}
               </button>
-              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-view mr-2">
+                <ViewSvg />{{ t("inboxPage.views") }}
+              </button>
               <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
               </button>
             </div>
           </div>
-          <div v-if="data">
-            <div v-for="todo in data.tasks" :key="todo.id">
+          <div v-if="taskItem">
+            <div v-for="todo in taskItem" :key="todo.id">
               <hr class="mt-2" />
-              <div class="flex">
-                <button class="tick-button mt-3 mr-1">
-                  <TaskCheckBoxSvg class="tick" />
-                </button>
-                <div class="mt-2 ml-2 leading-5">
-                  <p>{{ todo.title }}</p>
-                  <p class="text-gray-500 text-xs">{{ todo.description }}</p>
-                </div>
-              </div>
+              <Tasks :todo="todo" />
             </div>
           </div>
           <hr class="mt-3" />
@@ -452,8 +428,8 @@
                   <div>
                     <Field
                       type="text"
-                      name="form"
-                      v-model="form"
+                      name="title"
+                      v-model="form.title"
                       :rules="formRules"
                       class="w-full outline-none pl-3"
                       placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
@@ -463,7 +439,7 @@
                     <Field
                       as="textarea"
                       name="description"
-                      v-model="description"
+                      v-model="form.description"
                       :rules="descriptionRules"
                       class="
                         w-full
@@ -491,8 +467,7 @@
                   <div>
                     <Field
                       name="date"
-                      v-model="date"
-                      :format="dd - MM - YYYY"
+                      v-model="form.date"
                       :rules="dateRules"
                       type="date"
                       class="form-control w-40 m-2"
@@ -519,8 +494,8 @@
                     </button>
                   </div>
                   <div>
-                    <template v-if="this.description">
-                      <p>{{ this.description.length }}</p>
+                    <template v-if="form.description">
+                      <p>{{ form.description.length }}</p>
                     </template>
                     <template v-else>
                       <p>0</p>
@@ -544,9 +519,11 @@
             </div>
             <div>
               <button class="btn btn-comment mr-2">
-                <CommentSvg />Yorumlar
+                <CommentSvg />{{ t("inboxPage.comments") }}
               </button>
-              <button class="btn btn-view mr-2"><ViewSvg />Görüntüle</button>
+              <button class="btn btn-view mr-2">
+                <ViewSvg />{{ t("inboxPage.views") }}
+              </button>
               <button class="btn btn-sort">
                 <SortSvg />
                 {{ t("inboxPage.sort") }}
@@ -609,7 +586,7 @@
                       v-model="form.title"
                       :rules="formRules"
                       class="w-full outline-none pl-3 overflow-y-auto"
-                      placeholder="ör., Her 1 Mayıs'ta spor üyeliğini yenile #Sağlık"
+                      :placeholder="t('inboxPage.textPlaceholder')"
                     />
                   </div>
                   <div>
@@ -619,7 +596,7 @@
                       v-model="form.description"
                       :rules="descriptionRules"
                       class="w-full outline-none mt-2 pl-3 resize-none h-24"
-                      placeholder="Açıklama"
+                      :placeholder="t('inboxPage.description')"
                     ></Field>
                     <div class="ml-3 mr-3">
                       <label class="text-red-500 w-12 block">
