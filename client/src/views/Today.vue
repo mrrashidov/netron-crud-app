@@ -49,7 +49,7 @@
             <div class="">
               <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
               <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
-                {{ t("todayPage.today") }}
+                {{ t("todayPage.header") }}
               </h1>
               <p class="add-task-text text-center text-gray-500 mb-2">
                 {{ t("todayPage.text") }}
@@ -411,7 +411,7 @@
             <div class="">
               <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
               <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
-                {{ t("todayPage.today") }}
+                {{ t("todayPage.header") }}
               </h1>
               <p class="add-task-text text-center text-gray-500 mb-2">
                 {{ t("todayPage.text") }}
@@ -564,7 +564,7 @@
             <div>
               <AddTodoSvg class="w-2/6 mt-5 mx-auto" />
               <h1 class="add-task-header text-center text-gray-900 mt-2 mb-2">
-                {{ t("todayPage.today") }}
+                {{ t("todayPage.header") }}
               </h1>
               <p class="add-task-text text-center text-gray-500 mb-2">
                 {{ t("todayPage.text") }}
