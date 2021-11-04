@@ -16,52 +16,27 @@ module.exports = {
     tasks: () => todo.all(),
   },
   Task: {
-    status: (parent) => "active",
+    id: (task) => task.id,
     user_id: (parent) => parent.user_id,
+    title: (task) => task.title,
+    description: (task) => task.description,
+    status: (parent) => "active",
   },
   Mutation: {
     addTask: async (_, { input }) => {
-      const taskId = await todo
-        .store()
-        .insert({
-          user_id: input.user_id,
-          title: input.title,
-          description: input.description,
-          date: input.date,
-          status: status[input.status].id,
-        })
-        .then((res) => {
-          const lastInsertId = res[0];
-          return lastInsertId;
-        });
-      return await todo
-        .all(null, [
-          "todos.id",
-          "todos.user_id",
-          "todos.title",
-          "todos.description",
-          "todos.date",
-          "todos.status",
-          "todos.created_at",
-        ])
-        .where("todos.id", taskId)
-        .then(async (response) => {
-          console.log(response);
-          const item = {
-            mutation: "ADD_TASK",
-            data: {
-              id: response[0].id,
-              user_id: response[0].user_id,
-              title: response[0].title,
-              description: response[0].description,
-              date: response[0].date,
-              status: "active",
-              created_at: response[0].created_at,
-            },
-          };
-          await pubsub.publish("tasks", { tasks: item });
-          return item;
-        });
+      input.status = input.status ? status[input.status].id : status.active.id;
+      input.date = input.date ? input.date : new Date(Date.now());
+
+      return todo.store(input).then(async (res) => {
+        const findLastInsertItem = await todo.findById(res[0]);
+        findLastInsertItem.status = "active";
+        const item = {
+          mutation: "ADD_TASK",
+          data: findLastInsertItem,
+        };
+        await pubsub.publish("tasks", { tasks: item });
+        return findLastInsertItem;
+      });
     },
     updateTask: async (_, { input }) => {
       return todo.update(input, input.id).then(async (res) => {

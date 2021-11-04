@@ -43,7 +43,7 @@ module.exports = class Model {
     return this.database(this.table).update(values).where({ id });
   }
 
-  store(table = null) {
-    return this.database(table ? table : this.table);
+  store(payload, table = null) {
+    return this.database.insert(payload).into(table ? table : this.table);
   }
 };

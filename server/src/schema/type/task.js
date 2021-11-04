@@ -14,7 +14,7 @@ module.exports = gql`
     title: String!
     description: String
     date: String
-    status: StatusType!
+    status: StatusType = "active"
   }
 
   input DeleteInput {
