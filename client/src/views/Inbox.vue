@@ -697,7 +697,7 @@ import { useQuery, useMutation, useSubscription } from "villus";
 import * as yup from "yup";
 
 export default {
-  name: "Today",
+  name: "Inbox",
   data() {
     return {
       isActive: false,

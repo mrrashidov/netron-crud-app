@@ -46,10 +46,11 @@ module.exports = {
         ])
         .where("todos.id", taskId)
         .then(async (response) => {
+          console.log(response);
           const item = {
             mutation: "ADD_TASK",
             data: {
-              id: taskId,
+              id: response[0].id,
               user_id: response[0].user_id,
               title: response[0].title,
               description: response[0].description,
