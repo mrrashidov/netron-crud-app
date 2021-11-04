@@ -25,6 +25,8 @@ module.exports = {
   Mutation: {
     addTask: async (_, { input }) => {
       input.status = input.status ? status[input.status].id : status.active.id;
+      input.date = input.date ? input.date : new Date(Date.now());
+
       return todo.store(input).then(async (res) => {
         const findLastInsertItem = await todo.findById(res[0]);
         findLastInsertItem.status = "active";
