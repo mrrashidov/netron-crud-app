@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.isTag == true">
+  <div v-if="this.isTag">
     <div class="w-2/12 -mt-4 -ml-12 absolute bg-white shadow rounded">
       <div @click="onCancel">
         <ul>
@@ -99,6 +99,7 @@ import TagModal from "./TagModal.vue";
 import TagMoreSvg from "./icons/TagMoreSvg.vue";
 import TrashSvg from "./icons/TrashSvg.vue";
 import { useMutation } from "villus";
+import { useStore } from "vuex";
 export default {
   name: "TagOption",
   components: {
@@ -124,27 +125,22 @@ export default {
     },
   },
   setup() {
+    const store = useStore();
     const deleteTag = `
-    mutation deleteTag($input: DeleteTag){
-    deleteTag(input: $input){
-        user_id
-        name
-        color
-        }
+    mutation deleteTag($id: ID!){
+      deleteTag(id: $id)
     }
     `;
 
     const { execute } = useMutation(deleteTag);
 
     function onDelete(value) {
-      console.log(value.id);
+      console.log("value.id", value.id);
       execute({
-        input: {
-          id: value.id,
-        },
+        id: value.id,
       })
         .then((res) => {
-          console.log(res);
+          store.dispatch("tag/DELETE_TAG", { id: value.id });
         })
         .catch((err) => {
           console.log(err);

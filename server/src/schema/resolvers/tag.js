@@ -5,14 +5,21 @@ const pubsub = new PubSub();
 
 module.exports = {
   Subscription: {
-    newTag: {
+    tags: {
       subscribe: () => {
-        return pubsub.asyncIterator("newTag");
+        return pubsub.asyncIterator("tags");
       },
     },
   },
   Query: {
     tags: () => tag.all(),
+  },
+  Tag: {
+    id: (tag) => tag.id,
+    user_id: (parent) => parent.user_id,
+    name: (tag) => tag.name,
+    color: (tag) => tag.color,
+    status: (parent) => "active",
   },
   Mutation: {
     addTag: async (_, { input }) => {
@@ -38,20 +45,35 @@ module.exports = {
         ])
         .where("tags.id", tagsId)
         .then((response) => {
-          const item = response[0];
-          pubsub.publish("newTag", { newTag: item });
+          const item = {
+            mutation: "ADD_TAG",
+            data: response[0],
+          };
+          pubsub.publish("tags", { tags: item });
           return {
-            id: item.id,
-            user_id: item.user_id,
-            name: item.name,
-            color: item.color,
+            id: item.data.id,
+            user_id: item.data.user_id,
+            name: item.data.name,
+            color: item.data.color,
             status: "active",
-            created_at: item.created_at,
+            created_at: item.data.created_at,
           };
         });
     },
-    deleteTag: async (_, { input }) => {
-      await tag.delete(input.id);
+    deleteTag: async (_, { id }) => {
+      console.log(id);
+      await tag.delete(id).then(async (res) => {
+        console.log(res);
+        if (res == 1) {
+          await pubsub.publish("tags", {
+            tags: {
+              mutation: "DELETE_TAG",
+              data: { id },
+            },
+          });
+          return id;
+        }
+      });
     },
   },
 };

@@ -41,12 +41,10 @@
                       <AddLabelSvg />
                     </button>
                   </div>
+                  <!-- <p>{{ tagItems }}</p> -->
                 </div>
                 <div v-for="(tag, index) in tagItems" :key="index">
                   <TagOption :tag="tag" />
-                </div>
-                <div>
-                  <Tag />
                 </div>
               </div>
             </div>
@@ -84,7 +82,6 @@
 </template>
 
 <script>
-import Tag from "./Tag.vue";
 import TagOption from "./TagOption.vue";
 import TagMoreSvg from "./icons/TagMoreSvg.vue";
 import InboxSvg from "@icons/InboxSvg.vue";
@@ -94,8 +91,8 @@ import RightArrow from "@icons/RightArrow.vue";
 import AddLabelSvg from "@icons/AddLabelSvg.vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "vuex";
-import { computed } from "vue";
-import { useQuery } from "villus";
+import { computed, onMounted, watch } from "vue";
+import { useQuery, useSubscription } from "villus";
 export default {
   name: "Leftbar",
   components: {
@@ -106,7 +103,6 @@ export default {
     AddLabelSvg,
     TagMoreSvg,
     TagOption,
-    Tag,
   },
   data() {
     return {
@@ -137,7 +133,7 @@ export default {
   setup() {
     const store = useStore();
     const { t } = useI18n();
-    const getTags = `
+    const allTags = `
        query{
          tags{
          id
@@ -148,18 +144,41 @@ export default {
      }
      `;
 
-    const { data } = useQuery({
-      query: getTags,
-    })
-      .then((res) => {
-        console.log(res.data.value.tags);
-        store.dispatch("GET_TAGS", res.data.value.tags);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const tags = `
+     subscription{
+      tags{
+        mutation
+        data{
+          id
+          user_id
+          name
+          color
+          status
+        }
+      }
+    }
+     `;
 
-    store.dispatch("GET_TAGS");
+    onMounted(() => {
+      useQuery({
+        query: allTags,
+      }).then(({ data }) => store.dispatch("tag/GET_TAGS", data.value.tags));
+    });
+
+    const { data: tags_subscriber_data } = useSubscription({ query: tags });
+
+    watch(tags_subscriber_data, ({ tags }) => {
+      console.log("tagsData", tags);
+      if (tags.mutation === "ADD_TAG") {
+        store.dispatch("tag/ADD_TAG", tags.data);
+      }
+      if (tags.mutation === "DELETE_TAG") {
+        store.dispatch("tag/DELETE_TAG", tags.data);
+      }
+      // if (tasks.mutation === "UPDATE_TASK") {
+      //   store.dispatch("task/UPDATE_TASK", tasks.data);
+      // }
+    });
 
     function onLabelToggle() {
       store.dispatch("GET_TAG_TOGGLE", true);
@@ -167,11 +186,8 @@ export default {
 
     const tagItems = computed(() => store.state.tag.tags);
 
-    console.log("tagItems", tagItems);
-
     return {
       onLabelToggle,
-      data,
       tagItems,
       t,
     };
