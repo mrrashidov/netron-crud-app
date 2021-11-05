@@ -30,6 +30,7 @@ const tag: Module<any, any> = {
       commit("SET_ADD_TAG", payload);
     },
     DELETE_TAG: ({ commit }, payload) => {
+      console.log("delete_tag", payload);
       commit("SET_DELETE_TAG", payload);
     },
   },
@@ -38,8 +39,9 @@ const tag: Module<any, any> = {
       state.tags = data;
     },
     SET_ADD_TAG: async (state, data) => state.tags.push(data),
-    DELETE_TAG: async (state, data) => {
-      console.log("dataDelete", data);
+    SET_DELETE_TAG: async (state, data) => {
+      const deleteTag = state.tags.filter((item) => item.id !== data.id);
+      state.tags = deleteTag;
     },
   },
 };

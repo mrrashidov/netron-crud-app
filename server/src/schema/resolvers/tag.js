@@ -61,9 +61,7 @@ module.exports = {
         });
     },
     deleteTag: async (_, { id }) => {
-      console.log(id);
-      await tag.delete(id).then(async (res) => {
-        console.log(res);
+      return tag.delete(id).then(async (res) => {
         if (res == 1) {
           await pubsub.publish("tags", {
             tags: {

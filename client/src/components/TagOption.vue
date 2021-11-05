@@ -138,13 +138,7 @@ export default {
       console.log("value.id", value.id);
       execute({
         id: value.id,
-      })
-        .then((res) => {
-          store.dispatch("tag/DELETE_TAG", { id: value.id });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      });
     }
 
     return {

@@ -13,7 +13,7 @@ module.exports = gql`
   type Tag {
     id: ID!
     user_id: Int
-    name: String!
+    name: String
     color: String
     status: StatusType
   }
