@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-          <div v-else>
+          <div v-else :isTag="false">
             <div>
               <div v-if="tagItems">
                 <div @click="onCancel" class="flex items-center">
@@ -41,10 +41,9 @@
                       <AddLabelSvg />
                     </button>
                   </div>
-                  <!-- <p>{{ tagItems }}</p> -->
                 </div>
                 <div v-for="(tag, index) in tagItems" :key="index">
-                  <TagOption :tag="tag" />
+                  <TagOption @close="isTag = false" :tag="tag" />
                 </div>
               </div>
             </div>
@@ -168,16 +167,15 @@ export default {
     const { data: tags_subscriber_data } = useSubscription({ query: tags });
 
     watch(tags_subscriber_data, ({ tags }) => {
-      console.log("tagsData", tags);
       if (tags.mutation === "ADD_TAG") {
         store.dispatch("tag/ADD_TAG", tags.data);
+      }
+      if (tags.mutation === "UPDATE_TAG") {
+        store.dispatch("tag/UPDATE_TAG", tags.data);
       }
       if (tags.mutation === "DELETE_TAG") {
         store.dispatch("tag/DELETE_TAG", tags.data);
       }
-      // if (tasks.mutation === "UPDATE_TASK") {
-      //   store.dispatch("task/UPDATE_TASK", tasks.data);
-      // }
     });
 
     function onLabelToggle() {

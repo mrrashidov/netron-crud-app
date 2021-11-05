@@ -29,8 +29,10 @@ const tag: Module<any, any> = {
     ADD_TAG: ({ commit }, payload) => {
       commit("SET_ADD_TAG", payload);
     },
+    UPDATE_TAG: ({ commit }, payload) => {
+      commit("SET_UPDATE_TAG", payload);
+    },
     DELETE_TAG: ({ commit }, payload) => {
-      console.log("delete_tag", payload);
       commit("SET_DELETE_TAG", payload);
     },
   },
@@ -39,6 +41,16 @@ const tag: Module<any, any> = {
       state.tags = data;
     },
     SET_ADD_TAG: async (state, data) => state.tags.push(data),
+    SET_UPDATE_TAG: async (state, data) => {
+      const existsAtIndex = state.tags.findIndex(
+        (tagItem) => tagItem.id == data.id
+      );
+      if ((existsAtIndex) => existsAtIndex !== -1) {
+        state.tags[existsAtIndex] = data;
+      } else {
+        state.tasks.push(data);
+      }
+    },
     SET_DELETE_TAG: async (state, data) => {
       const deleteTag = state.tags.filter((item) => item.id !== data.id);
       state.tags = deleteTag;

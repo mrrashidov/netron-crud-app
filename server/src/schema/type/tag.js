@@ -10,6 +10,12 @@ module.exports = gql`
     status: StatusType
   }
 
+  input UpdateInput {
+    id: ID
+    name: String
+    color: String
+  }
+
   type Tag {
     id: ID!
     user_id: Int
@@ -30,6 +36,7 @@ module.exports = gql`
 
   type Mutation {
     addTag(input: TagInput): Tag
+    updateTag(input: UpdateInput): Tag
     deleteTag(id: ID!): ID
   }
 

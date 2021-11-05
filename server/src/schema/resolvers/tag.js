@@ -60,6 +60,22 @@ module.exports = {
           };
         });
     },
+    updateTag: async (_, { input }) => {
+      return tag.update(input, input.id).then(async (res) => {
+        if (res === 1) {
+          const item = await tag.findById(input.id);
+          item.status = "active";
+          await pubsub.publish("tags", {
+            tags: {
+              mutation: "UPDATE_TAG",
+              data: item,
+            },
+          });
+          return item;
+        }
+        throw new ApolloError("Item not found");
+      });
+    },
     deleteTag: async (_, { id }) => {
       return tag.delete(id).then(async (res) => {
         if (res == 1) {
