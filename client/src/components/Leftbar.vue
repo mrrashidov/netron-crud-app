@@ -41,7 +41,6 @@
                       <AddLabelSvg />
                     </button>
                   </div>
-                  <!-- <p>{{ tagItems }}</p> -->
                 </div>
                 <div v-for="(tag, index) in tagItems" :key="index">
                   <TagOption :tag="tag" />
@@ -175,8 +174,8 @@ export default {
       if (tags.mutation === "DELETE_TAG") {
         store.dispatch("tag/DELETE_TAG", tags.data);
       }
-      // if (tasks.mutation === "UPDATE_TASK") {
-      //   store.dispatch("task/UPDATE_TASK", tasks.data);
+      // if (tags.mutation === "UPDATE_TASK") {
+      //   store.dispatch("tag/UPDATE_TASK", tag.data);
       // }
     });
 
@@ -194,22 +193,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.tag:hover button {
-  display: block;
-}
-
-.tag-more-button {
-  display: none;
-}
-
-.list-menu:hover .tag-more-button {
-  display: flex;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.tag-more-button:hover {
-  color: rgba(0, 0, 0, 0.9) !important;
-}
-</style>
