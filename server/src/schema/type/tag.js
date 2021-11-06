@@ -10,12 +10,23 @@ module.exports = gql`
     status: StatusType
   }
 
+  input UpdateInput {
+    id: ID
+    name: String
+    color: String
+  }
+
   type Tag {
     id: ID!
     user_id: Int
-    name: String!
+    name: String
     color: String
     status: StatusType
+  }
+
+  type TagSubscriber {
+    mutation: String!
+    data: Tag
   }
 
   type Query {
@@ -25,10 +36,11 @@ module.exports = gql`
 
   type Mutation {
     addTag(input: TagInput): Tag
-    deleteTag(input: DeleteTag): Tag
+    updateTag(input: UpdateInput): Tag
+    deleteTag(id: ID!): ID
   }
 
   type Subscription {
-    newTag: Tag
+    tags: TagSubscriber
   }
 `;

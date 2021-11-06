@@ -21,13 +21,11 @@
           <div class="mb-3">
             <div class="flex justify-between">
               <label class="font-bold">{{ t("toggleTag.label") }}</label>
-              <label class="text-red-500"
-                ><ErrorMessage name="labelName"
-              /></label>
+              <label class="text-red-500"><ErrorMessage name="name" /></label>
             </div>
             <Field
-              name="labelName"
-              v-model="labelName"
+              name="name"
+              v-model="form.name"
               class="h-7 pl-2 block border border-gray-300 w-full rounded"
               type="text"
               :rules="labelNameRules"
@@ -36,14 +34,12 @@
           <div>
             <div class="flex justify-between">
               <label class="font-bold">{{ t("toggleTag.color") }}</label>
-              <label class="text-red-500"
-                ><ErrorMessage name="labelColor"
-              /></label>
+              <label class="text-red-500"><ErrorMessage name="color" /></label>
             </div>
             <Field
               as="select"
-              name="labelColor"
-              v-model="labelColor"
+              name="color"
+              v-model="form.color"
               :rules="labelColorRules"
               class="h-7 pl-2 block border border-gray-300 w-full rounded"
             >
@@ -59,19 +55,26 @@
               @click="onCloseTagToggle"
               type="button"
               class="
-                border border-gray-300
-                ml-2
+                btn btn-cancel
+                transition
+                ease-in-out
+                transform
+                hover:-translate-y-1 hover:scale-110
                 mr-2
-                p-1
-                w-12
-                hover:bg-gray-200
               "
             >
               {{ t("toggleTag.cancel") }}
             </button>
             <button
               type="submit"
-              class="add-task-button-general text-white p-1 ml-2 w-12"
+              class="
+                btn btn-primary
+                bg-primary
+                transition
+                ease-in-out
+                transform
+                hover:-translate-y-1 hover:scale-110
+              "
             >
               {{ t("toggleTag.add") }}
             </button>
@@ -84,7 +87,7 @@
 
 <script>
 import QuestionSvg from "./icons/QuestionSvg.vue";
-import { ref } from "vue";
+import { reactive } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import { Form, Field, ErrorMessage } from "vee-validate";
@@ -106,49 +109,45 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const labelName = ref();
-    const labelColor = ref();
     const store = useStore();
+
+    const form = reactive({
+      name: "",
+      color: "",
+    });
 
     function onCloseTagToggle() {
       store.dispatch("GET_TAG_TOGGLE", false);
     }
 
     const addTag = `
-    mutation addTag($input:TagInput){
-        addTag(input:$input){
+   mutation addTag($input: TagInput){
+      addTag(input: $input){
         id
         user_id
         name
         color
-        status
-        }
+      }
     }
     `;
 
     const { execute } = useMutation(addTag);
 
-    function tagSubmit() {
+    const tagSubmit = async (values, { resetForm }) => {
+      console.log("tagValues", values);
+      const form = {
+        ...values,
+        user_id: 1,
+        status: "active",
+      };
       execute({
-        input: {
-          user_id: 1,
-          name: labelName.value,
-          color: labelColor.value,
-          status: "active",
-        },
-      })
-        .then((res) => {
-          console.log(res.data.addTag);
-          store.dispatch("ADD_TAG", res.data.addTag);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+        input: form,
+      });
+      resetForm();
+    };
 
     return {
-      labelName,
-      labelColor,
+      form,
       onCloseTagToggle,
       tagSubmit,
       t,
@@ -156,10 +155,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.add-task-button-general {
-  font-size: 13px;
-  background-color: #db4c3f;
-}
-</style>

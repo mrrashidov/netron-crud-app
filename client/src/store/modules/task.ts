@@ -48,7 +48,6 @@ const task: Module<any, any> = {
       state.tasks = lastItem;
     },
     SET_UPDATE_TASK: (state, data) => {
-      console.log("updateData", data);
       const existsAtIndex = state.tasks.findIndex(
         (taskItem) => taskItem.id == data.id
       );
